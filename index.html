@@ -913,6 +913,39 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 .note.warn{background:#fef3c7;color:#92400e;padding:10px 12px;border-radius:10px;font-size:13px}
 .beltman{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-4px 0 12px}
 .beltwarn small{display:block;margin-top:4px;font-weight:400}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-weight:700;color:inherit;text-decoration:underline;cursor:pointer}
+.bbcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.bbcard{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface);display:flex;flex-direction:column;gap:10px;border-top:4px solid #111827}
+.bbcard header{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bbcard header small{display:block;color:var(--muted);font-size:12px}
+.bbrank{width:34px;height:34px;border-radius:50%;background:#111827;color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+.bbnums{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.bbnums div{background:var(--surface-2,#f8fafc);border-radius:9px;padding:6px 8px;min-width:0}
+.bbnums span{display:block;font-size:11px;color:var(--muted)}
+.bbnums b{font-size:15px}
+.bbnums small{display:block;font-size:10.5px;font-weight:600}
+.bbnums small.up,.bbcard small.up{color:var(--good)}.bbnums small.dn{color:var(--bad)}
+.bbnums b small{display:block}
+.bbwhy{font-size:13.5px;line-height:1.55}
+.bbwhy p{margin:0 0 6px}
+.bbev{margin:0;padding-left:18px;font-size:12.5px;color:var(--ink-2,var(--ink))}
+.bbcard footer{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.bbnear{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;display:flex;flex-direction:column;gap:8px}
+.bbnear h4{margin:0;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.bbnear p{margin:2px 0}
+.bname{border-bottom:1px dotted currentColor}
+.askchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chipbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:12.5px;cursor:pointer}
+.chipbtn:hover{border-color:var(--s4)}
+.askbox{display:flex;gap:8px;align-items:flex-end}
+.askbox textarea{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;resize:vertical;background:var(--surface);color:var(--ink)}
+.asklog{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.askq{align-self:flex-end;max-width:85%;background:var(--s4);color:#fff;border-radius:14px 14px 4px 14px;padding:8px 12px;font-size:13.5px}
+.askq b{opacity:.8;margin-right:4px;font-size:11px;text-transform:uppercase}
+.aska{max-width:95%;border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:10px 14px;font-size:13.5px;line-height:1.55;background:var(--surface)}
+.aska p{margin:0 0 6px}.aska ul{margin:4px 0 8px;padding-left:20px}.aska h4{margin:8px 0 4px;font-size:14px}
+.askact{display:flex;justify-content:flex-end}
+@media (max-width:600px){.bbnums{grid-template-columns:repeat(3,minmax(0,1fr))}.askbox{flex-direction:column;align-items:stretch}}
 
 </style>
 
@@ -3805,7 +3838,7 @@ function bindExtTaker(){
 // Ranks an SME's participants on their final score, suggests Black Belt for the top share (default 10%)
 // and Green Belt for everyone else who completed the programme. An optional AI review writes an executive
 // summary per participant. Only anonymous codes and scores are sent to the AI, never names or staff numbers.
-S.beltSme="";S.beltDraft={};S.beltBusy=false;S.beltOpen={};
+S.beltSme="";S.beltDraft={};S.beltBusy=false;S.beltOpen={};S.beltChat={};S.beltAsk=false;
 const BELTS={black:{label:"Black Belt",cls:"bb"},green:{label:"Green Belt",cls:"gb"},none:{label:"Not completed",cls:"nb"}};
 const beltPill=(b,sm)=>'<span class="beltp '+(BELTS[b]||BELTS.none).cls+(sm?" sm":"")+'">'+(b==="black"||b==="green"?'<i></i>':'')+esc((BELTS[b]||BELTS.none).label)+'</span>';
 const beltIco='<path d="M4 9h16v4H4z"/><path d="M10 13l-2 7 4-2 4 2-2-7"/>';
@@ -3826,96 +3859,171 @@ function beltRows(c){
   rows.forEach(x=>{x.ai=ai&&ai.items?ai.items[x.p.id]:null;x.sug=x.ai&&x.ai.belt?x.ai.belt:x.rule;x.saved=fin[x.p.id]||null;x.final=dr[x.p.id]||x.saved||null});
   return rows;
 }
+function beltAvg(rows){const C=rows.filter(x=>x.pass),A=f=>avgOf(C.map(f).filter(v=>v!=null));return{n:C.length,total:A(x=>x.total),att:A(x=>x.att),quiz:A(x=>x.quiz),trainer:A(x=>x.trainer),project:A(x=>x.project)}}
+const r2=v=>v==null?null:Math.round(v*100)/100;
+// Full SME data for the AI, with people as codes only
+function beltData(c,rows){
+  const sk=SKM(c),cnt=p=>{const n={P:0,A:0,R:0};Object.values(p.att||{}).forEach(v=>{if(n[v]!=null)n[v]++});return n};
+  const av=beltAvg(rows);
+  return{sme:c.name||c.id,title:c.title||"",period:c.period||"",passMark:passMark(c),weights:weights(c),blackBeltQuota:beltQuota(c,rows.length),
+    scales:"finalScore 0-100; attendance/quiz/trainer/project 0-1; quizScores 0-1 per module; trainerMarks raw out of "+sk+"; projectMarks 1-3 per criterion",
+    cohortAverageOfCompleted:{finalScore:r2(av.total),attendance:r2(av.att),quiz:r2(av.quiz),trainer:r2(av.trainer),project:r2(av.project)},
+    participants:rows.map(x=>({code:x.code,rank:x.rank,station:x.p.station||"",finalScore:Math.round(x.total*10)/10,completed:!!x.pass,
+      attendance:r2(x.att),attendanceCount:cnt(x.p),quiz:r2(x.quiz),trainer:r2(x.trainer),project:r2(x.project),
+      quizScores:Object.fromEntries((c.quizModules||[]).map(m=>[m.module,(x.p.quiz||{})[m.key]]).filter(e=>typeof e[1]==="number").map(e=>[e[0],r2(e[1])])),
+      trainerMarks:Object.fromEntries((c.trainerTopics||[]).map(m=>[m.module,(x.p.trainer||{})[m.key]]).filter(e=>typeof e[1]==="number"&&e[1]>0)),
+      projectMarks:Object.fromEntries((c.projectCriteria||[]).map(m=>[m.module,(x.p.project||{})[m.key]]).filter(e=>typeof e[1]==="number"&&e[1]>0)),
+      suggestedBelt:x.sug,finalBelt:x.final||null}))}
+}
+// names typed by the user → codes (so names never leave the portal); codes in answers → names
+function beltCodeMaps(rows){
+  const stop=new Set("muhammad mohammad mohamad mohamed mohd muhamad ahmad bin binti bt abdul abd nur noor nor siti syed sharifah wan nik che mat ab".split(" "));
+  const tok={};rows.forEach(x=>{String(x.p.name||"").toLowerCase().replace(/[^a-z\s]/g," ").split(/\s+/).filter(w=>w.length>=4&&!stop.has(w)).forEach(w=>{(tok[w]=tok[w]||new Set()).add(x.code)})});
+  return{toCode:q=>{let t=String(q);rows.slice().sort((a,b)=>String(b.p.name).length-String(a.p.name).length).forEach(x=>{if(x.p.name)t=t.replace(new RegExp(x.p.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"ig"),x.code);if(x.p.staffId)t=t.replace(new RegExp("\\b"+x.p.staffId+"\\b","g"),x.code)});
+      Object.entries(tok).forEach(([w,set])=>{if(set.size===1)t=t.replace(new RegExp("\\b"+w+"\\b","ig"),[...set][0])});return t},
+    byCode:Object.fromEntries(rows.map(x=>[x.code,x]))}
+}
+function beltMd(t,byCode){
+  let h=esc(String(t||"")).replace(/\bP\d{2}\b/g,m=>byCode&&byCode[m]?'<b class="bname" title="'+m+'">'+esc(byCode[m].p.name)+'</b>':m);
+  h=h.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  const L=h.split(/\n/);let out="",ul=false;
+  L.forEach(l=>{const m=l.match(/^\s*(?:[-*•]|\d+[.)])\s+(.*)/);if(m){if(!ul){out+="<ul>";ul=true}out+="<li>"+m[1]+"</li>";return}if(ul){out+="</ul>";ul=false}
+    const hd=l.match(/^\s*#{1,4}\s+(.*)/);if(hd){out+="<h4>"+hd[1]+"</h4>";return}if(l.trim())out+="<p>"+l+"</p>"});
+  if(ul)out+="</ul>";return out;
+}
+async function beltSample(){let s=null;try{s=await window.claude.use("sample")}catch(e){}return s}
+function beltErrMsg(e){S.beltErrDetail=e&&e.message?String(e.message).slice(0,300):"";
+  return e&&e.code==="not_granted"?"Permission for the AI was declined.":e&&e.code==="rate_limited"?"Too many AI requests. Try again in a minute.":e&&e.code==="not_enabled"?"AI is not switched on for this portal yet (Firebase console → Build → AI Logic → Get started → Gemini Developer API).":"The AI did not answer this time. Please try again."}
+const AI_OFF=()=>window.FB?"AI is not switched on for this portal yet (Firebase console → Build → AI Logic → Get started → Gemini Developer API).":"AI is not available in this view.";
+const beltLangTxt=c=>beltCfg(c).lang==="ms"?"Write all text in Bahasa Melayu (formal, professional).":"Write all text in plain professional English.";
+
 function beltView(){
   if(!S.admin)return loginGate("Sign in as an Editor or Admin to select Black and Green Belts.");
   const ids=Object.keys(S.cohorts).sort((a,b)=>String(b).localeCompare(String(a),undefined,{numeric:true}));
   if(!S.beltSme||!S.cohorts[S.beltSme])S.beltSme=S.cohorts[S.current]?S.current:(ids[0]||"");
   const c=S.cohorts[S.beltSme];
   const pick='<select id="beltSme" aria-label="Choose SME">'+PROGS.map(pg=>{const L=ids.filter(id=>progOf(S.cohorts[id])===pg[0]);return L.length?'<optgroup label="'+esc(pg[1])+'">'+L.map(id=>'<option value="'+esc(id)+'"'+(id===S.beltSme?" selected":"")+'>'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</optgroup>':''}).join("")+'</select>';
-  let h='<section class="banner beltb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Black / Green Belt selection</h1><div class="meta"><span>The best participants become Black Belt · everyone who completes the programme gets Green Belt</span></div></div></section>';
+  let h='<section class="banner beltb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Black / Green Belt selection</h1><div class="meta"><span>AI picks the Black Belt candidates and explains why · you decide the final belts</span></div></div></section>';
   if(!c)return h+'<div class="empty"><b>No SME yet</b>Add an SME first.</div>';
-  const rows=beltRows(c),n=rows.length,q=beltQuota(c,n),cfg=beltCfg(c),st=stats(c).started,done=rows.filter(x=>x.pass).length;
+  const rows=beltRows(c),n=rows.length,q=beltQuota(c,n),cfg=beltCfg(c),st=stats(c).started,done=rows.filter(x=>x.pass).length,av=beltAvg(rows),M=beltCodeMaps(rows);
   const fin=rows.filter(x=>x.final),fb=fin.filter(x=>x.final==="black").length,fg=fin.filter(x=>x.final==="green").length,dirty=Object.keys(S.beltDraft[c.id]||{}).length>0;
   h+='<div class="beltbar"><div class="field"><label for="beltSme">SME</label>'+pick+'</div>'+
     '<div class="field"><label for="beltPct">Black Belt share</label><select id="beltPct">'+[5,10,15,20,25].map(v=>'<option value="'+v+'"'+(v===beltPct(c)?" selected":"")+'>Top '+v+'% · '+plural(Math.max(1,Math.round(n*v/100)),"person","people")+'</option>').join("")+'</select></div>'+
-    '<div class="acts"><button class="btn primary" id="beltAI"'+(S.beltBusy||!n?" disabled":"")+'>'+(S.beltBusy?'<span class="spin"></span> AI is reviewing…':'✦ '+(cfg.ai?"Re-run AI review":"Evaluate with AI"))+'</button>'+
-    '<button class="btn" id="beltAcc"'+(n?"":" disabled")+'>Use suggestions as final</button><button class="btn ghost" id="beltX">'+I.down+' Excel</button></div></div>';
-  h+=(S.beltErr?'<div class="note warn beltwarn"><span><b>'+esc(S.beltErr)+'</b>'+(S.beltErrDetail?'<small>Technical detail: '+esc(S.beltErrDetail)+'</small>':'')+'<small>Or use any AI chat (Claude, Gemini, ChatGPT): press <b>Copy AI prompt</b>, paste it in the chat, copy the JSON answer and press <b>Paste AI result</b>.</small></span></div>':'')+'<div class="beltman"><span class="hint">No AI in the portal?</span><button class="btn sm ghost" id="beltCopy">Copy AI prompt</button><button class="btn sm ghost" id="beltPaste">Paste AI result</button></div>';
+    '<div class="field"><label for="beltLang">AI language</label><select id="beltLang"><option value="en">English</option><option value="ms"'+(cfg.lang==="ms"?" selected":"")+'>Bahasa Melayu</option></select></div>'+
+    '<div class="acts"><button class="btn primary" id="beltAI"'+(S.beltBusy||!n?" disabled":"")+'>'+(S.beltBusy==="review"?'<span class="spin"></span> AI is selecting…':'✦ '+(cfg.ai?"Re-run AI selection":"AI: select & justify Black Belt"))+'</button>'+
+    '<button class="btn ghost" id="beltX">'+I.down+' Excel</button></div></div>';
+  if(S.beltErr)h+='<div class="note warn beltwarn"><span><b>'+esc(S.beltErr)+'</b>'+(S.beltErrDetail?'<small>Technical detail: '+esc(S.beltErrDetail)+'</small>':'')+'<small>Until then: <button class="linkbtn" id="beltCopy">copy the AI prompt</button>, paste it in any AI chat (Claude / Gemini / ChatGPT), then <button class="linkbtn" id="beltPaste">paste the answer here</button>.</small></span></div>';
   if(!st.project||!st.skill)h+='<div class="note warn">'+I.lock+' <span><b>Assessment not complete.</b> '+(!st.project?"Project ":"")+(!st.project&&!st.skill?"and ":"")+(!st.skill?"Trainer ":"")+'marks are not in yet, so the ranking may change. Best to select belts after the final assessment.</span></div>';
   h+='<div class="kpis">'+kpiH("Participants",n,"",done+" completed (≥ "+passMark(c)+"%)","--s5",NAV[1][3])+
     kpiH("Black Belt quota",q,"","Top "+beltPct(c)+"% of participants","--ink",beltIco)+
     kpiH("Final Black Belt",fb,"/"+q,fin.length?(fb>q?"Above quota":fb<q?"Below quota":"On quota"):"Not decided yet","--ink",beltIco,q?Math.min(1,fb/q):0)+
     kpiH("Final Green Belt",fg,"",fin.length?(cfg.decidedAt?"Saved "+new Date(cfg.decidedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"Not saved"):"Not decided yet","--good",beltIco)+'</div>';
-  // executive summary
-  const ai=cfg.ai;
-  h+='<section class="panel beltsum"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s4)"></i>'+(ai?"AI review · "+new Date(ai.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Executive summary")+'</div><h3>Executive summary · '+esc(c.name||c.id)+'</h3></div></div>'+
-    (ai&&ai.summary?'<p class="beltexec">'+esc(ai.summary)+'</p>':'<p class="hint">Press <b>Evaluate with AI</b> for a written executive summary of the cohort and of every participant. Until then the suggestion below is based on the final score only.</p>')+
-    '<div class="beltlegend">'+beltPill("black")+' top '+beltPct(c)+'% (best performers) '+beltPill("green")+' completed the programme '+beltPill("none")+' below the pass mark</div>'+
-    '<p class="hint">AI only suggests. You choose the final belt for each person, then press <b>Save final selection</b>. Names and staff numbers are not sent to the AI, only anonymous codes and scores.</p></section>';
-  // table
+  // ---- Black Belt candidates with justification
+  const ai=cfg.ai,just=cfg.just||{};
+  const cand=rows.filter(x=>(x.final||x.sug)==="black"),near=ai?rows.filter(x=>x.ai&&x.ai.whyNot&&(x.final||x.sug)!=="black"):[];
+  const vs=(v,a)=>v==null?'–':(v*100).toFixed(0)+'%'+(a!=null?' <small class="'+(v>=a?"up":"dn")+'">'+(v>=a?"+":"")+((v-a)*100).toFixed(0)+' vs avg</small>':'');
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:#111827"></i>'+(ai?"AI selection · "+new Date(ai.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"By final score")+'</div><h3>Why these candidates qualify for Black Belt</h3><p>'+(ai?"AI’s reasons, with the evidence from the SME data. Edit any text before you report it.":"Press <b>AI: select & justify Black Belt</b> — AI reviews all SME data, picks up to "+q+" candidates and explains why each one qualifies.")+'</p></div></div>'+
+    (ai&&ai.summary?'<div class="beltexec">'+beltMd(ai.summary,M.byCode)+'</div>':'')+
+    '<div class="bbcards">'+(cand.length?cand.map(x=>{const why=just[x.p.id]!=null?just[x.p.id]:(x.ai&&x.ai.why)||"",ev=(x.ai&&x.ai.evidence)||[];
+      return '<article class="bbcard"><header><span class="bbrank">#'+x.rank+'</span><div class="grow"><b>'+esc(x.p.name)+'</b><small>'+esc(x.p.station||"")+'</small></div>'+beltPill("black",1)+(x.final==="black"?'<span class="pill good">Final</span>':'<span class="pill">Suggested</span>')+'</header>'+
+        '<div class="bbnums"><div><span>Final score</span><b>'+x.total.toFixed(1)+'</b><small class="'+(x.total>=av.total?"up":"dn")+'">'+(x.total>=av.total?"+":"")+(x.total-(av.total||0)).toFixed(1)+' vs avg</small></div><div><span>Project</span><b>'+vs(x.project,av.project)+'</b></div><div><span>Trainer</span><b>'+vs(x.trainer,av.trainer)+'</b></div><div><span>Quiz</span><b>'+vs(x.quiz,av.quiz)+'</b></div><div><span>Attendance</span><b>'+vs(x.att,av.att)+'</b></div></div>'+
+        (why?'<div class="bbwhy">'+beltMd(why,M.byCode)+(just[x.p.id]!=null?'<small class="hint">Edited by you</small>':'')+'</div>':'<p class="hint">'+(ai?"No reason written for this person — AI did not pick them. Ask AI below, or write your own.":"No AI reason yet.")+'</p>')+
+        (ev.length?'<ul class="bbev">'+ev.map(e=>'<li>'+beltMd(e,M.byCode).replace(/^<p>|<\/p>$/g,"")+'</li>').join("")+'</ul>':'')+
+        '<footer><button class="btn sm ghost" data-bbedit="'+esc(x.p.id)+'">'+I.edit+' Edit reason</button><button class="btn sm ghost" data-bbask="'+esc(x.code)+'">Ask AI about this person</button></footer></article>'}).join(""):'<div class="empty"><b>No candidates</b>Nobody has passed yet.</div>')+'</div>'+
+    (near.length?'<div class="bbnear"><h4>Close, but not Black Belt</h4>'+near.map(x=>'<div><b>'+esc(x.p.name)+'</b> <span class="hint">#'+x.rank+' · '+x.total.toFixed(1)+'</span><div>'+beltMd(x.ai.whyNot,M.byCode)+'</div></div>').join("")+'</div>':'')+'</section>';
+  // ---- Ask AI
+  const chat=S.beltChat[c.id]||[];
+  const chips=cfg.lang==="ms"?["Kenapa calon Black Belt ini lebih layak berbanding yang lain?","Bandingkan 5 peserta teratas","Siapa paling kuat dalam project dan kenapa?","Apakah kelemahan biasa kumpulan ini?","Peserta mana hampir gagal dan apa yang perlu dibantu?","Tulis ringkasan untuk laporan pengurusan"]:["Why do the Black Belt candidates deserve it more than the others?","Compare the top 5 participants","Who is strongest in the project and why?","What are the common gaps in this group?","Who is at risk and what support do they need?","Write a summary for the management report"];
+  h+='<section class="panel askai"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s4)"></i>Ask AI</div><h3>Ask anything about '+esc(c.name||c.id)+'</h3><p>AI reads this SME’s attendance, quiz, trainer and project data. You can type names — they are swapped for codes before anything is sent to the AI.</p></div></div>'+
+    '<div class="askchips">'+chips.map(t=>'<button class="chipbtn" data-askchip="'+esc(t)+'">'+esc(t)+'</button>').join("")+'</div>'+
+    '<div class="askbox"><textarea id="askQ" rows="2" placeholder="'+(cfg.lang==="ms"?"cth. Kenapa Asyraf layak Black Belt? Siapa paling konsisten dalam kuiz?":"e.g. Why does Asyraf deserve Black Belt? Who is most consistent in the quizzes?")+'">'+esc(S.beltQ||"")+'</textarea><button class="btn primary" id="askGo"'+(S.beltBusy?" disabled":"")+'>'+(S.beltBusy==="ask"?'<span class="spin"></span> Thinking…':'Ask')+'</button></div>'+
+    (chat.length?'<div class="asklog">'+chat.map((m,i)=>'<div class="askq"><b>You</b> '+esc(m.q)+'</div><div class="aska">'+beltMd(m.a,M.byCode)+'<div class="askact"><button class="btn sm ghost" data-askcopy="'+i+'">Copy</button></div></div>').join("")+'</div>':'')+'</section>';
+  // ---- table
   const pc=v=>v==null?'<span class="hint">–</span>':(v*100).toFixed(0)+"%";
-  h+='<section class="panel"><div class="ph"><div class="t"><h3>Ranking & selection</h3><p>Sorted by final score. Click a name for the AI summary.</p></div><div class="a"><button class="btn primary" id="beltSave"'+(dirty?"":" disabled")+'>Save final selection</button></div></div><div class="tblwrap"><table class="belttbl"><thead><tr><th>#</th><th>Participant</th><th class="r">Score</th><th class="r">Attend.</th><th class="r">Quiz</th><th class="r">Trainer</th><th class="r">Project</th><th>Suggested</th><th>Final belt</th></tr></thead><tbody>'+
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Ranking & final selection</h3><p>Sorted by final score. Click a name for the AI note.</p></div><div class="a"><button class="btn" id="beltAcc"'+(n?"":" disabled")+'>Use suggestions as final</button><button class="btn primary" id="beltSave"'+(dirty?"":" disabled")+'>Save final selection</button></div></div><div class="tblwrap"><table class="belttbl"><thead><tr><th>#</th><th>Participant</th><th class="r">Score</th><th class="r">Attend.</th><th class="r">Quiz</th><th class="r">Trainer</th><th class="r">Project</th><th>Suggested</th><th>Final belt</th></tr></thead><tbody>'+
     rows.map(x=>{const o=S.beltOpen[x.p.id],a=x.ai;
       return '<tr class="'+(x.final==="black"?"isbb":"")+'"><td class="num">'+x.rank+'</td><td><button class="linkish" data-beltopen="'+esc(x.p.id)+'"><b>'+esc(x.p.name)+'</b></button><small class="hint">'+esc(x.p.station||"")+'</small></td>'+
         '<td class="r"><b class="num">'+x.total.toFixed(1)+'</b><div class="mbar"><i style="width:'+Math.min(100,x.total)+'%;background:var('+(x.pass?"--good":"--bad")+')"></i></div></td><td class="r num">'+pc(x.att)+'</td><td class="r num">'+pc(x.quiz)+'</td><td class="r num">'+pc(x.trainer)+'</td><td class="r num">'+pc(x.project)+'</td>'+
         '<td>'+beltPill(x.sug,1)+(a?'<small class="hint">AI'+(a.belt!==x.rule?" · score says "+BELTS[x.rule].label:"")+'</small>':'<small class="hint">By score</small>')+'</td>'+
         '<td><select class="beltsel '+(x.final?(BELTS[x.final]||{}).cls:"")+'" data-beltf="'+esc(x.p.id)+'" aria-label="Final belt for '+esc(x.p.name)+'"><option value="">– choose –</option>'+["black","green","none"].map(b=>'<option value="'+b+'"'+(x.final===b?" selected":"")+'>'+BELTS[b].label+'</option>').join("")+'</select>'+(S.beltDraft[c.id]&&S.beltDraft[c.id][x.p.id]?'<small class="hint">unsaved</small>':'')+'</td></tr>'+
-        (o?'<tr class="beltdet"><td></td><td colspan="8">'+(a?'<p>'+esc(a.summary||"")+'</p><div class="beltsg">'+(a.strengths&&a.strengths.length?'<div><b>Strengths</b><ul>'+a.strengths.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ul></div>':'')+(a.gaps&&a.gaps.length?'<div><b>To develop</b><ul>'+a.gaps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ul></div>':'')+'</div>':'<p class="hint">No AI summary yet.</p>')+
+        (o?'<tr class="beltdet"><td></td><td colspan="8">'+(a&&a.summary?beltMd(a.summary,M.byCode):'<p class="hint">No AI note yet.</p>')+(a&&a.whyNot?'<p><b>Why not Black Belt:</b> '+esc(a.whyNot)+'</p>':'')+
           '<div class="beltsg"><div><b>Best trainer marks</b><ul>'+x.tr.slice().sort((p,q)=>q[1]-p[1]).slice(0,3).map(t=>'<li>'+esc(t[0])+' · '+(t[1]*100).toFixed(0)+'%</li>').join("")+'</ul></div><div><b>Best project criteria</b><ul>'+x.pj.slice().sort((p,q)=>q[1]-p[1]).slice(0,3).map(t=>'<li>'+esc(t[0])+' · '+(t[1]*3).toFixed(1)+'/3</li>').join("")+'</ul></div></div></td></tr>':'');
     }).join("")+'</tbody></table></div></section>';
   return h;
 }
 function beltPrompt(c,rows){
-  const w=weights(c),q=beltQuota(c,rows.length),r2=v=>v==null?null:Math.round(v*100)/100;
-  const data=rows.map(x=>({code:x.code,finalScore:Math.round(x.total*10)/10,completed:!!x.pass,attendance:r2(x.att),quiz:r2(x.quiz),trainer:r2(x.trainer),project:r2(x.project),
-    trainerMarks:Object.fromEntries(x.tr.map(t=>[t[0],r2(t[1])])),projectMarks:Object.fromEntries(x.pj.map(t=>[t[0],Math.round(t[1]*3*10)/10]))}));
-  return "You are a senior talent assessor for TNB Genco's Genco Academy SME (Subject Matter Expert) development programme.\n"+
-    "Final score (0-100) = attendance "+w.att+"% + quiz "+w.quiz+"% + trainer assessment "+w.skill+"% + project "+w.project+"%. Pass mark "+passMark(c)+". "+
-    "attendance/quiz/trainer/project are fractions 0-1; trainerMarks are 0-1 per topic; projectMarks are 1-3 per criterion.\n"+
-    "Task: recommend belts. Black Belt = the very best, about "+beltPct(c)+"% of participants, exactly "+q+" people at most: strong final score AND well-rounded strength, weighting the project (problem solving, structuring, business and financial thinking) and trainer-observed behaviour (critical thinking, attitude, drive) more than attendance. "+
-    "Green Belt = every other participant with completed=true. completed=false gets \"none\".\n"+
-    "Return ONLY JSON: {\"summary\":\"executive summary of the whole cohort, 4-6 sentences: overall level, standout strengths, common gaps, why the Black Belt picks stand out\",\"items\":[{\"code\":\"P01\",\"belt\":\"black|green|none\",\"summary\":\"2-3 sentence executive summary of this participant's performance\",\"strengths\":[\"max 3 short points\"],\"gaps\":[\"max 2 short points\"]}]}\n"+
-    "Include every code exactly once. Refer to people only by code. Plain professional English.\n\nPARTICIPANTS:\n"+JSON.stringify(data);
+  const q=beltQuota(c,rows.length);
+  return "You are a senior talent assessor for TNB Genco's Genco Academy SME (Subject Matter Expert) development programme. You select Black Belt candidates and must justify every pick with evidence from the data.\n"+
+    "Rules: Black Belt = the very best, at most "+q+" people (about "+beltPct(c)+"%). Judge on the whole record, not only finalScore: project work (problem solving, structuring, business and financial thinking) and trainer-observed behaviour (critical thinking, attitude, drive) count most, then quiz mastery, then attendance/discipline. Only completed=true can get a belt. Green Belt = every other completed participant. completed=false → \"none\".\n"+
+    "For each Black Belt pick write a clear justification (4-6 sentences) of WHY this person qualifies: what they did better than the cohort, quoting their actual numbers against the cohort average and naming specific criteria/modules where they excel, plus one development area. Give 3-5 short evidence bullets with numbers.\n"+
+    "For the 2-3 participants ranked just below the Black Belt picks, write whyNot: 1-2 sentences on what kept them out.\n"+
+    "Return ONLY JSON: {\"summary\":\"executive summary of the cohort and of the Black Belt selection, 4-6 sentences\",\"items\":[{\"code\":\"P01\",\"belt\":\"black|green|none\",\"summary\":\"1-2 sentence note on this participant\",\"why\":\"only for black: the justification\",\"evidence\":[\"only for black: evidence bullets\"],\"whyNot\":\"only for the near misses\"}]}\n"+
+    "Include every code once. Refer to people only by their code (P01, P02…). "+beltLangTxt(c)+"\n\nSME DATA:\n"+JSON.stringify(beltData(c,rows));
+}
+function beltAskPrompt(c,rows,question){
+  return "You are an analyst for TNB Genco's Genco Academy SME development programme. Answer the user's question using ONLY the SME data below. Be specific and quote numbers. When ranking or comparing, explain the reasons. "+
+    "Refer to people only by their code (P01, P02…), never invent names. If the data cannot answer the question, say so. Answer in the same language as the question (Bahasa Melayu or English). Use short paragraphs and '- ' bullets; **bold** for key points.\n"+
+    "Return ONLY JSON: {\"answer\":\"your answer\"}\n\nSME DATA:\n"+JSON.stringify(beltData(c,rows))+"\n\nQUESTION:\n"+question;
 }
 async function beltRunAI(){
   const c=S.cohorts[S.beltSme];if(!c||S.beltBusy)return;const rows=beltRows(c);
-  let sample=null;try{sample=await window.claude.use("sample")}catch(e){}
-  if(!sample){S.beltErr=window.FB?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again. The score-based suggestion below still works.":"AI is not available in this view.";safeRender();return}
-  S.beltBusy=true;S.beltErr="";safeRender();
-  try{
-    const j=await sample.json(beltPrompt(c,rows),{modelTier:"default"});beltApply(c,rows,j);
-  }catch(e){S.beltErrDetail=e&&e.message?String(e.message).slice(0,300):"";S.beltErr=e&&e.code==="not_granted"?"Permission for the AI was declined.":e&&e.code==="rate_limited"?"Too many AI requests. Try again in a minute.":e&&e.code==="not_enabled"?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again.":"The AI review did not work this time. Try again; the score-based suggestion still works."}
+  const sample=await beltSample();if(!sample){S.beltErr=AI_OFF();S.beltErrDetail="";S.beltPending={t:"review"};safeRender();return}
+  S.beltBusy="review";S.beltErr="";safeRender();
+  try{const j=await sample.json(beltPrompt(c,rows),{modelTier:"default"});beltApply(c,rows,j)}catch(e){S.beltErr=beltErrMsg(e);S.beltPending={t:"review"}}
   S.beltBusy=false;safeRender();
 }
-function beltApply(c,rows,j){{
-    const by={};rows.forEach(x=>by[x.code]=x);const items={};
-    (j&&j.items||[]).forEach(it=>{const x=by[String(it.code||"").trim().toUpperCase()];if(!x)return;let b=String(it.belt||"").toLowerCase();b=b.startsWith("black")?"black":b.startsWith("green")?"green":"none";if(!x.pass&&b!=="none")b="none";
-      items[x.p.id]={belt:b,summary:String(it.summary||"").slice(0,700),strengths:(it.strengths||[]).slice(0,3).map(s=>String(s).slice(0,160)),gaps:(it.gaps||[]).slice(0,2).map(s=>String(s).slice(0,160))}});
-    if(!Object.keys(items).length)throw new Error("empty");
-    // keep Black Belt within the quota (highest score first)
-    const q=beltQuota(c,rows.length),bl=rows.filter(x=>items[x.p.id]&&items[x.p.id].belt==="black");bl.slice(q).forEach(x=>items[x.p.id].belt="green");
-    rows.forEach(x=>{if(!items[x.p.id])items[x.p.id]={belt:x.rule,summary:"",strengths:[],gaps:[]}});
-    const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:{at:new Date().toISOString(),summary:String(j.summary||"").slice(0,2000),items}});
-    S.beltErr="";S.beltErrDetail="";queueSave(cc,"AI belt review for "+(c.name||c.id));toast("AI review done — check the suggestions, then choose the final belts");
-}}
-function beltPasteModal(c){openModal(mhead("Paste AI result","Paste the JSON answer from the AI chat")+'<div class="mb"><div class="field"><textarea id="bp-t" rows="12" style="width:100%;font-family:ui-monospace,monospace;font-size:12px" placeholder="{&quot;summary&quot;: &quot;…&quot;, &quot;items&quot;: [ … ]}"></textarea></div><div class="err" id="bp-e"></div><div class="mfoot"><button class="btn primary" id="bp-ok">Use this result</button></div></div>');
-  $("#bp-ok").addEventListener("click",()=>{let t=$("#bp-t").value.trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");const a=t.indexOf("{"),b=t.lastIndexOf("}");if(a>=0&&b>a)t=t.slice(a,b+1);
-    try{beltApply(c,beltRows(c),JSON.parse(t));closeModal();safeRender()}catch(e){$("#bp-e").textContent="This is not a valid AI result. Copy the whole JSON answer (starting with { and ending with })."}})}
+function beltApply(c,rows,j){
+  const by={};rows.forEach(x=>by[x.code]=x);const items={};const T=(v,n)=>String(v||"").slice(0,n);
+  (j&&j.items||[]).forEach(it=>{const x=by[String(it.code||"").trim().toUpperCase()];if(!x)return;let b=String(it.belt||"").toLowerCase();b=b.startsWith("black")?"black":b.startsWith("green")?"green":"none";if(!x.pass&&b!=="none")b="none";
+    items[x.p.id]={belt:b,summary:T(it.summary,600),why:T(it.why,1500),evidence:(Array.isArray(it.evidence)?it.evidence:[]).slice(0,5).map(s=>T(s,220)),whyNot:T(it.whyNot,500)}});
+  if(!Object.keys(items).length)throw new Error("empty");
+  const q=beltQuota(c,rows.length),bl=rows.filter(x=>items[x.p.id]&&items[x.p.id].belt==="black");bl.slice(q).forEach(x=>items[x.p.id].belt="green");
+  rows.forEach(x=>{if(!items[x.p.id])items[x.p.id]={belt:x.rule,summary:"",why:"",evidence:[],whyNot:""}});
+  const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:{at:new Date().toISOString(),summary:T(j.summary,2500),items},just:{}});
+  S.beltErr="";S.beltErrDetail="";S.beltPending=null;queueSave(cc,"AI Black Belt selection for "+(c.name||c.id));toast("AI selection done — read the reasons, then choose the final belts");
+}
+async function beltAsk(){
+  const c=S.cohorts[S.beltSme],el=$("#askQ");if(!c||!el||S.beltBusy)return;const q=el.value.trim();if(!q){el.focus();return}S.beltQ=q;
+  const rows=beltRows(c),M=beltCodeMaps(rows),qc=M.toCode(q);
+  const sample=await beltSample();if(!sample){S.beltErr=AI_OFF();S.beltErrDetail="";S.beltPending={t:"ask",q,qc};safeRender();return}
+  S.beltBusy="ask";S.beltErr="";safeRender();
+  try{const j=await sample.json(beltAskPrompt(c,rows,qc),{modelTier:"default"});beltAddAnswer(c,q,j)}catch(e){S.beltErr=beltErrMsg(e);S.beltPending={t:"ask",q,qc}}
+  S.beltBusy=false;safeRender();
+}
+function beltAddAnswer(c,q,j){const a=typeof j==="string"?j:(j&&(j.answer||j.text))||"";if(!a.trim())throw new Error("empty");(S.beltChat[c.id]=S.beltChat[c.id]||[]).unshift({q,a:String(a).slice(0,8000),at:Date.now()});S.beltQ="";S.beltErr="";S.beltErrDetail="";S.beltPending=null}
+function beltPendingPrompt(c){const rows=beltRows(c),p=S.beltPending||{t:"review"};return p.t==="ask"?beltAskPrompt(c,rows,p.qc):beltPrompt(c,rows)}
+async function beltCopy(t){try{await Promise.race([navigator.clipboard.writeText(t),new Promise((_,no)=>setTimeout(()=>no(new Error("t")),1500))]);toast("Copied — paste it into the AI chat")}catch(e){openModal(mhead("Copy AI prompt","Select all and copy")+'<div class="mb"><textarea rows="14" style="width:100%;font-size:12px" readonly>'+esc(t)+'</textarea></div>')}}
+function beltPasteModal(c){const p=S.beltPending||{t:"review"};
+  openModal(mhead("Paste AI answer",p.t==="ask"?"Paste the answer to: "+short(p.q,80):"Paste the JSON answer from the AI chat")+'<div class="mb"><div class="field"><textarea id="bp-t" rows="12" style="width:100%;font-family:ui-monospace,monospace;font-size:12px"></textarea></div><div class="err" id="bp-e"></div><div class="mfoot"><button class="btn primary" id="bp-ok">Use this answer</button></div></div>');
+  $("#bp-ok").addEventListener("click",()=>{const raw=$("#bp-t").value.trim();let t=raw.replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");const a=t.indexOf("{"),b=t.lastIndexOf("}");let j=null;if(a>=0&&b>a){try{j=JSON.parse(t.slice(a,b+1))}catch(e){}}
+    try{if(p.t==="ask")beltAddAnswer(c,p.q,j||raw);else{if(!j)throw 0;beltApply(c,beltRows(c),j)}closeModal();safeRender()}catch(e){$("#bp-e").textContent=p.t==="ask"?"Paste the AI’s answer.":"This is not a valid AI result. Copy the whole JSON answer (starting with { and ending with })."}})}
+function beltEditReason(c,pid){const rows=beltRows(c),x=rows.find(r=>r.p.id===pid);if(!x)return;const M=beltCodeMaps(rows),cur=(beltCfg(c).just||{})[pid]!=null?beltCfg(c).just[pid]:String((x.ai&&x.ai.why)||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m);
+  openModal(mhead("Reason for Black Belt",x.p.name)+'<div class="mb"><div class="field"><textarea id="br-t" rows="9" style="width:100%">'+esc(cur)+'</textarea></div><div class="mfoot"><button class="btn primary" id="br-ok">Save reason</button>'+((beltCfg(c).just||{})[pid]!=null?'<span style="flex:1"></span><button class="btn ghost" id="br-rs">Use AI text again</button>':'')+'</div></div>');
+  const save=v=>{const cc=clone(c),J=Object.assign({},(cc.belt||{}).just||{});if(v==null)delete J[pid];else J[pid]=v;cc.belt=Object.assign({},cc.belt||{},{just:J});queueSave(cc,"Black Belt reason edited for "+x.p.name);closeModal();safeRender()};
+  $("#br-ok").addEventListener("click",()=>save($("#br-t").value.trim()));const rs=$("#br-rs");if(rs)rs.addEventListener("click",()=>save(null))}
 async function beltExport(c){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
-  const rows=beltRows(c),P=v=>v==null?"":Math.round(v*1000)/10;
-  const A=[["Rank","Name","Staff number","Station","Final score","Attendance %","Quiz %","Trainer %","Project %","Suggested by score","AI suggestion","AI executive summary","Strengths","To develop","Final belt"]].concat(rows.map(x=>[x.rank,x.p.name,x.p.staffId||"",x.p.station||"",Math.round(x.total*10)/10,P(x.att),P(x.quiz),P(x.trainer),P(x.project),BELTS[x.rule].label,x.ai?BELTS[x.ai.belt].label:"",x.ai?x.ai.summary:"",x.ai?(x.ai.strengths||[]).join("; "):"",x.ai?(x.ai.gaps||[]).join("; "):"",x.final?BELTS[x.final].label:""]));
+  const rows=beltRows(c),M=beltCodeMaps(rows),N=t=>String(t||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m),P=v=>v==null?"":Math.round(v*1000)/10,J=beltCfg(c).just||{};
+  const A=[["Rank","Name","Staff number","Station","Final score","Attendance %","Quiz %","Trainer %","Project %","Suggested by score","AI suggestion","Final belt","Why Black Belt","Evidence","Why not Black Belt","AI note"]].concat(rows.map(x=>[x.rank,x.p.name,x.p.staffId||"",x.p.station||"",Math.round(x.total*10)/10,P(x.att),P(x.quiz),P(x.trainer),P(x.project),BELTS[x.rule].label,x.ai?BELTS[x.ai.belt].label:"",x.final?BELTS[x.final].label:"",N(J[x.p.id]!=null?J[x.p.id]:x.ai?x.ai.why:""),x.ai?N((x.ai.evidence||[]).join("; ")):"",x.ai?N(x.ai.whyNot):"",x.ai?N(x.ai.summary):""]));
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(A),"Belt selection");
-  const ai=beltCfg(c).ai;if(ai&&ai.summary)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Executive summary"],[ai.summary]]),"Summary");
+  const ai=beltCfg(c).ai;if(ai&&ai.summary)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Executive summary"],[N(ai.summary)]]),"Summary");
+  const ch=S.beltChat[c.id]||[];if(ch.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Question","AI answer"]].concat(ch.map(m=>[m.q,N(m.a)]))),"Ask AI");
   try{await dl.save({filename:("Belt_selection_"+(c.name||c.id)).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_")+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
 function bindBelt(){
   const c=S.cohorts[S.beltSme];
-  const sm=$("#beltSme");if(sm)sm.addEventListener("change",()=>{S.beltSme=sm.value;S.beltErr="";S.beltOpen={};safeRender()});
+  const sm=$("#beltSme");if(sm)sm.addEventListener("change",()=>{S.beltSme=sm.value;S.beltErr="";S.beltPending=null;S.beltOpen={};safeRender()});
   if(!c)return;
   const pc=$("#beltPct");if(pc)pc.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{pct:+pc.value});queueSave(cc,"Black Belt share set to "+pc.value+"%");safeRender()});
+  const lg=$("#beltLang");if(lg)lg.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{lang:lg.value});queueSave(cc);safeRender()});
   const ai=$("#beltAI");if(ai)ai.addEventListener("click",beltRunAI);
-  const cp=$("#beltCopy");if(cp)cp.addEventListener("click",async()=>{const t=beltPrompt(c,beltRows(c));try{await Promise.race([navigator.clipboard.writeText(t),new Promise((_,no)=>setTimeout(()=>no(new Error("t")),1500))]);toast("Prompt copied — paste it into the AI chat")}catch(e){openModal(mhead("Copy AI prompt","Select all and copy")+'<div class="mb"><textarea rows="14" style="width:100%;font-size:12px" readonly>'+esc(t)+'</textarea></div>')}});
+  const cp=$("#beltCopy");if(cp)cp.addEventListener("click",()=>beltCopy(beltPendingPrompt(c)));
   const ps=$("#beltPaste");if(ps)ps.addEventListener("click",()=>beltPasteModal(c));
   const x=$("#beltX");if(x)x.addEventListener("click",()=>beltExport(c));
+  const qa=$("#askQ");if(qa){qa.addEventListener("input",()=>{S.beltQ=qa.value});qa.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();beltAsk()}})}
+  const ag=$("#askGo");if(ag)ag.addEventListener("click",beltAsk);
+  document.querySelectorAll("[data-askchip]").forEach(b=>b.addEventListener("click",()=>{const t=$("#askQ");t.value=b.dataset.askchip;S.beltQ=t.value;t.focus()}));
+  document.querySelectorAll("[data-askcopy]").forEach(b=>b.addEventListener("click",()=>{const rows=beltRows(c),M=beltCodeMaps(rows),m=(S.beltChat[c.id]||[])[+b.dataset.askcopy];if(m)beltCopy(String(m.a).replace(/\bP\d{2}\b/g,k=>M.byCode[k]?M.byCode[k].p.name:k).replace(/\*\*/g,""))}));
+  document.querySelectorAll("[data-bbedit]").forEach(b=>b.addEventListener("click",()=>beltEditReason(c,b.dataset.bbedit)));
+  document.querySelectorAll("[data-bbask]").forEach(b=>b.addEventListener("click",()=>{const x=beltRows(c).find(r=>r.code===b.dataset.bbask);const t=$("#askQ");t.value=(beltCfg(c).lang==="ms"?"Kenapa "+x.p.name+" layak Black Belt berbanding peserta lain? Apa kekuatan dan kelemahannya?":"Why does "+x.p.name+" deserve Black Belt over the others? What are the strengths and gaps?");S.beltQ=t.value;t.scrollIntoView({behavior:"smooth",block:"center"});t.focus()}));
   const acc=$("#beltAcc");if(acc)acc.addEventListener("click",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{};beltRows(c).forEach(r=>{if(r.saved!==r.sug)d[r.p.id]=r.sug;else delete d[r.p.id]});safeRender();toast("Suggestions copied — press Save final selection to keep them")});
   document.querySelectorAll("[data-beltf]").forEach(s=>s.addEventListener("change",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{},id=s.dataset.beltf,sv=(beltCfg(c).final||{})[id]||"";if(s.value===sv)delete d[id];else d[id]=s.value;safeRender()}));
   document.querySelectorAll("[data-beltopen]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.beltopen;S.beltOpen[id]=!S.beltOpen[id];safeRender()}));
