@@ -704,6 +704,97 @@ dl.kv dd{margin:2px 0 0;font-weight:600}
 .phfoot .btn.danger{color:#ff8a80}
 .ycard.hasph{padding-top:0;overflow:hidden}
 .ycov{width:calc(100% + 28px);margin:0 -14px 4px;height:110px;object-fit:cover;display:block}
+.musicbox{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);text-align:left}
+.musicbox .mhead{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.mstyles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,130px),1fr));gap:8px}
+.mst{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 10px;cursor:pointer;font:inherit}
+.mst small{color:var(--ink-3);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mst.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 30%,transparent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.mctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px}
+.mvol{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+.mvol input{width:130px;accent-color:var(--accent)}
+.musicfloat{position:fixed;right:16px;bottom:16px;z-index:60;border:0;border-radius:999px;padding:10px 16px;background:var(--brand);color:#fff;font:600 13px/1 inherit;box-shadow:0 6px 18px rgb(0 0 0/.25);cursor:pointer}
+/* quiz v2 */
+.phasepick{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:520px}
+.phasepick button{display:flex;flex-direction:column;gap:2px;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit}
+.phasepick button small{font-size:11.5px;color:var(--ink-3)}
+.phasepick button.on.pre{border-color:var(--s5);background:color-mix(in srgb,var(--s5) 10%,var(--surface))}
+.phasepick button.on.post{border-color:var(--s2);background:color-mix(in srgb,var(--s2) 10%,var(--surface))}
+.qtabs2{display:flex;gap:6px;margin:4px 0 16px;padding:4px;background:var(--surface-2);border-radius:12px;width:max-content;max-width:100%;overflow-x:auto}
+.qtabs2 button{border:0;background:transparent;color:var(--ink-2);font:600 13.5px/1 inherit;padding:9px 14px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.qtabs2 button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgb(0 0 0/.12)}
+.qtabs2 button:disabled{opacity:.45;cursor:not-allowed}
+tr.dim td{opacity:.55}
+.btn.armed{background:var(--bad);color:#fff;width:auto;padding:0 10px}
+.cmpq{display:flex;flex-direction:column;gap:10px}
+.cq{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:4px 10px;align-items:center}
+.cq .ql{grid-column:1/-1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cq .cv{font-size:12.5px;text-align:right;color:var(--ink-2)}
+.cb{position:relative;height:12px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.cb.sm{height:8px}
+.cb i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.cb i.pre{background:color-mix(in srgb,var(--s5) 45%,transparent)}
+.cb i.post{background:var(--s2);height:50%;top:25%}
+.cmpq .legend{display:flex;gap:14px;font-size:12px;color:var(--ink-3)}
+.cmpq .legend i{display:inline-block;width:12px;height:8px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.cmpq .legend i.pre{background:color-mix(in srgb,var(--s5) 45%,transparent)}.cmpq .legend i.post{background:var(--s2)}
+/* participant phone page */
+body.taker{background:linear-gradient(180deg,#0b2a6b 0,#123c8f 240px,var(--bg) 240px)}
+.tk .tkhead{color:#fff}.tk .tkhead small{color:rgba(255,255,255,.75)}
+.tkphase{margin-left:auto;font:700 11px/1 inherit;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:#fff;color:#123c8f}
+.tkphase.pre{background:#f3e8ff;color:#7e22ce}.tkphase.post{background:#ffedd5;color:#c2410c}
+.tkhero{position:relative;overflow:hidden;border-radius:20px;padding:22px 20px;color:#fff;background:radial-gradient(120% 140% at 0% 0%,#3b82f6 0,#1e40af 45%,#7c3aed 100%);box-shadow:0 10px 30px rgb(30 64 175/.35);display:flex;flex-direction:column;gap:10px}
+.tkhero.center{align-items:center;text-align:center}
+.tkhero h1{font-size:clamp(22px,6vw,28px);line-height:1.15;color:#fff}
+.tkhero p{color:rgba(255,255,255,.9);margin:0}
+.tkchip{align-self:flex-start;font:700 11px/1 inherit;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:6px 10px;border-radius:999px}
+.tkfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tkfacts span{background:rgba(255,255,255,.14);border-radius:12px;padding:10px;font-size:12px;text-align:center;color:rgba(255,255,255,.85)}
+.tkfacts b{display:block;font-size:20px;color:#fff;font-family:var(--f-display)}
+.btn.onhero{background:#fff;color:#1e40af;border:0}
+.tkbar{display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:13px}
+.tkbar .eyebrow{color:#fff}
+.tksteps{display:flex;gap:5px}
+.tksteps i{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
+.tksteps i.ok{background:#4ade80}.tksteps i.cur{background:#fff;box-shadow:0 0 0 2px #fbbf24}
+.tkq{border-top:6px solid var(--qc);animation:tkin .3s ease}
+@keyframes tkin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tkq .tkqn{color:var(--qc)}
+.tkq .tkqt{font-size:18px;line-height:1.35}
+.tkopt{transition:transform .12s,border-color .12s,background .12s}
+.tkopt:active{transform:scale(.98)}
+.tkopt span{background:color-mix(in srgb,var(--oc) 14%,transparent);color:var(--oc)}
+.tkopt.on{border-color:var(--oc);background:color-mix(in srgb,var(--oc) 10%,var(--surface))}
+.tkopt.on span{background:var(--oc);color:#fff}
+.tknav{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.tkhero.res{background:radial-gradient(120% 120% at 50% 0%,color-mix(in srgb,var(--bc) 70%,#1e3a8a) 0,#1e3a8a 70%)}
+.tkscorewrap{position:relative;width:190px;height:190px;margin-top:6px}
+.tkring .arc{transition:stroke-dashoffset 1.3s cubic-bezier(.2,.8,.2,1)}
+.tkscoretxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:2px}
+.tkscoretxt b{font:800 54px/1 var(--f-display);color:#fff}
+.tkscoretxt span{font:700 22px/1 inherit;color:rgba(255,255,255,.8);margin-top:14px}
+.tkmedal{filter:drop-shadow(0 4px 8px rgb(0 0 0/.3));animation:pop .6s .9s both}
+@keyframes pop{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;top:-12px;left:var(--x);width:8px;height:14px;background:var(--c);border-radius:2px;transform:rotate(var(--r));animation:fall 2.6s var(--d) ease-in forwards}
+@keyframes fall{to{transform:translateY(560px) rotate(calc(var(--r) + 540deg));opacity:0}}
+.tktiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tktiles div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--k);border-radius:14px;padding:12px;text-align:center}
+.tktiles b{display:block;font:800 26px/1.1 var(--f-display);color:var(--k)}
+.tktiles span{font-size:12px;color:var(--ink-3)}
+.tkgain .gainrow{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:center}
+.tkgain .gainrow b{display:block;font:800 24px/1.1 var(--f-display)}
+.tkgain .gainrow span{font-size:12px;color:var(--ink-3)}
+.tkgain .arrow{font-size:22px;color:var(--ink-3)}
+.tkgain .delta.up b{color:var(--good)}.tkgain .delta.down b{color:var(--bad)}
+.tkrev{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.tkrev i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff}
+.tkrev.ok i{background:var(--good)}.tkrev.no i{background:var(--bad)}
+.tkrev b{font-size:14px;font-weight:600}
+.tkrev small{display:block;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.tkrev small.right{color:var(--good)}
+.tkrev.ok small.right{display:none}
+@media (prefers-reduced-motion:reduce){.confetti,.tkmedal,.tkq{animation:none!important}.confetti{display:none}}
 
 </style>
 
@@ -2724,23 +2815,26 @@ function bindEditor(){
 }
 
 /* run screen */
-function quizRunView(q){
+function quizRunView_old(q){
   const c=S.cohorts[q.smeId],R=S.qResp[q.id]||[],n=(c&&c.participants||[]).length,link=quizLink(q),st=QSTAT[q.status||"draft"];
   const avg=R.length?R.reduce((a,r)=>a+(r.pct||0),0)/R.length:null;
   let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"")+' · scan to answer</span><h1>'+esc(q.title)+'</h1><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
     '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" id="qCopy">Copy link</button></div>'+
     '<div class="runstate"><span class="pill '+st[1]+'" style="font-size:14px;padding:4px 14px">'+st[0]+'</span>'+(q.status==="open"?'<button class="btn danger" id="qClose">Close quiz</button>':'<button class="btn primary" id="qOpen">Open quiz for answers</button>')+'</div>'+
-    (q.status!=="open"?'<p class="hint">Participants see “This quiz is not open yet” until you open it.</p>':'')+'</section>';
+    (q.status!=="open"?'<p class="hint">Participants see “This quiz is not open yet” until you open it.</p>':'')+musicPanel()+'</section>';
   h+='<section class="panel"><div class="ph"><div class="t"><h3>Live answers</h3><p>Updates as participants submit</p></div></div><div class="livek"><div><b class="num">'+R.length+'</b><span>of '+n+' answered</span></div><div><b class="num">'+(avg==null?"–":Math.round(avg*100)+"%")+'</b><span>average</span></div><div><b class="num">'+(q.questions||[]).length+'</b><span>questions</span></div></div>'+
     '<div class="meter big"><i style="width:'+(n?Math.min(100,R.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:420px;overflow:auto">'+
     R.slice().sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+' · '+esc(new Date(r.submittedAt).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))+'</small></span><b class="num">'+Math.round((r.pct||0)*100)+'%</b></div>').join("")+
     (R.length?'':'<span class="hint">No answers yet.</span>')+'</div></section></div>';
   return h;
 }
-function bindQuizRun(q){
+function bindQuizRun_old(q){
   if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(quizLink(q),420)}).catch(()=>{const b=$("#qrbox");if(b)b.innerHTML='<p class="hint">QR library could not load. Share the link below instead.</p>'});
   const cp=$("#qCopy");if(cp)cp.addEventListener("click",()=>{navigator.clipboard.writeText(quizLink(q)).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"))});
+  bindMusic();
+  const o0=$("#qOpen");if(o0)o0.addEventListener("click",()=>{if(S.music.auto&&!S.music.playing)musicPlay()});
+  const cl0=$("#qClose");if(cl0)cl0.addEventListener("click",()=>{if(S.music.auto&&S.music.playing)musicStop()});
   const o=$("#qOpen");if(o)o.addEventListener("click",()=>saveQuiz({...q,status:"open",openedAt:new Date().toISOString()},"Quiz is open").then(render));
   const cl=$("#qClose");if(cl)cl.addEventListener("click",()=>saveQuiz({...q,status:"closed",closedAt:new Date().toISOString()},"Quiz closed").then(render));
 }
@@ -2748,7 +2842,7 @@ function bindQuizRun(q){
 /* results */
 function matchParticipant(c,r){const ps=c?c.participants||[]:[];if(r.pid){const p=ps.find(x=>x.id===r.pid);if(p)return p}
   return ps.find(p=>r.staffId&&p.staffId&&String(p.staffId)===String(r.staffId))||ps.find(p=>p.name.toLowerCase().replace(/[^a-z]/g,"")===String(r.name||"").toLowerCase().replace(/[^a-z]/g,""))}
-function quizResultView(q){
+function quizResultView_old(q){
   const c=S.cohorts[q.smeId],R=(S.qResp[q.id]||[]).slice().sort((a,b)=>(b.pct||0)-(a.pct||0)),Qs=q.questions||[];
   const best={};R.forEach(r=>{const p=matchParticipant(c,r),k=p?p.id:"x"+r.id;if(!best[k]||String(r.submittedAt)<String(best[k].r.submittedAt))best[k]={r,p}});
   const rows=Object.values(best),matched=rows.filter(x=>x.p).length;
@@ -2761,7 +2855,7 @@ function quizResultView(q){
     (rows.length?'':'<tr><td colspan="6" class="hint">No submissions yet.</td></tr>')+'</tbody></table></div></section>';
   return h;
 }
-function bindQuizResult(q){
+function bindQuizResult_old(q){
   const b=$("#qPush");if(!b)return;
   b.addEventListener("click",async()=>{const c=S.cohorts[q.smeId];if(!c)return;const R=S.qResp[q.id]||[];
     const best={};R.forEach(r=>{const p=matchParticipant(c,r);if(p&&(!best[p.id]||String(r.submittedAt)<String(best[p.id].submittedAt)))best[p.id]=r});
@@ -2775,7 +2869,7 @@ function bindQuizResult(q){
 function readHash(){const m=(location.hash||"").match(/^#quiz-([A-Za-z0-9_-]+)$/);S.taker=m?m[1]:null;document.body.classList.toggle("taker",!!S.taker)}
 window.addEventListener("hashchange",()=>{readHash();render()});
 readHash();
-function takerView(){
+function takerView_old(){
   const q=S.quizzes[S.taker],tk=S.tk;
   const shell=inner=>'<div class="tk"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(q?(S.cohorts[q.smeId]||{}).name||q.smeId:"Quiz")+'</small></div></div>'+inner+'</div>';
   if(!S.db)return shell('<div class="tkcard"><h2>Quiz unavailable</h2><p>Open this link on claude.ai while signed in.</p></div>');
@@ -2794,7 +2888,7 @@ function takerView(){
     Qs.map((x,i)=>'<div class="tkcard tkq"><b class="tkqn">Question '+(i+1)+'</b><p class="tkqt">'+esc(x.text)+'</p>'+x.options.map((o,j)=>'<button class="tkopt'+(tk.ans[x.id]===j?" on":"")+'" data-tka="'+esc(x.id)+'|'+j+'"><span>'+String.fromCharCode(65+j)+'</span>'+esc(o)+'</button>').join("")+'</div>').join("")+
     '<div class="tkcard"><div class="err" id="tkerr2"></div><button class="btn primary big" id="tkSubmit">Submit answers</button></div>');
 }
-function bindTaker(){
+function bindTaker_old(){
   const q=S.quizzes[S.taker],tk=S.tk;if(!q)return;
   const sel=$("#tk-n");if(sel)sel.addEventListener("change",()=>{$("#tk-other").hidden=sel.value!=="__other"});
   const st=$("#tkStart");if(st)st.addEventListener("click",()=>{const v=sel.value,c=S.cohorts[q.smeId];
@@ -2811,6 +2905,231 @@ function bindTaker(){
     const resp={name:tk.name,staffId:tk.staffId,pid:tk.pid,answers:tk.ans,score,max,pct:max?score/max:0,submittedAt:new Date().toISOString()};
     let saved=false;try{await S.db.doc("quizzes/"+q.id+"/responses/"+rid).set(resp);saved=true}catch(e){}
     Object.assign(tk,{done:true,saved,score,max,code:rid.slice(-6).toUpperCase()+"-"+score+"/"+max});render();window.scrollTo(0,0)});
+}
+
+/* ---------- QUIZ BACKGROUND MUSIC (original, generated in the browser) ---------- */
+const MUSIC_STYLES=[["calm","Calm focus","Soft pads, slow"],["upbeat","Upbeat","Light beat and melody"],["lofi","Lo-fi","Mellow chords, soft drums"],["clock","Countdown tick","Ticking clock, gentle pulse"],["own","My own music","Choose an MP3 on this computer"]];
+S.music={style:"calm",vol:.5,playing:false,auto:true,file:null,fileName:""};
+try{const m=JSON.parse(localStorage.getItem("ga-music")||"{}");if(m.style)S.music.style=m.style;if(m.vol!=null)S.music.vol=m.vol;if(m.auto!=null)S.music.auto=m.auto}catch(e){}
+const MU={ctx:null,master:null,timer:null,step:0,next:0,audio:null};
+function musicSavePref(){try{localStorage.setItem("ga-music",JSON.stringify({style:S.music.style,vol:S.music.vol,auto:S.music.auto}))}catch(e){}}
+function muCtx(){if(!MU.ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;MU.ctx=new C();MU.master=MU.ctx.createGain();MU.master.connect(MU.ctx.destination)}if(MU.ctx.state==="suspended")MU.ctx.resume();return MU.ctx}
+const mtof=n=>440*Math.pow(2,(n-69)/12);
+function muTone(t,freq,dur,type,gain,attack,release){const c=MU.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(gain,t+(attack||.02));g.gain.setTargetAtTime(0,t+dur,(release||.15));o.connect(g);g.connect(MU.master);o.start(t);o.stop(t+dur+(release||.15)*6)}
+function muNoise(t,dur,gain,hp){const c=MU.ctx,len=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+  const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type="highpass";f.frequency.value=hp||6000;g.gain.value=gain;s.connect(f);f.connect(g);g.connect(MU.master);s.start(t)}
+function muKick(t,gain){const c=MU.ctx,o=c.createOscillator(),g=c.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(40,t+.18);g.gain.setValueAtTime(gain,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g);g.connect(MU.master);o.start(t);o.stop(t+.32)}
+/* chord progressions (MIDI roots + intervals) — original, generic */
+const MU_PROG={calm:[[57,[0,4,7,11]],[53,[0,4,7,11]],[60,[0,4,7,9]],[55,[0,4,7,10]]],upbeat:[[60,[0,4,7]],[57,[0,3,7]],[53,[0,4,7]],[55,[0,4,7]]],lofi:[[62,[0,3,7,10]],[55,[0,4,7,10]],[60,[0,4,7,11]],[57,[0,3,7,10]]],clock:[[57,[0,7]],[57,[0,7]],[53,[0,7]],[55,[0,7]]]};
+const MU_BPM={calm:66,upbeat:112,lofi:78,clock:60};
+function muStep(style,i,t,beat){
+  const prog=MU_PROG[style],bar=Math.floor(i/8)%prog.length,[root,iv]=prog[bar],s=i%8;
+  if(style==="calm"){if(s===0)iv.forEach(x=>muTone(t,mtof(root+x),beat*7.5,"sine",.05,.8,.9));if(s%2===0&&Math.random()<.55)muTone(t,mtof(root+12+iv[(i/2|0)%iv.length]),beat*1.6,"triangle",.035,.05,.5)}
+  else if(style==="upbeat"){if(s===0)iv.forEach(x=>muTone(t,mtof(root+x),beat*3.6,"triangle",.035,.02,.2));if(s===4)iv.forEach(x=>muTone(t,mtof(root+x),beat*3.6,"triangle",.03,.02,.2));
+    muTone(t,mtof(root+12+[0,iv[1],iv[2],12,iv[2],iv[1],0,iv[2]][s]),beat*.45,"square",.018,.005,.06);if(s%2===0)muKick(t,.35);if(s%2===1)muNoise(t,.05,.05);if(s===2||s===6)muNoise(t,.15,.07,1800);muTone(t,mtof(root-12),beat*.4,"sine",s%2===0?.09:0,.01,.08)}
+  else if(style==="lofi"){if(s===0)iv.forEach(x=>muTone(t+Math.random()*.03,mtof(root+x),beat*7.6,"sine",.045,.15,.6));if(s===0||s===5)muKick(t,.3);if(s===4)muNoise(t,.12,.05,2500);if(s%2===1)muNoise(t,.04,.025);
+    if(s===3||s===7)muTone(t,mtof(root+24+iv[(i/4|0)%iv.length]),beat*.9,"triangle",.02,.02,.3);if(s===0)muTone(t,mtof(root-12),beat*3.5,"sine",.08,.03,.3)}
+  else if(style==="clock"){muTone(t,s%2===0?2200:1700,.03,"square",.03,.002,.02);if(s===0)iv.forEach(x=>muTone(t,mtof(root+x),beat*7.5,"sine",.035,.4,.8));if(s===0||s===4)muTone(t,mtof(root-12),beat*.6,"sine",.08,.01,.2)}
+}
+function muSchedule(){const c=MU.ctx;if(!c||!S.music.playing)return;const st=S.music.style,beat=60/MU_BPM[st]/2;
+  while(MU.next<c.currentTime+.25){muStep(st,MU.step,MU.next,beat);MU.step++;MU.next+=beat}}
+function musicPlay(){
+  const m=S.music;musicStop(true);
+  if(m.style==="own"){if(!m.file){toast("Choose a music file first");return}MU.audio=new Audio(m.file);MU.audio.loop=true;MU.audio.volume=m.vol;MU.audio.play().catch(()=>toast("This file could not be played"));m.playing=true;musicUI();return}
+  const c=muCtx();if(!c){toast("Music is not supported in this browser");return}
+  MU.master.gain.cancelScheduledValues(c.currentTime);MU.master.gain.setValueAtTime(0,c.currentTime);MU.master.gain.linearRampToValueAtTime(m.vol*.9,c.currentTime+1.2);
+  MU.step=0;MU.next=c.currentTime+.08;m.playing=true;MU.timer=setInterval(muSchedule,60);muSchedule();musicUI();
+}
+function musicStop(quick){
+  const m=S.music;if(MU.timer){clearInterval(MU.timer);MU.timer=null}
+  if(MU.ctx&&MU.master){const t=MU.ctx.currentTime;MU.master.gain.cancelScheduledValues(t);MU.master.gain.setValueAtTime(MU.master.gain.value,t);MU.master.gain.linearRampToValueAtTime(0,t+(quick?.05:1.2))}
+  if(MU.audio){const a=MU.audio;MU.audio=null;if(quick){a.pause()}else{let v=a.volume;const f=setInterval(()=>{v-=.08;if(v<=0){clearInterval(f);a.pause()}else a.volume=v},90)}}
+  m.playing=false;musicUI();
+}
+function musicSetVol(v){S.music.vol=v;if(MU.audio)MU.audio.volume=v;if(MU.ctx&&MU.master&&S.music.playing){MU.master.gain.cancelScheduledValues(MU.ctx.currentTime);MU.master.gain.setTargetAtTime(v*.9,MU.ctx.currentTime,.1)}musicSavePref()}
+function musicPanel(){const m=S.music;
+  return '<div class="musicbox" id="musicBox"><div class="mhead"><b>♪ Background music</b><span class="hint">Plays from this computer’s speakers while participants answer</span></div>'+
+    '<div class="mstyles">'+MUSIC_STYLES.map(s=>'<button type="button" class="mst'+(m.style===s[0]?" on":"")+'" data-mstyle="'+s[0]+'"><b>'+s[1]+'</b><small>'+(s[0]==="own"&&m.fileName?esc(m.fileName):s[2])+'</small></button>').join("")+'</div>'+
+    '<input type="file" id="mFile" accept="audio/*" hidden>'+
+    '<div class="mctl"><button type="button" class="btn '+(m.playing?"":"primary")+'" id="mPlay">'+(m.playing?"■ Stop music":"▶ Play music")+'</button>'+
+    '<label class="mvol">Volume <input type="range" id="mVol" min="0" max="1" step="0.05" value="'+m.vol+'"></label>'+
+    '<label class="chk"><input type="checkbox" id="mAuto"'+(m.auto?" checked":"")+'> Start when I open the quiz, stop when I close it</label></div></div>';
+}
+function musicUI(){const b=$("#musicBox");if(b){const w=document.createElement("div");w.innerHTML=musicPanel();b.replaceWith(w.firstChild);bindMusic()}musicFloat()}
+function musicFloat(){let f=$("#musicFloat");const show=S.music.playing&&!$("#musicBox");
+  if(show&&!f){f=document.createElement("button");f.id="musicFloat";f.className="musicfloat";f.type="button";f.textContent="♪ Music playing · Stop";f.addEventListener("click",()=>musicStop());document.body.appendChild(f)}
+  if(!show&&f)f.remove()}
+setInterval(musicFloat,1000);
+function bindMusic(){
+  document.querySelectorAll("[data-mstyle]").forEach(b=>b.addEventListener("click",()=>{const st=b.dataset.mstyle;
+    if(st==="own"){$("#mFile").click();return}S.music.style=st;musicSavePref();if(S.music.playing)musicPlay();else musicUI()}));
+  const f=$("#mFile");if(f)f.addEventListener("change",()=>{const x=f.files[0];if(!x)return;if(S.music.file)URL.revokeObjectURL(S.music.file);S.music.file=URL.createObjectURL(x);S.music.fileName=x.name;S.music.style="own";musicPlay()});
+  const p=$("#mPlay");if(p)p.addEventListener("click",()=>{S.music.playing?musicStop():musicPlay()});
+  const v=$("#mVol");if(v)v.addEventListener("input",()=>musicSetVol(+v.value));
+  const a=$("#mAuto");if(a)a.addEventListener("change",()=>{S.music.auto=a.checked;musicSavePref()});
+}
+
+/* ---------- QUIZ v2: pre / post, delete submissions, participant infographics ---------- */
+const PHASES=[["pre","Pre-quiz","Before the session — a baseline. Not saved to the SME."],["post","Post-quiz","After the session — this score goes to the SME."]];
+const qphLabel=p=>p==="pre"?"Pre-quiz":"Post-quiz";
+const rPhase=r=>r.phase==="pre"?"pre":"post";
+S.qPhaseView=null;S.qRunPhase={};
+function qBest(q,phase){const c=S.cohorts[q.smeId],R=(S.qResp[q.id]||[]).filter(r=>rPhase(r)===phase),best={};
+  R.forEach(r=>{const p=matchParticipant(c,r),k=p?p.id:"x"+String(r.name||"").toLowerCase().replace(/[^a-z]/g,"");if(!best[k]||String(r.submittedAt)<String(best[k].r.submittedAt))best[k]={r,p,k}});
+  return{R,rows:Object.values(best).sort((a,b)=>(b.r.pct||0)-(a.r.pct||0)),counted:new Set(Object.values(best).map(x=>x.r.id))}}
+const pctTxt=v=>v==null?"–":Math.round(v*100)+"%";
+const avgOf=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+
+/* ---- run screen ---- */
+function quizRunView(q){
+  const c=S.cohorts[q.smeId],open=q.status==="open",ph=open?(q.phase||"post"):(S.qRunPhase[q.id]||q.phase||"pre");
+  const {R,rows}=qBest(q,ph),n=(c&&c.participants||[]).length,link=quizLink(q);
+  const avg=avgOf(rows.map(x=>x.r.pct||0));
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
+  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
+    '<div class="phasepick" role="group" aria-label="Quiz phase">'+PHASES.map(p=>'<button type="button" class="'+(ph===p[0]?"on ":"")+p[0]+'" data-qphase="'+p[0]+'"'+(open&&ph!==p[0]?' title="Switch the open quiz to '+p[1]+'"':'')+'><b>'+p[1]+'</b><small>'+p[2]+'</small></button>').join("")+'</div>'+
+    '<div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
+    '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" id="qCopy">Copy link</button></div>'+
+    '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+qphLabel(ph)+'</span><button class="btn danger" id="qClose">Close '+qphLabel(ph).toLowerCase()+'</button>':'<span class="pill '+QSTAT[q.status||"draft"][1]+'" style="font-size:14px;padding:4px 14px">'+QSTAT[q.status||"draft"][0]+'</span><button class="btn primary" id="qOpen">Open '+qphLabel(ph).toLowerCase()+'</button>')+'</div>'+
+    (open?'':'<p class="hint">Participants see “not open yet” until you open it. Run the Pre-quiz before the session and the Post-quiz after it, with the same QR code.</p>')+musicPanel()+'</section>';
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var('+(ph==="pre"?"--s5":"--s2")+')"></i>'+qphLabel(ph)+'</div><h3>Live answers</h3><p>Updates as participants submit</p></div></div><div class="livek"><div><b class="num">'+rows.length+'</b><span>of '+n+' answered</span></div><div><b class="num">'+pctTxt(avg)+'</b><span>average</span></div><div><b class="num">'+(q.questions||[]).length+'</b><span>questions</span></div></div>'+
+    '<div class="meter big"><i style="width:'+(n?Math.min(100,rows.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:420px;overflow:auto">'+
+    R.slice().sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(new Date(r.submittedAt).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))+(r.secs?' · '+fmtSecs(r.secs):'')+'</small></span><b class="num">'+pctTxt(r.pct||0)+'</b></div>').join("")+
+    (R.length?'':'<span class="hint">No answers yet.</span>')+'</div></section></div>';
+  return h;
+}
+const fmtSecs=s=>{s=Math.round(s||0);return s<60?s+"s":Math.floor(s/60)+"m "+(s%60)+"s"};
+function bindQuizRun(q){
+  if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(quizLink(q),420)}).catch(()=>{const b=$("#qrbox");if(b)b.innerHTML='<p class="hint">QR library could not load. Share the link below instead.</p>'});
+  const cp=$("#qCopy");if(cp)cp.addEventListener("click",()=>{navigator.clipboard.writeText(quizLink(q)).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"))});
+  bindMusic();
+  document.querySelectorAll("[data-qphase]").forEach(b=>b.addEventListener("click",()=>{const p=b.dataset.qphase;
+    if(q.status==="open"){if((q.phase||"post")===p)return;saveQuiz({...q,phase:p},"Switched to "+qphLabel(p)).then(render)}else{S.qRunPhase[q.id]=p;render()}}));
+  const o=$("#qOpen");if(o)o.addEventListener("click",()=>{const p=S.qRunPhase[q.id]||q.phase||"pre";if(S.music.auto&&!S.music.playing)musicPlay();
+    saveQuiz({...q,status:"open",phase:p,openedAt:new Date().toISOString()},qphLabel(p)+" is open").then(render)});
+  const cl=$("#qClose");if(cl)cl.addEventListener("click",()=>{if(S.music.auto&&S.music.playing)musicStop();
+    saveQuiz({...q,status:"closed",closedAt:new Date().toISOString()},qphLabel(q.phase||"post")+" closed").then(render)});
+}
+
+/* ---- results ---- */
+function quizResultView(q){
+  const c=S.cohorts[q.smeId],Qs=q.questions||[],all=S.qResp[q.id]||[];
+  const hasPre=all.some(r=>rPhase(r)==="pre"),hasPost=all.some(r=>rPhase(r)==="post");
+  let v=S.qPhaseView||(hasPost?"post":hasPre?"pre":"post");if(v==="compare"&&!(hasPre&&hasPost))v=hasPost?"post":"pre";
+  const PRE=qBest(q,"pre"),POST=qBest(q,"post");
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
+  const matchedPost=POST.rows.filter(x=>x.p).length;
+  h+='<section class="banner quizb"><div class="grow"><span class="bk">'+esc(c?c.name||q.smeId:"")+' · results</span><h1>'+esc(q.title)+'</h1><div class="meta"><span>Pre-quiz: '+PRE.rows.length+' answered · avg '+pctTxt(avgOf(PRE.rows.map(x=>x.r.pct||0)))+'</span><span>Post-quiz: '+POST.rows.length+' answered · avg '+pctTxt(avgOf(POST.rows.map(x=>x.r.pct||0)))+'</span>'+(q.savedAt?'<span>Post scores saved '+esc(new Date(q.savedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</span>':'')+'</div></div>'+
+    '<div class="acts"><button class="btn onban solid" id="qPush"'+(matchedPost?"":" disabled")+' title="Only Post-quiz scores are saved">Save post-quiz scores to '+esc(c?c.name||q.smeId:"SME")+'</button></div></section>';
+  h+='<div class="qtabs2" role="tablist">'+[["pre","Pre-quiz",PRE.rows.length],["post","Post-quiz",POST.rows.length],["compare","Pre vs Post",null]].map(t=>'<button role="tab" class="'+(v===t[0]?"on":"")+'" data-qpv="'+t[0]+'"'+(t[0]==="compare"&&!(hasPre&&hasPost)?' disabled title="Needs both pre and post answers"':'')+'>'+t[1]+(t[2]!=null?' <span class="num">'+t[2]+'</span>':'')+'</button>').join("")+'</div>';
+  if(v==="compare")return h+compareView(q,PRE,POST);
+  const B=v==="pre"?PRE:POST,rows=B.rows;
+  h+='<div class="g2">'+panel("qrDist",{title:"Score distribution",tag:qphLabel(v),tagColor:v==="pre"?"--s5":"--s2",sub:"Participants per score band",opts:[["col","Column"],["pie","Donut"]],render:t=>{const bs=bands(rows.map(x=>x.r.pct||0));return t==="pie"?donut(bs,{center:rows.length,centerLabel:"ANSWERED"}):columns(bs.map(b=>({label:b.label.split(" · ")[0],value:b.value,text:b.value,color:b.color,tip:b.label+": "+b.value})))}})+
+    panel("qrItems",{title:"Question analysis",tag:"Questions",tagColor:"--s1",sub:"Share of participants who got each question right",opts:[["bar","Bar"]],render:()=>hbars(Qs.map((x,i)=>{const ok=rows.filter(r=>(r.r.answers||{})[x.id]===x.answer).length,vv=rows.length?ok/rows.length:null;return{label:"Q"+(i+1)+". "+x.text,value:vv,max:1,text:vv==null?"–":Math.round(vv*100)+"%",color:rateColor(vv),tip:x.text+"\nCorrect: "+x.options[x.answer]+"\n"+ok+" of "+rows.length+" right"}}),{max:1})})+'</div>';
+  const list=B.R.slice().sort((a,b)=>String(a.name).localeCompare(String(b.name))||String(a.submittedAt).localeCompare(String(b.submittedAt)));
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>'+qphLabel(v)+' submissions</h3><p>The first submission from each participant counts. Delete wrong or test entries with the bin icon.'+(v==="pre"?' Pre-quiz scores are not saved to the SME.':'')+'</p></div>'+(list.length&&S.admin?'<div class="a"><button class="btn sm danger" id="qClear" data-ph="'+v+'">'+I.trash+' Delete all '+qphLabel(v).toLowerCase()+' answers</button></div>':'')+'</div><div class="tblwrap"><table><thead><tr><th>#</th><th>Participant</th><th>Matched in SME</th><th class="r">Score</th><th class="r">%</th><th>Time</th><th>Submitted</th><th></th></tr></thead><tbody>'+
+    list.map((r,i)=>{const p=matchParticipant(c,r),cnt=B.counted.has(r.id);return '<tr'+(cnt?'':' class="dim"')+'><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+(cnt?'':' · duplicate, not counted')+'</small></div></td><td>'+(p?'<span class="pill good">'+esc(p.name)+'</span>':'<span class="pill bad">Not found</span>')+'</td><td class="r num">'+r.score+' / '+r.max+'</td><td class="r num rowsum">'+pctTxt(r.pct||0)+'</td><td class="hint">'+(r.secs?fmtSecs(r.secs):'–')+'</td><td class="hint">'+esc(new Date(r.submittedAt).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r">'+(S.admin?'<button class="btn sm icon ghost" data-rdel="'+esc(r.id)+'" aria-label="Delete this submission" title="Delete this submission">'+I.trash+'</button>':'')+'</td></tr>'}).join("")+
+    (list.length?'':'<tr><td colspan="8" class="hint">No '+qphLabel(v).toLowerCase()+' submissions yet.</td></tr>')+'</tbody></table></div></section>';
+  return h;
+}
+function compareView(q,PRE,POST){
+  const c=S.cohorts[q.smeId],Qs=q.questions||[];
+  const pre={};PRE.rows.forEach(x=>pre[x.k]=x);const pairs=POST.rows.filter(x=>pre[x.k]).map(x=>({name:x.p?x.p.name:x.r.name,a:pre[x.k].r.pct||0,b:x.r.pct||0}));
+  const aPre=avgOf(PRE.rows.map(x=>x.r.pct||0)),aPost=avgOf(POST.rows.map(x=>x.r.pct||0)),up=pairs.filter(x=>x.b>x.a).length,gain=avgOf(pairs.map(x=>x.b-x.a));
+  let h='<div class="kpis">'+kpiH("Pre-quiz average",pctTxt(aPre),"",PRE.rows.length+" answered","--s5",'<path d="M4 20V10M10 20V4M16 20v-7"/>',aPre)+kpiH("Post-quiz average",pctTxt(aPost),"",POST.rows.length+" answered","--s2",'<path d="M4 20V10M10 20V4M16 20v-7"/>',aPost)+
+    kpiH("Average gain",gain==null?"–":(gain>=0?"+":"")+Math.round(gain*100),gain==null?"":" pts",pairs.length+" took both","--good",'<path d="M4 17l6-6 4 4 6-6M14 9h6v6"/>',null)+kpiH("Improved",up,"/"+pairs.length,"Scored higher after the session","--s3",'<circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-3 5 3-1.5-8"/>',pairs.length?up/pairs.length:null)+'</div>';
+  h+='<div class="g2">'+panel("qrCmpQ",{title:"Each question, before and after",tag:"Questions",tagColor:"--s1",sub:"Share who answered correctly — wide light bar = pre-quiz, narrow bar = post-quiz",opts:[["bar","Bar"]],render:()=>'<div class="cmpq">'+Qs.map((x,i)=>{const f=rows=>rows.length?rows.filter(r=>(r.r.answers||{})[x.id]===x.answer).length/rows.length:null,a=f(PRE.rows),b=f(POST.rows);
+      return '<div class="cq" data-tip="'+esc(x.text+"\nPre "+pctTxt(a)+" → Post "+pctTxt(b))+'"><span class="ql">Q'+(i+1)+'. '+esc(x.text)+'</span><div class="cb"><i class="pre" style="width:'+((a||0)*100)+'%"></i><i class="post" style="width:'+((b||0)*100)+'%"></i></div><span class="num cv">'+pctTxt(a)+' → <b>'+pctTxt(b)+'</b></span></div>'}).join("")+'<div class="legend"><span><i class="pre"></i>Pre-quiz</span><span><i class="post"></i>Post-quiz</span></div></div>'})+
+    panel("qrCmpDist",{title:"Score bands, before and after",tag:"Participants",tagColor:"--s5",sub:"How many participants in each band",opts:[["col","Column"]],render:()=>{const A=bands(PRE.rows.map(x=>x.r.pct||0)),B=bands(POST.rows.map(x=>x.r.pct||0));
+      const mx=Math.max(1,...A.map(x=>x.value),...B.map(x=>x.value));return hbars([].concat(...A.map((x,i)=>[{label:x.label.split(" · ")[0]+" · pre",value:x.value,text:x.value,color:"--s5",tip:x.label+" — pre-quiz: "+x.value},{label:x.label.split(" · ")[0]+" · post",value:B[i].value,text:B[i].value,color:"--s2",tip:x.label+" — post-quiz: "+B[i].value}])),{max:mx})}})+'</div>';
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Participant improvement</h3><p>'+pairs.length+' participants took both the pre-quiz and the post-quiz</p></div></div><div class="tblwrap"><table><thead><tr><th>Participant</th><th class="r">Pre</th><th class="r">Post</th><th class="r">Change</th><th style="width:30%"></th></tr></thead><tbody>'+
+    pairs.sort((x,y)=>(y.b-y.a)-(x.b-x.a)).map(x=>{const d=x.b-x.a;return '<tr><td><b>'+esc(x.name)+'</b></td><td class="r num">'+pctTxt(x.a)+'</td><td class="r num">'+pctTxt(x.b)+'</td><td class="r num"><span class="pill '+(d>0?"good":d<0?"bad":"none")+'">'+(d>0?"+":"")+Math.round(d*100)+'</span></td><td><div class="cb sm"><i class="pre" style="width:'+x.a*100+'%"></i><i class="post" style="width:'+x.b*100+'%"></i></div></td></tr>'}).join("")+
+    (pairs.length?'':'<tr><td colspan="5" class="hint">Nobody has both a pre-quiz and a post-quiz answer yet.</td></tr>')+'</tbody></table></div></section>';
+  return h;
+}
+function bindQuizResult(q){
+  document.querySelectorAll("[data-qpv]").forEach(b=>b.addEventListener("click",()=>{if(b.disabled)return;S.qPhaseView=b.dataset.qpv;render()}));
+  document.querySelectorAll("[data-rdel]").forEach(b=>{let armed=false;b.addEventListener("click",async()=>{
+    if(!armed){armed=true;b.classList.add("armed");b.innerHTML="Delete?";setTimeout(()=>{if(document.body.contains(b)){armed=false;b.classList.remove("armed");b.innerHTML=I.trash}},4000);return}
+    try{await S.db.doc("quizzes/"+q.id+"/responses/"+b.dataset.rdel).delete();S.qResp[q.id]=(S.qResp[q.id]||[]).filter(r=>r.id!==b.dataset.rdel);toast("Submission deleted");render()}catch(e){toast("Could not delete this submission")}})});
+  const clr=$("#qClear");if(clr)clr.addEventListener("click",async()=>{const ph=clr.dataset.ph,L=(S.qResp[q.id]||[]).filter(r=>rPhase(r)===ph);
+    if(!confirm("Delete all "+L.length+" "+qphLabel(ph).toLowerCase()+" answers for “"+q.title+"”? This cannot be undone."))return;
+    let n=0;for(const r of L){try{await S.db.doc("quizzes/"+q.id+"/responses/"+r.id).delete();n++}catch(e){}}
+    S.qResp[q.id]=(S.qResp[q.id]||[]).filter(r=>!(rPhase(r)===ph&&L.includes(r)));toast(n+" answers deleted");render()});
+  const b=$("#qPush");if(!b)return;
+  b.addEventListener("click",async()=>{const c=S.cohorts[q.smeId];if(!c)return;const POST=qBest(q,"post"),best={};POST.rows.forEach(x=>{if(x.p)best[x.p.id]=x.r});
+    let key=q.quizKey;const n=Object.keys(best).length;
+    upd(q.smeId,cc=>{cc.quizModules=cc.quizModules||[];if(!key||!cc.quizModules.some(m=>m.key===key)){let i=1;while(cc.quizModules.some(m=>m.key==="q"+i))i++;key="q"+i;cc.quizModules.push({key,module:q.title,date:new Date().toISOString().slice(0,10)})}
+      cc.participants.forEach(p=>{if(best[p.id]){p.quiz=p.quiz||{};p.quiz[key]=Math.round((best[p.id].pct||0)*1000)/1000}})},"Quiz “"+q.title+"”: "+n+" post-quiz scores saved from QR quiz");
+    await saveQuiz({...q,quizKey:key,savedAt:new Date().toISOString()},n+" post-quiz scores saved to "+(c.name||q.smeId)+" → Quizzes");render()});
+}
+
+/* ---- participant page (phone) ---- */
+const TK_COLORS=["#2563eb","#f97316","#16a34a","#a855f7","#e11d48","#0891b2"];
+function tkRing(p,size,stroke,col){const r=(size-stroke)/2,C=2*Math.PI*r;return '<svg class="tkring" viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'"><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="'+stroke+'"/><circle class="arc" cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="'+stroke+'" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+C.toFixed(1)+'" data-to="'+(C*(1-p)).toFixed(1)+'" transform="rotate(-90 '+size/2+' '+size/2+')"/></svg>'}
+function tkBand(p){return p>=.9?{t:"Outstanding!",s:"You nailed it. Expert level.",m:"gold",c:"#f5b301"}:p>=.75?{t:"Great job!",s:"Strong understanding — well done.",m:"silver",c:"#22c55e"}:p>=.5?{t:"Good effort!",s:"You’re on the right track. Keep going!",m:"bronze",c:"#f97316"}:{t:"Keep learning!",s:"Every expert started here. You’ve got this.",m:"start",c:"#60a5fa"}}
+function tkMedal(m){const col={gold:["#fde047","#f59e0b"],silver:["#e5e7eb","#9ca3af"],bronze:["#fdba74","#c2410c"],start:["#bfdbfe","#3b82f6"]}[m];
+  return '<svg class="tkmedal" viewBox="0 0 64 80" width="56" height="70" aria-hidden="true"><path d="M18 2h12l6 26H24z" fill="#ef4444"/><path d="M34 2h12l-6 26H28z" fill="#2563eb"/><circle cx="32" cy="50" r="24" fill="'+col[1]+'"/><circle cx="32" cy="50" r="18" fill="'+col[0]+'"/><path d="M32 38l3.5 7.5 8 .9-6 5.5 1.7 8L32 56l-7.2 3.9 1.7-8-6-5.5 8-.9z" fill="'+col[1]+'"/></svg>'}
+function takerView(){
+  const q=S.quizzes[S.taker],tk=S.tk,ph=q?(q.phase||"post"):"post";
+  const shell=(inner,cls)=>'<div class="tk '+(cls||"")+'"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(q?(S.cohorts[q.smeId]||{}).name||q.smeName||q.smeId:"Quiz")+'</small></div>'+(q?'<span class="tkphase '+ph+'">'+qphLabel(ph)+'</span>':'')+'</div>'+inner+'</div>';
+  if(!S.db)return shell('<div class="tkcard"><h2>Quiz unavailable</h2><p>Check your internet connection and open the link again.</p></div>');
+  if(!S.quizLoaded)return shell('<div class="tkcard center"><span class="spin"></span> Loading quiz…</div>');
+  if(!q)return shell('<div class="tkcard center"><h2>Quiz not found</h2><p>Check the QR code with your trainer.</p></div>');
+  if(tk.done)return shell(tkResult(q,tk,ph),"done");
+  if(q.status!=="open")return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><p>'+(q.status==="closed"?"This quiz is closed. Thank you!":"Not open yet — wait for your trainer, then tap Refresh.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>');
+  const c=S.cohorts[q.smeId],ps=(c&&c.participants||[]).slice().sort((a,b)=>a.name.localeCompare(b.name)),Qs=q.questions||[];
+  if(!tk.name)return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><div class="tkfacts"><span><b>'+Qs.length+'</b> questions</span><span><b>~'+Math.max(1,Math.round(Qs.length*.5))+'</b> min</span><span><b>'+(ph==="pre"?"Baseline":"Final")+'</b> score</span></div>'+
+    '<p class="tkintro">'+(ph==="pre"?"Let’s see what you already know. No pressure — this is your starting point.":"Show what you’ve learned! This score is recorded for your SME assessment.")+'</p></div>'+
+    '<div class="tkcard"><div class="field"><label for="tk-n">Your name</label><select id="tk-n"><option value="">Select your name…</option>'+ps.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("")+'<option value="__other">My name is not listed</option></select></div>'+
+    '<div id="tk-other" hidden><div class="field"><label for="tk-on">Full name</label><input id="tk-on" type="text"></div><div class="field"><label for="tk-os">Staff number</label><input id="tk-os" type="text" inputmode="numeric"></div></div>'+
+    '<div class="err" id="tkerr"></div><button class="btn primary big" id="tkStart">Start '+qphLabel(ph).toLowerCase()+' →</button></div>');
+  const Qo=tk.order.map(i=>Qs[i]),i=Math.min(tk.cur||0,Qo.length-1),x=Qo[i],done=Object.keys(tk.ans).length;
+  return shell('<div class="tkbar"><span class="eyebrow">'+esc(tk.name)+'</span><span class="num">'+done+' / '+Qo.length+' answered</span></div><div class="tksteps">'+Qo.map((y,j)=>'<i class="'+(j===i?"cur ":"")+(tk.ans[y.id]!=null?"ok":"")+'" data-tkgo="'+j+'"></i>').join("")+'</div>'+
+    '<div class="tkcard tkq" style="--qc:'+TK_COLORS[i%TK_COLORS.length]+'"><b class="tkqn">Question '+(i+1)+' of '+Qo.length+'</b><p class="tkqt">'+esc(x.text)+'</p>'+x.options.map((o,j)=>'<button class="tkopt'+(tk.ans[x.id]===j?" on":"")+'" data-tka="'+esc(x.id)+'|'+j+'" style="--oc:'+TK_COLORS[j%TK_COLORS.length]+'"><span>'+String.fromCharCode(65+j)+'</span>'+esc(o)+'</button>').join("")+'</div>'+
+    '<div class="tknav"><button class="btn big" id="tkPrev"'+(i===0?" disabled":"")+'>← Back</button>'+(i<Qo.length-1?'<button class="btn primary big" id="tkNext">Next →</button>':'<button class="btn primary big" id="tkSubmit">Submit answers ✓</button>')+'</div><div class="err" id="tkerr2"></div>');
+}
+function tkResult(q,tk,ph){
+  if(q.showScore===false)return '<div class="tkhero center"><div class="tkok">✓</div><h1>Thank you, '+esc(tk.name.split(" ")[0])+'!</h1><p>Your '+qphLabel(ph).toLowerCase()+' answers have been '+(tk.saved?"saved":"recorded on this phone only")+'.</p></div>'+(tk.saved?'':tkNotSaved(tk));
+  const p=tk.max?tk.score/tk.max:0,b=tkBand(p),Qs=q.questions||[],nOk=Qs.filter(x=>tk.ans[x.id]===x.answer).length,wrong=Qs.length-nOk;
+  let h='<div class="tkhero center res" style="--bc:'+b.c+'">'+(p>=.75?'<div class="confetti" aria-hidden="true">'+Array.from({length:28},(_,k)=>'<i style="--x:'+(Math.random()*100).toFixed(0)+'%;--d:'+(Math.random()*1.5).toFixed(2)+'s;--c:'+TK_COLORS[k%6]+';--r:'+(Math.random()*360|0)+'deg"></i>').join("")+'</div>':'')+
+    '<div class="tkscorewrap">'+tkRing(p,190,16,b.c)+'<div class="tkscoretxt"><b class="num" data-count="'+Math.round(p*100)+'">0</b><span>%</span></div></div>'+
+    '<h1>'+b.t+'</h1><p>'+esc(tk.name.split(" ")[0])+', '+b.s.charAt(0).toLowerCase()+b.s.slice(1)+'</p>'+tkMedal(b.m)+'</div>';
+  h+='<div class="tktiles"><div style="--k:#16a34a"><b class="num">'+nOk+'</b><span>Correct</span></div><div style="--k:#e11d48"><b class="num">'+wrong+'</b><span>Wrong</span></div><div style="--k:#2563eb"><b class="num">'+fmtSecs(tk.secs)+'</b><span>Time</span></div></div>';
+  if(ph==="post"&&tk.prePct!=null){const d=p-tk.prePct;h+='<div class="tkcard tkgain"><span class="eyebrow">Your progress</span><div class="gainrow"><div><b class="num">'+pctTxt(tk.prePct)+'</b><span>Pre-quiz</span></div><span class="arrow">→</span><div><b class="num">'+pctTxt(p)+'</b><span>Post-quiz</span></div><div class="delta '+(d>=0?"up":"down")+'"><b class="num">'+(d>=0?"+":"")+Math.round(d*100)+'</b><span>points</span></div></div><div class="cb"><i class="pre" style="width:'+tk.prePct*100+'%"></i><i class="post" style="width:'+p*100+'%"></i></div></div>'}
+  if(ph==="post")h+='<div class="tkcard"><span class="eyebrow">Answer review</span>'+tk.order.map((ix,j)=>{const x=Qs[ix],a=tk.ans[x.id],ok=a===x.answer;return '<div class="tkrev '+(ok?"ok":"no")+'"><i>'+(ok?"✓":"✗")+'</i><div><b>'+(j+1)+'. '+esc(x.text)+'</b>'+(ok?'':'<small>'+(a==null?"Not answered":"Your answer: "+esc(x.options[a]))+'</small>')+'<small class="right">Correct: '+esc(x.options[x.answer])+'</small></div></div>'}).join("")+'</div>';
+  else h+='<div class="tkcard center"><p>This was your <b>pre-quiz</b> — your starting point. The correct answers will be revealed after the post-quiz. Enjoy the session!</p></div>';
+  return h+(tk.saved?'':tkNotSaved(tk));
+}
+const tkNotSaved=tk=>'<div class="notice" style="text-align:left">Your answers could not be sent. Show this screen to your trainer. Code: <b>'+esc(tk.code)+'</b></div>';
+function tkAnimate(){const a=document.querySelector(".tkring .arc");if(a)requestAnimationFrame(()=>requestAnimationFrame(()=>{a.style.strokeDashoffset=a.dataset.to}));
+  const n=document.querySelector("[data-count]");if(n&&!n.dataset.done){n.dataset.done=1;const to=+n.dataset.count,t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1200);n.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}}
+function bindTaker(){
+  const q=S.quizzes[S.taker],tk=S.tk;if(!q)return;const ph=q.phase||"post";
+  if(tk.done){tkAnimate();return}
+  const sel=$("#tk-n");if(sel)sel.addEventListener("change",()=>{$("#tk-other").hidden=sel.value!=="__other"});
+  const st=$("#tkStart");if(st)st.addEventListener("click",()=>{const v=sel.value,c=S.cohorts[q.smeId];
+    if(!v){$("#tkerr").textContent="Choose your name.";return}
+    if(v==="__other"){const n=$("#tk-on").value.trim();if(n.length<3){$("#tkerr").textContent="Type your full name.";return}tk.name=n;tk.staffId=$("#tk-os").value.trim();tk.pid=null}
+    else{const p=c.participants.find(x=>x.id===v);tk.name=p.name;tk.staffId=p.staffId||"";tk.pid=p.id}
+    tk.ans={};tk.cur=0;tk.t0=Date.now();tk.order=(q.questions||[]).map((_,i)=>i);if(q.shuffle)tk.order.sort(()=>Math.random()-.5);render();window.scrollTo(0,0)});
+  const go=j=>{tk.cur=j;render();window.scrollTo(0,0)};
+  document.querySelectorAll("[data-tka]").forEach(b=>b.addEventListener("click",()=>{const [id,j]=b.dataset.tka.split("|");tk.ans[id]=+j;render();
+    const n=(q.questions||[]).length;if(tk.cur<n-1)setTimeout(()=>{if(!tk.done&&tk.ans[id]===+j)go(tk.cur+1)},380)}));
+  document.querySelectorAll("[data-tkgo]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.tkgo)));
+  const pv=$("#tkPrev");if(pv)pv.addEventListener("click",()=>go(Math.max(0,tk.cur-1)));
+  const nx=$("#tkNext");if(nx)nx.addEventListener("click",()=>go(tk.cur+1));
+  const sb=$("#tkSubmit");if(sb)sb.addEventListener("click",async()=>{const Qs=q.questions||[],miss=Qs.filter(x=>tk.ans[x.id]==null).length;
+    if(miss&&!tk.warned){tk.warned=true;$("#tkerr2").textContent=plural(miss,"question is","questions are")+" not answered (grey dots above). Tap Submit again to send anyway.";return}
+    sb.disabled=true;sb.textContent="Sending…";
+    const max=Qs.reduce((a,x)=>a+(x.points||1),0),score=Qs.reduce((a,x)=>a+(tk.ans[x.id]===x.answer?(x.points||1):0),0),secs=Math.round((Date.now()-(tk.t0||Date.now()))/1000);
+    const rid="r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    const resp={name:tk.name,staffId:tk.staffId,pid:tk.pid,answers:tk.ans,score,max,pct:max?score/max:0,phase:ph,secs,submittedAt:new Date().toISOString()};
+    let saved=false;try{await S.db.doc("quizzes/"+q.id+"/responses/"+rid).set(resp);saved=true}catch(e){}
+    const pk="ga-pre-"+q.id+"-"+(tk.pid||String(tk.name).toLowerCase().replace(/[^a-z]/g,""));let prePct=null;
+    try{if(ph==="pre")localStorage.setItem(pk,String(resp.pct));else{const v=localStorage.getItem(pk);if(v!=null)prePct=+v}}catch(e){}
+    Object.assign(tk,{done:true,saved,score,max,secs,prePct,code:rid.slice(-6).toUpperCase()+"-"+score+"/"+max});render();window.scrollTo(0,0)});
 }
 
 /* ---------- STAFF DIRECTORY (lookup only, no menu tab) ---------- */
