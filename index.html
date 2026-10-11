@@ -911,6 +911,8 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .beltp.gb,:root:not([data-theme="light"]) .beltsel.gb{background:#14532d;color:#bbf7d0;border-color:#166534}:root:not([data-theme="light"]) .beltp.bb,:root:not([data-theme="light"]) .beltsel.bb{background:#000;border-color:#4b5563}}
 :root[data-theme="dark"] .beltp.gb,:root[data-theme="dark"] .beltsel.gb{background:#14532d;color:#bbf7d0;border-color:#166534}
 .note.warn{background:#fef3c7;color:#92400e;padding:10px 12px;border-radius:10px;font-size:13px}
+.beltman{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-4px 0 12px}
+.beltwarn small{display:block;margin-top:4px;font-weight:400}
 
 </style>
 
@@ -1005,9 +1007,11 @@ const assetsApi={
 const downloadsApi={save:async({filename,data})=>{const blob=data instanceof Blob?data:new Blob([data]);const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}};
 let aiM=null;
 const sampleApi={json:async(prompt)=>{
-  try{if(!aiM){const AI=await import(G+"firebase-ai.js");const ai=AI.getAI(app,{backend:new AI.GoogleAIBackend()});aiM=AI.getGenerativeModel(ai,{model:cfg.aiModel||"gemini-2.5-flash",generationConfig:{responseMimeType:"application/json",temperature:0.3}})}
-    const r=await aiM.generateContent(prompt);const t=r.response.text().trim().replace(/^```(?:json)?\s*/,"").replace(/```$/,"");return JSON.parse(t)}
-  catch(e){aiM=null;const m=String(e&&e.message||e);console.warn("AI",m);throw{code:/not.?enabled|has not been used|disabled|SERVICE_DISABLED|api-not-enabled|PERMISSION_DENIED|403/i.test(m)?"not_enabled":/429|quota|RESOURCE_EXHAUSTED/i.test(m)?"rate_limited":"failed",message:m}}}};
+  const models=[cfg.aiModel||"gemini-2.5-flash","gemini-flash-latest","gemini-2.0-flash"];let r=null,last=null;
+  try{const AI=await import(G+"firebase-ai.js");const ai=AI.getAI(app,{backend:new AI.GoogleAIBackend()});
+    for(const m of (aiM?[aiM]:models)){try{const gm=AI.getGenerativeModel(ai,{model:m,generationConfig:{responseMimeType:"application/json",temperature:0.3}});r=await gm.generateContent(prompt);aiM=m;break}catch(e){last=e;if(!/not.?found|404|not supported/i.test(String(e&&e.message||e)))throw e}}
+    if(!r)throw last;const t=r.response.text().trim().replace(/^```(?:json)?\s*/,"").replace(/```$/,"");return JSON.parse(t)}
+  catch(e){aiM=null;const m=String(e&&e.message||e);console.warn("AI",m);throw{code:/AI Logic|firebasevertexai|not.?enabled|has not been used|disabled|SERVICE_DISABLED|api-not-enabled|PERMISSION_DENIED|403/i.test(m)?"not_enabled":/429|quota|RESOURCE_EXHAUSTED/i.test(m)?"rate_limited":"failed",message:m}}}};
 const api={use:n=>n==="sample"?((FB.role==="admin"||FB.role==="editor")?sampleApi:null):n==="db"?dbApi:n==="downloads"?downloadsApi:n==="assets"?((FB.role==="admin"||FB.role==="editor")?assetsApi:null):null};
 let done=false;
 async function finish(u){
@@ -3836,7 +3840,7 @@ function beltView(){
     '<div class="field"><label for="beltPct">Black Belt share</label><select id="beltPct">'+[5,10,15,20,25].map(v=>'<option value="'+v+'"'+(v===beltPct(c)?" selected":"")+'>Top '+v+'% · '+plural(Math.max(1,Math.round(n*v/100)),"person","people")+'</option>').join("")+'</select></div>'+
     '<div class="acts"><button class="btn primary" id="beltAI"'+(S.beltBusy||!n?" disabled":"")+'>'+(S.beltBusy?'<span class="spin"></span> AI is reviewing…':'✦ '+(cfg.ai?"Re-run AI review":"Evaluate with AI"))+'</button>'+
     '<button class="btn" id="beltAcc"'+(n?"":" disabled")+'>Use suggestions as final</button><button class="btn ghost" id="beltX">'+I.down+' Excel</button></div></div>';
-  h+='<div class="err" id="beltErr">'+esc(S.beltErr||"")+'</div>';
+  h+=(S.beltErr?'<div class="note warn beltwarn"><span><b>'+esc(S.beltErr)+'</b>'+(S.beltErrDetail?'<small>Technical detail: '+esc(S.beltErrDetail)+'</small>':'')+'<small>Or use any AI chat (Claude, Gemini, ChatGPT): press <b>Copy AI prompt</b>, paste it in the chat, copy the JSON answer and press <b>Paste AI result</b>.</small></span></div>':'')+'<div class="beltman"><span class="hint">No AI in the portal?</span><button class="btn sm ghost" id="beltCopy">Copy AI prompt</button><button class="btn sm ghost" id="beltPaste">Paste AI result</button></div>';
   if(!st.project||!st.skill)h+='<div class="note warn">'+I.lock+' <span><b>Assessment not complete.</b> '+(!st.project?"Project ":"")+(!st.project&&!st.skill?"and ":"")+(!st.skill?"Trainer ":"")+'marks are not in yet, so the ranking may change. Best to select belts after the final assessment.</span></div>';
   h+='<div class="kpis">'+kpiH("Participants",n,"",done+" completed (≥ "+passMark(c)+"%)","--s5",NAV[1][3])+
     kpiH("Black Belt quota",q,"","Top "+beltPct(c)+"% of participants","--ink",beltIco)+
@@ -3879,7 +3883,11 @@ async function beltRunAI(){
   if(!sample){S.beltErr=window.FB?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again. The score-based suggestion below still works.":"AI is not available in this view.";safeRender();return}
   S.beltBusy=true;S.beltErr="";safeRender();
   try{
-    const j=await sample.json(beltPrompt(c,rows),{modelTier:"default"});
+    const j=await sample.json(beltPrompt(c,rows),{modelTier:"default"});beltApply(c,rows,j);
+  }catch(e){S.beltErrDetail=e&&e.message?String(e.message).slice(0,300):"";S.beltErr=e&&e.code==="not_granted"?"Permission for the AI was declined.":e&&e.code==="rate_limited"?"Too many AI requests. Try again in a minute.":e&&e.code==="not_enabled"?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again.":"The AI review did not work this time. Try again; the score-based suggestion still works."}
+  S.beltBusy=false;safeRender();
+}
+function beltApply(c,rows,j){{
     const by={};rows.forEach(x=>by[x.code]=x);const items={};
     (j&&j.items||[]).forEach(it=>{const x=by[String(it.code||"").trim().toUpperCase()];if(!x)return;let b=String(it.belt||"").toLowerCase();b=b.startsWith("black")?"black":b.startsWith("green")?"green":"none";if(!x.pass&&b!=="none")b="none";
       items[x.p.id]={belt:b,summary:String(it.summary||"").slice(0,700),strengths:(it.strengths||[]).slice(0,3).map(s=>String(s).slice(0,160)),gaps:(it.gaps||[]).slice(0,2).map(s=>String(s).slice(0,160))}});
@@ -3888,10 +3896,11 @@ async function beltRunAI(){
     const q=beltQuota(c,rows.length),bl=rows.filter(x=>items[x.p.id]&&items[x.p.id].belt==="black");bl.slice(q).forEach(x=>items[x.p.id].belt="green");
     rows.forEach(x=>{if(!items[x.p.id])items[x.p.id]={belt:x.rule,summary:"",strengths:[],gaps:[]}});
     const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:{at:new Date().toISOString(),summary:String(j.summary||"").slice(0,2000),items}});
-    queueSave(cc,"AI belt review for "+(c.name||c.id));toast("AI review done — check the suggestions, then choose the final belts");
-  }catch(e){S.beltErr=e&&e.code==="not_granted"?"Permission for the AI was declined.":e&&e.code==="rate_limited"?"Too many AI requests. Try again in a minute.":e&&e.code==="not_enabled"?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again.":"The AI review did not work this time. Try again; the score-based suggestion still works."}
-  S.beltBusy=false;safeRender();
-}
+    S.beltErr="";S.beltErrDetail="";queueSave(cc,"AI belt review for "+(c.name||c.id));toast("AI review done — check the suggestions, then choose the final belts");
+}}
+function beltPasteModal(c){openModal(mhead("Paste AI result","Paste the JSON answer from the AI chat")+'<div class="mb"><div class="field"><textarea id="bp-t" rows="12" style="width:100%;font-family:ui-monospace,monospace;font-size:12px" placeholder="{&quot;summary&quot;: &quot;…&quot;, &quot;items&quot;: [ … ]}"></textarea></div><div class="err" id="bp-e"></div><div class="mfoot"><button class="btn primary" id="bp-ok">Use this result</button></div></div>');
+  $("#bp-ok").addEventListener("click",()=>{let t=$("#bp-t").value.trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");const a=t.indexOf("{"),b=t.lastIndexOf("}");if(a>=0&&b>a)t=t.slice(a,b+1);
+    try{beltApply(c,beltRows(c),JSON.parse(t));closeModal();safeRender()}catch(e){$("#bp-e").textContent="This is not a valid AI result. Copy the whole JSON answer (starting with { and ending with })."}})}
 async function beltExport(c){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
   const rows=beltRows(c),P=v=>v==null?"":Math.round(v*1000)/10;
   const A=[["Rank","Name","Staff number","Station","Final score","Attendance %","Quiz %","Trainer %","Project %","Suggested by score","AI suggestion","AI executive summary","Strengths","To develop","Final belt"]].concat(rows.map(x=>[x.rank,x.p.name,x.p.staffId||"",x.p.station||"",Math.round(x.total*10)/10,P(x.att),P(x.quiz),P(x.trainer),P(x.project),BELTS[x.rule].label,x.ai?BELTS[x.ai.belt].label:"",x.ai?x.ai.summary:"",x.ai?(x.ai.strengths||[]).join("; "):"",x.ai?(x.ai.gaps||[]).join("; "):"",x.final?BELTS[x.final].label:""]));
@@ -3904,6 +3913,8 @@ function bindBelt(){
   if(!c)return;
   const pc=$("#beltPct");if(pc)pc.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{pct:+pc.value});queueSave(cc,"Black Belt share set to "+pc.value+"%");safeRender()});
   const ai=$("#beltAI");if(ai)ai.addEventListener("click",beltRunAI);
+  const cp=$("#beltCopy");if(cp)cp.addEventListener("click",async()=>{const t=beltPrompt(c,beltRows(c));try{await Promise.race([navigator.clipboard.writeText(t),new Promise((_,no)=>setTimeout(()=>no(new Error("t")),1500))]);toast("Prompt copied — paste it into the AI chat")}catch(e){openModal(mhead("Copy AI prompt","Select all and copy")+'<div class="mb"><textarea rows="14" style="width:100%;font-size:12px" readonly>'+esc(t)+'</textarea></div>')}});
+  const ps=$("#beltPaste");if(ps)ps.addEventListener("click",()=>beltPasteModal(c));
   const x=$("#beltX");if(x)x.addEventListener("click",()=>beltExport(c));
   const acc=$("#beltAcc");if(acc)acc.addEventListener("click",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{};beltRows(c).forEach(r=>{if(r.saved!==r.sug)d[r.p.id]=r.sug;else delete d[r.p.id]});safeRender();toast("Suggestions copied — press Save final selection to keep them")});
   document.querySelectorAll("[data-beltf]").forEach(s=>s.addEventListener("change",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{},id=s.dataset.beltf,sv=(beltCfg(c).final||{})[id]||"";if(s.value===sv)delete d[id];else d[id]=s.value;safeRender()}));
