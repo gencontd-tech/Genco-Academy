@@ -863,6 +863,54 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 .fbrec button.on{border-color:var(--s4);background:color-mix(in srgb,var(--s4) 12%,var(--surface))}
 .tk textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;margin-top:6px}
 .fbsec{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 12px;color:var(--s4);font-weight:700}
+/* feedback templates / question editor */
+.tplnow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--surface-2,var(--surface))}
+.tplnow>span{flex:1;min-width:200px;font-size:13px}
+.tqed .tqpart{border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px;background:var(--surface)}
+.tqph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.tqph input[type=text]{flex:1;min-width:180px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:inherit;font-weight:600;background:var(--surface);color:var(--ink)}
+.tqph .chk{white-space:nowrap;font-size:13px}
+.tqno{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--s3);color:#fff;font-weight:700;font-size:13px;flex:none}
+.tqitems{display:flex;flex-direction:column;gap:6px}
+.tqi{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto;gap:6px;align-items:start}
+.tqi .num{padding-top:9px;color:var(--muted);font-size:13px;text-align:right}
+.tqi textarea{width:100%;min-width:0;resize:none;overflow:hidden;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:inherit;line-height:1.4;background:var(--surface);color:var(--ink)}
+.tqed .field input[type=text],.tqed .field textarea{width:100%}
+.tpllist{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.tplrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.tplrow .grow{flex:1;min-width:200px}
+.tplrow small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+@media (max-width:600px){.tqi{grid-template-columns:22px minmax(0,1fr) auto}.tqi [data-imv]{display:none}}
+/* belt selection */
+.banner.beltb{background:linear-gradient(115deg,#0b0f19 0%,#1f2937 55%,#15803d 100%)}
+.beltbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:0 0 12px}
+.beltbar .field{margin:0;min-width:200px}
+.beltbar .field select{width:100%}
+.beltbar .acts{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.beltp{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+.beltp i{width:14px;height:6px;border-radius:2px;display:inline-block}
+.beltp.bb{background:#111827;color:#fff}.beltp.bb i{background:#fff}
+.beltp.gb{background:#dcfce7;color:#166534;border-color:#86efac}.beltp.gb i{background:#16a34a}
+.beltp.nb{background:var(--surface-2,#f1f5f9);color:var(--muted);border-color:var(--line)}
+.beltp.sm{font-size:11.5px;padding:3px 8px}
+.beltexec{font-size:14.5px;line-height:1.6;margin:4px 0 12px}
+.beltlegend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin-bottom:8px}
+.belttbl td{vertical-align:top}
+.belttbl td small{display:block;margin-top:2px}
+.belttbl .mbar{height:4px;border-radius:2px;background:var(--line);margin-top:4px;min-width:50px}
+.belttbl .mbar i{display:block;height:100%;border-radius:2px}
+.belttbl tr.isbb td:first-child{box-shadow:inset 4px 0 0 #111827}
+.beltsel{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:13px;background:var(--surface);color:var(--ink)}
+.beltsel.bb{background:#111827;color:#fff;border-color:#111827}
+.beltsel.gb{background:#dcfce7;color:#166534;border-color:#86efac}
+.beltdet td{background:var(--surface-2,#f8fafc)}
+.beltdet p{margin:2px 0 8px;line-height:1.55;max-width:900px}
+.beltsg{display:flex;flex-wrap:wrap;gap:8px 32px;font-size:13px}
+.beltsg ul{margin:4px 0 8px;padding-left:18px}
+.note.warn{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .beltp.gb,:root:not([data-theme="light"]) .beltsel.gb{background:#14532d;color:#bbf7d0;border-color:#166534}:root:not([data-theme="light"]) .beltp.bb,:root:not([data-theme="light"]) .beltsel.bb{background:#000;border-color:#4b5563}}
+:root[data-theme="dark"] .beltp.gb,:root[data-theme="dark"] .beltsel.gb{background:#14532d;color:#bbf7d0;border-color:#166534}
+.note.warn{background:#fef3c7;color:#92400e;padding:10px 12px;border-radius:10px;font-size:13px}
 
 </style>
 
@@ -892,7 +940,8 @@ window.__fbCfg={
   messagingSenderId:"558697729945",
   appId:"1:558697729945:web:be8325666b3d139b000d08",
   measurementId:"G-Y3DMSQ1V3F",
-  ownerEmail:"genco.ntd@gmail.com"
+  ownerEmail:"genco.ntd@gmail.com",
+  aiModel:"gemini-2.5-flash"
 };
 (function(){var res;window.__fbReady=new Promise(function(r){res=r});window.__fbResolve=res;
   window.claude={use:function(n){return window.__fbReady.then(function(fb){return fb.use(n)})}};
@@ -954,7 +1003,12 @@ const assetsApi={
   list:async()=>({assets:[],usage:{}})
 };
 const downloadsApi={save:async({filename,data})=>{const blob=data instanceof Blob?data:new Blob([data]);const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}};
-const api={use:n=>n==="db"?dbApi:n==="downloads"?downloadsApi:n==="assets"?((FB.role==="admin"||FB.role==="editor")?assetsApi:null):null};
+let aiM=null;
+const sampleApi={json:async(prompt)=>{
+  try{if(!aiM){const AI=await import(G+"firebase-ai.js");const ai=AI.getAI(app,{backend:new AI.GoogleAIBackend()});aiM=AI.getGenerativeModel(ai,{model:cfg.aiModel||"gemini-2.5-flash",generationConfig:{responseMimeType:"application/json",temperature:0.3}})}
+    const r=await aiM.generateContent(prompt);const t=r.response.text().trim().replace(/^```(?:json)?\s*/,"").replace(/```$/,"");return JSON.parse(t)}
+  catch(e){aiM=null;const m=String(e&&e.message||e);console.warn("AI",m);throw{code:/not.?enabled|has not been used|disabled|SERVICE_DISABLED|api-not-enabled|PERMISSION_DENIED|403/i.test(m)?"not_enabled":/429|quota|RESOURCE_EXHAUSTED/i.test(m)?"rate_limited":"failed",message:m}}}};
+const api={use:n=>n==="sample"?((FB.role==="admin"||FB.role==="editor")?sampleApi:null):n==="db"?dbApi:n==="downloads"?downloadsApi:n==="assets"?((FB.role==="admin"||FB.role==="editor")?assetsApi:null):null};
 let done=false;
 async function finish(u){
   FB.user=u;FB.anon=!u||u.isAnonymous;
@@ -1562,6 +1616,7 @@ function renderInner(){
   if(S.current==="__quiz"){app.innerHTML=quizView();const qq=S.qView&&S.quizzes[S.qView.id];if(qq&&S.admin){if(S.qView.mode==="run")bindQuizRun(qq);else bindQuizResult(qq)}return}
   if(S.current==="__att"){app.innerHTML=attView();bindAttAdmin();return}
   if(S.current==="__fb"){app.innerHTML=fbView();bindFbAdmin();return}
+  if(S.current==="__belt"){app.innerHTML=beltView();bindBelt();return}
   if(S.current==="__history"){app.innerHTML=historyView();bindHistory();return}
   if(S.current==="__people"){app.innerHTML=peopleDirView();bindPeopleDir();return}
   if(!S.current||!S.cohorts[S.current]){app.innerHTML=homeView();return}
@@ -1583,7 +1638,7 @@ function renderSide(){
   const side=$("#side"),list=ids(),c=S.cohorts[S.current];
   let h='<button class="sbrand" data-home><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><span><b>Genco Academy</b><small>Assessment Portal</small></span></button>';
   h+='<nav class="snav"><button class="sitem'+(!S.current?" on":"")+'" data-home><span class="ico" style="--k:var(--ga)">'+navIco('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>')+'</span>Home</button><button class="sitem'+(S.current==="__history"?" on":"")+'" data-history><span class="ico" style="--k:var(--s3)">'+navIco('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>')+'</span>SME History'+(hBatches().length?'<span class="badge num">'+hBatches().length+'</span>':'')+'</button></nav>';
-  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__att"?" on":"")+'" data-attmenu><span class="ico" style="--k:var(--s3)">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+'</span>Attendance'+(Object.values(S.att||{}).some(a=>Object.keys(a.openUntil||{}).some(k=>extOpen(a,k)))?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__fb"?" on":"")+'" data-fbmenu><span class="ico" style="--k:var(--s4)">'+navIco('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>')+'</span>Forum feedback</button></nav>';
+  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__att"?" on":"")+'" data-attmenu><span class="ico" style="--k:var(--s3)">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+'</span>Attendance'+(Object.values(S.att||{}).some(a=>Object.keys(a.openUntil||{}).some(k=>extOpen(a,k)))?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__fb"?" on":"")+'" data-fbmenu><span class="ico" style="--k:var(--s4)">'+navIco('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>')+'</span>Forum feedback</button><button class="sitem'+(S.current==="__belt"?" on":"")+'" data-beltmenu><span class="ico" style="--k:var(--ink)">'+navIco(beltIco)+'</span>Belt selection</button></nav>';
   h+='<div class="slabel">SME programme <span class="num">'+list.length+'</span></div><div class="ssel"><span class="dot" style="background:var('+(S.cohorts[S.current]?SME_COL(S.current):"--nav-ink-2")+')"></span><select id="sideSme" aria-label="Choose SME"><option value="">Select SME…</option>'+PROGS.map(pg=>{const L=list.filter(id=>progOf(S.cohorts[id])===pg[0]);return L.length?'<optgroup label="'+esc(pg[1])+'">'+L.map(id=>'<option value="'+esc(id)+'"'+(S.current===id?" selected":"")+'>'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</optgroup>':''}).join("")+'</select></div>';
   h+='<nav class="snav"><button class="sadd" data-act="newcohort">'+I.plus+' Add SME</button></nav>';
   if(c){
@@ -1597,7 +1652,7 @@ function renderSide(){
 }
 function renderTop(){
   const c=S.cohorts[S.current],tl=(NAV.find(n=>n[0]===S.tab)||NAV[0])[1];
-  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__att"?'<span>/</span><b>Attendance</b>':S.current==="__fb"?'<span>/</span><b>Forum feedback</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
+  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__att"?'<span>/</span><b>Attendance</b>':S.current==="__fb"?'<span>/</span><b>Forum feedback</b>':S.current==="__belt"?'<span>/</span><b>Belt selection</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
 }
 
 /* ---------- HOME ---------- */
@@ -2615,7 +2670,7 @@ function can(page){
   const g=(S.portal&&S.portal.guest)||"all";
   if(g==="none")return false;if(g==="home")return page==="home";return true;
 }
-function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"||S.current==="__att"||S.current==="__fb"?"quiz":"sme"}
+function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"||S.current==="__att"||S.current==="__fb"||S.current==="__belt"?"quiz":"sme"}
 function gate_orig(){ // returns html when the page must not render, else null
   if(S.db&&!S.usersLoaded)return '<div class="empty" style="margin-top:40px"><span class="spin"></span><b>Loading portal…</b></div>';
   const pg=pageOf();
@@ -2657,7 +2712,7 @@ function postSide(side){
   if(!can("history"))side.querySelectorAll("[data-history]").forEach(e=>e.remove());
   if(!can("people"))side.querySelectorAll("[data-people]").forEach(e=>e.remove());
   if(!can("sme")){side.querySelectorAll(".ssel").forEach(e=>{const l=e.previousElementSibling;if(l&&l.classList.contains("slabel"))l.remove();e.remove()})}
-  if(!S.admin)side.querySelectorAll(".sadd,[data-quizmenu],[data-attmenu],[data-fbmenu]").forEach(e=>e.remove());
+  if(!S.admin)side.querySelectorAll(".sadd,[data-quizmenu],[data-attmenu],[data-fbmenu],[data-beltmenu]").forEach(e=>e.remove());
   if(!S.me&&(S.portal.guest==="none"))side.querySelectorAll(".snav,.slabel,.ssel").forEach(e=>e.remove());
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-settings],[data-settab]");if(!t)return;
@@ -3357,8 +3412,14 @@ const FB_TEMPLATES={
     {id:"p3",title:"Overall",items:["Overall, I am very satisfied with the session."]}],
     rec:null,comment:"Any comment or suggestion?"}
 };
-const fbItems=f=>{const T=f.tpl||FB_TEMPLATES[f.template||"ntd"],tr=(f.trainers||[]).filter(Boolean),out=[];
-  T.parts.forEach(p=>{if(p.perTrainer)(tr.length?tr:["Trainer"]).forEach((t,ti)=>p.items.forEach((q,i)=>out.push({k:p.id+"_"+i+"_t"+ti,part:p.id,ptitle:p.title,q,trainer:t,ti})));else p.items.forEach((q,i)=>out.push({k:p.id+"_"+i,part:p.id,ptitle:p.title,q}))});return out};
+const fbItems=f=>{const T=tplOf(f),tr=(f.trainers||[]).filter(Boolean),out=[];
+  T.parts.forEach(p=>{const its=(p.items||[]).map(itN);if(p.perTrainer)(tr.length?tr:["Trainer"]).forEach((t,ti)=>its.forEach(x=>out.push({k:p.id+"_"+x.k+"_t"+ti,ik:x.k,part:p.id,ptitle:p.title,q:x.q,trainer:t,ti})));else its.forEach(x=>out.push({k:p.id+"_"+x.k,ik:x.k,part:p.id,ptitle:p.title,q:x.q}))});return out};
+const itN=(q,i)=>typeof q==="string"?{k:String(i),q}:q;
+S.fbTplList=[];
+function tplAll(){const m={};Object.entries(FB_TEMPLATES).forEach(([k,t])=>m[k]={...clone(t),id:k,builtin:true});(S.fbTplList||[]).forEach(t=>{m[t.id]={...clone(t),builtin:!!FB_TEMPLATES[t.id],custom:true}});Object.values(m).forEach(t=>t.desc=tplDesc(t));return m}
+function tplDesc(t){const q=(t.parts||[]).reduce((a,p)=>a+(p.items||[]).length,0),tp=(t.parts||[]).some(p=>p.perTrainer);return q+" rating question"+(q===1?"":"s")+" · "+(t.parts||[]).length+" section"+((t.parts||[]).length===1?"":"s")+(tp?" · trainer rating":"")+(t.rec?" · recommendation":"")+" · comment"}
+const tplOf=f=>f.tpl||tplAll()[f.template||"ntd"]||FB_TEMPLATES.ntd;
+async function saveTplList(L){try{await S.db.doc("config/fbtemplates").set({list:clone(L),updatedAt:new Date().toISOString()});S.fbTplList=L;return true}catch(e){toast("Could not save the templates");return false}}
 const extCol=t=>t==="att"?"attendance":"feedback";
 const extStore=t=>t==="att"?S.att:S.fbk;
 const extLink=(t,id,slot)=>quizBase().replace(/#.*$/,"")+"#"+t+"-"+id+(slot&&t==="att"?"."+slot:"");
@@ -3368,11 +3429,12 @@ const fmtTime=ms=>new Date(ms).toLocaleTimeString("en-GB",{hour:"2-digit",minute
 const localISO=d=>{d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const extId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 function subscribeExt(){if(!S.db)return;
-  S.db.collection("attendance").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.att=m;S.attLoaded=true;if(S.current==="__att"||S.ext)safeRender()},()=>{S.attLoaded=true});
+  S.db.collection("attendance").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.att=m;S.attLoaded=true;if(S.admin)Object.values(m).forEach(a=>{if(S.cohorts[a.smeId]&&(a.days||[]).some(d=>d.sess)){watchExt("att",a.id);attSyncSoon(a.id)}});if(S.current==="__att"||S.ext)safeRender()},()=>{S.attLoaded=true});
   S.db.collection("feedback").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.fbk=m;S.fbkLoaded=true;if(S.current==="__fb"||S.ext)safeRender()},()=>{S.fbkLoaded=true});
+  S.db.doc("config/fbtemplates").onSnapshot(d=>{S.fbTplList=d.exists?(d.data().list||[]):[];if(S.current==="__fb")safeRender()},()=>{});
   S.db.doc("config/trainers").onSnapshot(d=>{S.trainers=d.exists?(d.data().names||[]):[];if(S.current==="__fb")safeRender()},()=>{});
 }
-function watchExt(t,id){const p=extCol(t)+"/"+id+"/responses";if(!S.db||S.extSub[p])return;S.extSub[p]=S.db.collection(p).onSnapshot(sn=>{S.extResp[p]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(S.current==="__att"||S.current==="__fb")safeRender()},()=>{})}
+function watchExt(t,id){const p=extCol(t)+"/"+id+"/responses";if(!S.db||S.extSub[p])return;S.extSub[p]=S.db.collection(p).onSnapshot(sn=>{S.extResp[p]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(t==="att")attSyncSoon(id);if(S.current==="__att"||S.current==="__fb")safeRender()},()=>{})}
 const extResp=(t,id)=>S.extResp[extCol(t)+"/"+id+"/responses"]||[];
 async function extSave(t,d,msg){d=clone(d);d.updatedAt=new Date().toISOString();d.updatedBy=S.me?S.me.username:"";const c=S.cohorts[d.smeId];
   if(c){d.smeName=c.name||d.smeId;d.roster=(c.participants||[]).filter(p=>!/withdraw/i.test(p.remark||"")).map(p=>({id:p.id,name:p.name}))}else{delete d.roster;delete d.smeName}
@@ -3384,6 +3446,12 @@ const leftTxt=ms=>{const s=Math.max(0,Math.round((ms-Date.now())/60000));return 
 function whoSelect(sel){return '<select id="ev-s"><option value=""'+(!sel?" selected":"")+'>Open to anyone (type name, staff no., department)</option><optgroup label="Participants of an SME">'+ids().map(i=>'<option value="'+esc(i)+'"'+(i===sel?" selected":"")+'>'+esc(S.cohorts[i].name||i)+'</option>').join("")+'</optgroup></select>'}
 
 /* ---------------- ATTENDANCE: admin ---------------- */
+// Check-ins are copied to the SME attendance (P) automatically while an Editor/Admin has the portal open.
+function attSyncSoon(id){clearTimeout(attSyncSoon["t"+id]);attSyncSoon["t"+id]=setTimeout(()=>attSync(S.att[id]),1500)}
+function attSync(a){if(!S.admin||!a||!S.db)return 0;const c=S.cohorts[a.smeId];if(!c)return 0;const R=extResp("att",a.id),keys=new Set((c.sessions||[]).map(s=>s.key)),todo=[];
+  (a.days||[]).forEach(d=>{if(!d.sess||!keys.has(d.sess))return;R.forEach(r=>{if(r.slot!=="d"+d.n||!r.pid)return;const p=(c.participants||[]).find(x=>x.id===r.pid);if(p&&(p.att||{})[d.sess]!=="P")todo.push([p.id,d.sess])})});
+  if(!todo.length)return 0;const cc=clone(c);todo.forEach(([pid,k])=>{const p=cc.participants.find(x=>x.id===pid);if(p){p.att=p.att||{};p.att[k]="P"}});
+  queueSave(cc,"QR check-in “"+a.title+"”: "+plural(todo.length,"participant","participants")+" marked present");if(S.current===a.smeId)safeRender();return todo.length}
 function attView(){
   if(!S.admin)return loginGate("Sign in as an Editor or Admin to manage attendance.");
   const v=S.extView&&S.extView.t==="att"&&S.att[S.extView.id];if(v)return S.extView.mode==="run"?attRunView(v):attDash(v);
@@ -3397,7 +3465,8 @@ function attView(){
       '<div class="qacts"><button class="btn sm" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-attdash="'+esc(a.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
 }
 function attEditor(id){
-  const a=id?clone(S.att[id]):{id:"a"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",location:"",days:[{n:1,label:"Day 1",date:localISO(),sess:""}],validity:{mode:"day",hours:2},openUntil:{}};
+  const a=id?clone(S.att[id]):{id:"a"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",location:"",days:[{n:1,label:"Day 1",date:localISO(),sess:"__new"}],validity:{mode:"day",hours:2},openUntil:{},v:2};
+  if(a.v!==2&&S.cohorts[a.smeId])a.days.forEach(d=>{if(!d.sess)d.sess="__new"});a.v=2;
   S.ex.att=a;drawAttEditor();
 }
 function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions||[]):[];
@@ -3405,17 +3474,23 @@ function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions|
     '<div class="field"><label for="ea-t">Course / forum title</label><input id="ea-t" type="text" value="'+esc(a.title)+'" placeholder="e.g. Critical Thinking & Problem Solving"></div>'+
     '<div class="field"><label for="ea-l">Location</label><input id="ea-l" type="text" value="'+esc(a.location||"")+'" placeholder="e.g. TNB MITC, Bangi"></div>'+
     '<div class="field"><label for="ev-s">Who checks in</label>'+whoSelect(a.smeId)+'</div></div>'+
-    '<div class="field"><label>Days</label><div class="dayrows">'+a.days.map((d,i)=>'<div class="dayrow"><b>Day '+d.n+'</b><input type="text" data-dl="'+i+'" value="'+esc(d.label)+'" aria-label="Label"><input type="date" data-dd="'+i+'" value="'+esc(d.date||"")+'" aria-label="Date">'+(c?'<select data-ds="'+i+'" aria-label="Save to SME attendance session"><option value="">Don’t save to SME</option>'+ss.map(s=>'<option value="'+s.key+'"'+(s.key===d.sess?" selected":"")+'>'+esc(s.module)+(s.date?" · "+esc(fmtD(s.date)):"")+'</option>').join("")+'</select>':'')+(a.days.length>1?'<button class="btn sm icon ghost" data-ddel="'+i+'" aria-label="Remove day">'+I.x+'</button>':'')+'</div>').join("")+'</div>'+
-    '<button class="more" id="eaAdd">'+I.plus+' Add day</button>'+(c?'<span class="hint">Pick the SME attendance session for each day so check-ins can be saved to the SME.</span>':'')+'</div>'+
+    '<div class="field"><label>Days</label><div class="dayrows">'+a.days.map((d,i)=>'<div class="dayrow"><b>Day '+d.n+'</b><input type="text" data-dl="'+i+'" value="'+esc(d.label)+'" aria-label="Label"><input type="date" data-dd="'+i+'" value="'+esc(d.date||"")+'" aria-label="Date">'+(c?'<select data-ds="'+i+'" aria-label="Save to SME attendance session"><option value="__new"'+(d.sess==="__new"?" selected":"")+'>✓ Save to SME · new session</option>'+(ss.length?'<optgroup label="Save to an existing SME session">'+ss.map(s=>'<option value="'+s.key+'"'+(s.key===d.sess?" selected":"")+'>'+esc(s.module)+(s.date?" · "+esc(fmtD(s.date)):"")+'</option>').join("")+'</optgroup>':'')+'<option value=""'+(!d.sess?" selected":"")+'>Don’t save to SME</option></select>':'')+(a.days.length>1?'<button class="btn sm icon ghost" data-ddel="'+i+'" aria-label="Remove day">'+I.x+'</button>':'')+'</div>').join("")+'</div>'+
+    '<button class="more" id="eaAdd">'+I.plus+' Add day</button>'+(c?'<span class="hint">Check-ins go straight into the SME’s Attendance tab (marked Present). “New session” adds a column for that day; or pick a session the SME already has.</span>':'')+'</div>'+
     validityHtml(a.validity)+'<div class="err" id="eaerr"></div><div class="mfoot"><button class="btn primary" id="eaSave">Save</button>'+(S.att[a.id]?'<span style="flex:1"></span><button class="btn danger" id="eaDel">'+I.trash+' Delete</button>':'')+'</div></div>';
   openModal(h);$(".modal").classList.add("wide");
   const read=()=>{a.title=$("#ea-t").value.trim();a.location=$("#ea-l").value.trim();a.smeId=$("#ev-s").value;a.validity=readValidity();
     document.querySelectorAll("[data-dl]").forEach(e=>a.days[+e.dataset.dl].label=e.value.trim()||"Day "+a.days[+e.dataset.dl].n);document.querySelectorAll("[data-dd]").forEach(e=>a.days[+e.dataset.dd].date=e.value);document.querySelectorAll("[data-ds]").forEach(e=>a.days[+e.dataset.ds].sess=e.value)};
-  $("#ev-s").addEventListener("change",()=>{read();a.days.forEach(d=>d.sess="");drawAttEditor()});
-  $("#eaAdd").addEventListener("click",()=>{read();const last=a.days[a.days.length-1],n=Math.max(...a.days.map(d=>d.n))+1;let dt="";if(last.date){const x=new Date(last.date+"T00:00:00");x.setDate(x.getDate()+1);dt=localISO(x)}a.days.push({n,label:"Day "+n,date:dt,sess:""});drawAttEditor()});
+  $("#ev-s").addEventListener("change",()=>{read();a.days.forEach(d=>d.sess="__new");drawAttEditor()});
+  $("#eaAdd").addEventListener("click",()=>{read();const last=a.days[a.days.length-1],n=Math.max(...a.days.map(d=>d.n))+1;let dt="";if(last.date){const x=new Date(last.date+"T00:00:00");x.setDate(x.getDate()+1);dt=localISO(x)}a.days.push({n,label:"Day "+n,date:dt,sess:S.cohorts[a.smeId]?"__new":""});drawAttEditor()});
   document.querySelectorAll("[data-ddel]").forEach(b=>b.addEventListener("click",()=>{read();a.days.splice(+b.dataset.ddel,1);drawAttEditor()}));
   $("#eaSave").addEventListener("click",async()=>{read();if(!a.title){$("#eaerr").textContent="Give it a title.";return}if(a.days.some(d=>!d.date)){$("#eaerr").textContent="Every day needs a date.";return}
-    if(await extSave("att",a,"Attendance saved")){closeModal();render()}});
+    const cc0=S.cohorts[a.smeId];
+    if(!cc0)a.days.forEach(d=>{if(d.sess==="__new")d.sess=""});
+    else if(a.days.some(d=>d.sess==="__new")){const cc=clone(cc0);cc.sessions=cc.sessions||[];const made=[];
+      a.days.forEach(d=>{if(d.sess!=="__new")return;const mod=a.title+(a.days.length>1?" – "+d.label:"");let hit=cc.sessions.find(x=>x.module===mod&&(x.date||"")===d.date);
+        if(!hit){let n=1;while(cc.sessions.some(x=>x.key==="a"+n))n++;hit={key:"a"+n,module:mod,date:d.date};cc.sessions.push(hit);made.push(mod)}d.sess=hit.key});
+      if(made.length)queueSave(cc,"Added attendance "+(made.length>1?"sessions":"session")+" “"+made.join("”, “")+"”")}
+    if(await extSave("att",a,"Attendance saved")){closeModal();watchExt("att",a.id);attSyncSoon(a.id);render()}});
   const del=$("#eaDel");if(del){let armed=false;del.addEventListener("click",async()=>{if(!armed){armed=true;del.textContent="Click again to delete";return}try{await S.db.doc("attendance/"+a.id).delete();delete S.att[a.id];closeModal();toast("Deleted");render()}catch(e){toast("Could not delete")}})}
 }
 function attRunView(a){
@@ -3440,7 +3515,8 @@ function attDash(a){
   const P=Object.values(people).sort((x,y)=>x.name.localeCompare(y.name)),N=c?(c.participants||[]).length:P.length;
   const per=days.map(d=>R.filter(r=>r.slot==="d"+d.n).length),uniq=new Set(R.map(r=>r.key||r.name)).size,rate=N&&days.length?avgOf(per.map(x=>x/N)):null;
   let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All attendance</button><span style="flex:1"></span><button class="btn" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button></div>';
-  h+='<section class="banner attb"><div class="grow"><span class="bk">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1><div class="meta"><span>'+plural(days.length,"day","days")+'</span><span>'+esc(days.length?fmtDay(days[0].date)+(days.length>1?" – "+fmtDay(days[days.length-1].date):""):"")+'</span></div></div><div class="acts"><button class="btn onban" id="attExport">'+I.down+' Export to Excel</button>'+(c&&days.some(d=>d.sess)?'<button class="btn onban solid" id="attPush">Save to '+esc(c.name||a.smeId)+' attendance</button>':'')+'</div></section>';
+  h+='<section class="banner attb"><div class="grow"><span class="bk">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1><div class="meta"><span>'+plural(days.length,"day","days")+'</span><span>'+esc(days.length?fmtDay(days[0].date)+(days.length>1?" – "+fmtDay(days[days.length-1].date):""):"")+'</span></div></div><div class="acts"><button class="btn onban" id="attExport">'+I.down+' Export to Excel</button>'+(c&&days.some(d=>d.sess)?'<button class="btn onban solid" id="attPush">Mark absentees in '+esc(c.name||a.smeId)+'</button>':'')+'</div></section>';
+  if(c)h+='<div class="notice">'+(days.some(d=>d.sess)?'✓ Linked to <b>'+esc(c.name||a.smeId)+'</b>: check-ins are saved to its Attendance tab automatically (Present). '+esc(days.filter(d=>!d.sess).map(d=>d.label).join(", ")?"Not linked: "+days.filter(d=>!d.sess).map(d=>d.label).join(", ")+".":""):'Not linked to the SME attendance. Edit this attendance and choose “Save to SME” for each day.')+'</div>';
   h+='<div class="kpis">'+kpiH("Days",days.length,"",a.location||"","--s1",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>')+kpiH("People checked in",uniq,c?"/"+N:"","At least one day","--s5",NAV[1][3],N?uniq/N:null)+kpiH("Check-ins",R.length,"","All days","--s3",'<path d="M9 11l3 3 8-8"/>')+kpiH("Average attendance",rate==null?"–":Math.round(rate*100),rate==null?"":"%",c?"Per day, of "+N+" participants":"Needs an SME roster","--good",'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',rate)+'</div>';
   h+=panel("attDays",{title:"Check-ins per day",tag:"Attendance",tagColor:"--s3",sub:c?"Bars show checked in out of "+N:"Number of people who checked in",opts:[["col","Column"],["bar","Bar"]],render:t=>{const it=days.map((d,i)=>({label:d.label,value:per[i],text:per[i]+(c?"/"+N:""),color:c&&N?rateColor(per[i]/N):"--s3",tip:d.label+" · "+fmtDay(d.date)+": "+per[i]}));return t==="bar"?hbars(it,{max:c?N:undefined}):columns(it,{max:c?N:undefined})}});
   h+='<section class="panel"><div class="ph"><div class="t"><h3>Who came each day</h3><p>✓ with check-in time · blank = not checked in</p></div></div><div class="tblwrap"><table><thead><tr><th>#</th><th>Name</th><th>'+(c?"Station":"Department")+'</th>'+days.map(d=>'<th class="r">'+esc(d.label)+'<br><small class="hint">'+esc(fmtDay(d.date).replace(/^\w+, /,""))+'</small></th>').join("")+'<th class="r">Days</th></tr></thead><tbody>'+
@@ -3462,7 +3538,7 @@ function bindAttAdmin(){
   }else{
     const ex=$("#attExport");if(ex)ex.addEventListener("click",()=>attExport(a));
     const pu=$("#attPush");if(pu)pu.addEventListener("click",async()=>{const c=S.cohorts[a.smeId],R=extResp("att",a.id);let n=0;
-      if(!confirm("Mark checked-in participants as Present and the others as Absent for the mapped days in "+(c.name||a.smeId)+"?"))return;
+      if(!confirm("Check-ins are already saved as Present. Mark everyone who did NOT check in as Absent for these days in "+(c.name||a.smeId)+"? (Do this after the course day ends.)"))return;
       upd(a.smeId,cc=>{(a.days||[]).filter(d=>d.sess).forEach(d=>{const ins=new Set(R.filter(r=>r.slot==="d"+d.n&&r.pid).map(r=>r.pid));cc.participants.forEach(p=>{p.att=p.att||{};p.att[d.sess]=ins.has(p.id)?"P":(p.att[d.sess]==="R"?"R":"A");if(ins.has(p.id))n++})})},"Attendance “"+a.title+"” saved from QR check-in");
       toast(n+" check-ins saved to "+(c.name||a.smeId))});
   }
@@ -3474,18 +3550,18 @@ function fbView(){
   const v=S.extView&&S.extView.t==="fb"&&S.fbk[S.extView.id];if(v)return S.extView.mode==="run"?fbRunView(v):fbDash(v);
   const L=Object.values(S.fbk).sort((a,b)=>String(b.date||b.updatedAt||"").localeCompare(String(a.date||a.updatedAt||"")));
   L.forEach(f=>watchExt("fb",f.id));
-  let h='<section class="banner fbb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Forum feedback</h1><div class="meta"><span>'+plural(L.length,"forum","forums")+'</span><span>Feedback form per subject, scanned by QR</span></div></div><div class="acts"><button class="btn onban" id="fbTrainers">Trainers ('+S.trainers.length+')</button><button class="btn onban solid" data-fbnew>'+I.plus+' New feedback form</button></div></section>';
+  let h='<section class="banner fbb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Forum feedback</h1><div class="meta"><span>'+plural(L.length,"forum","forums")+'</span><span>Feedback form per subject, scanned by QR</span></div></div><div class="acts"><button class="btn onban" id="fbTpls">Templates ('+Object.keys(tplAll()).length+')</button><button class="btn onban" id="fbTrainers">Trainers ('+S.trainers.length+')</button><button class="btn onban solid" data-fbnew>'+I.plus+' New feedback form</button></div></section>';
   if(!S.fbkLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
   if(!L.length)return h+'<div class="empty"><b>No feedback forms yet</b>Create one for each subject or forum. Pick a template, the module and up to two trainers.<div class="acts"><button class="btn primary" data-fbnew>'+I.plus+' New feedback form</button></div></div>';
   // overview dashboard
   const stat=L.map(f=>({f,...fbStats(f)})),all=stat.filter(s=>s.n),tot=stat.reduce((x,s)=>x+s.n,0),ov=avgOf(all.map(s=>s.overall));
   const tr={};all.forEach(s=>s.trainers.forEach(t=>{(tr[t.name]=tr[t.name]||{name:t.name,v:[],forums:0,n:0});tr[t.name].v.push(t.avg);tr[t.name].forums++;tr[t.name].n+=s.n}));const TR=Object.values(tr).map(t=>({...t,avg:avgOf(t.v)})).sort((x,y)=>y.avg-x.avg);
   h+='<div class="kpis">'+kpiH("Forums",L.length,"",all.length+" with responses","--s1",'<path d="M4 5h16v11H8l-4 4z"/>')+kpiH("Responses",tot,"","All forums","--s5",NAV[1][3])+kpiH("Overall satisfaction",ov==null?"–":(ov*100).toFixed(0),ov==null?"":"%","Average of all rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',ov)+kpiH("Trainers rated",TR.length,"",TR[0]?"Top: "+TR[0].name:"","--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+'</div>';
-  if(all.length)h+='<div class="g2">'+panel("fbForums",{title:"Satisfaction by forum",tag:"Forums",tagColor:"--s1",sub:"Average of all rating items (3 = Agree). Click to open.",opts:[["bar","Bar"]],render:()=>hbars(all.slice().sort((x,y)=>y.overall-x.overall).map(s=>({label:s.f.title,sub:(s.f.date?fmtDay(s.f.date)+" · ":"")+s.n+" responses",value:s.overall,max:1,text:(s.overall*3).toFixed(2)+" / 3",color:rateColor(s.overall),act:'data-fbdash="'+esc(s.f.id)+'"'})),{max:1})})+
-    panel("fbTrainerBoard",{title:"Trainer ratings",tag:"Trainers",tagColor:"--s3",sub:"Average of Part 2 (Trainer) across all forums",opts:[["bar","Bar"]],render:()=>TR.length?hbars(TR.map(t=>({label:t.name,sub:plural(t.forums,"forum","forums")+" · "+t.n+" responses",value:t.avg,max:1,text:(t.avg*3).toFixed(2)+" / 3",color:rateColor(t.avg)})),{max:1}):emptyChart("No trainer ratings yet.")})+'</div>';
+  if(all.length)h+='<div class="g2">'+panel("fbForums",{title:"Satisfaction by forum",tag:"Forums",tagColor:"--s1",sub:"Average of all rating items (3 = Agree). Click to open.",opts:[["bar","Bar"]],render:()=>hbars(all.slice().sort((x,y)=>y.overall-x.overall).map(s=>({label:s.f.title,sub:(s.f.date?fmtDay(s.f.date)+" · ":"")+s.n+" responses",value:s.overall,max:1,text:(1+s.overall*2).toFixed(2)+" / 3",color:rateColor(s.overall),act:'data-fbdash="'+esc(s.f.id)+'"'})),{max:1})})+
+    panel("fbTrainerBoard",{title:"Trainer ratings",tag:"Trainers",tagColor:"--s3",sub:"Average of Part 2 (Trainer) across all forums",opts:[["bar","Bar"]],render:()=>TR.length?hbars(TR.map(t=>({label:t.name,sub:plural(t.forums,"forum","forums")+" · "+t.n+" responses",value:t.avg,max:1,text:(1+t.avg*2).toFixed(2)+" / 3",color:rateColor(t.avg)})),{max:1}):emptyChart("No trainer ratings yet.")})+'</div>';
   h+='<div class="sechead"><div><h2>Feedback forms</h2></div></div><div class="qcards">'+stat.map(s=>{const f=s.f,c=S.cohorts[f.smeId],open=extOpen(f,"fb");
     return '<div class="qcard" style="--k:var('+(c?SME_COL(f.smeId):"--s3")+')"><div class="top">'+(open?'<span class="pill good">Open</span>':'<span class="pill none">Closed</span>')+'<span class="hint">'+esc(c?c.name||f.smeId:"Open to anyone")+'</span></div><b class="qt">'+esc(f.title)+'</b><span class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).filter(Boolean).join(" & ")].filter(Boolean).join(" · "))+'</span>'+
-      (s.n?'<div class="fbmini"><b class="num">'+(s.overall*3).toFixed(2)+'</b><span>/ 3 · '+s.n+' responses</span><div class="meter"><i style="width:'+s.overall*100+'%"></i></div></div>':'<span class="hint">No responses yet</span>')+
+      (s.n?'<div class="fbmini"><b class="num">'+(1+s.overall*2).toFixed(2)+'</b><span>/ 3 · '+s.n+' responses</span><div class="meter"><i style="width:'+s.overall*100+'%"></i></div></div>':'<span class="hint">No responses yet</span>')+
       '<div class="qacts"><button class="btn sm" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-fbdash="'+esc(f.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
   return h;
 }
@@ -3494,17 +3570,20 @@ function fbStats(f){const R=extResp("fb",f.id),items=fbItems(f),avgK=k=>avgOf(R.
   const norm=v=>v==null?null:(v-1)/2; // 1..3 → 0..1
   const vals=it.filter(x=>x.avg!=null);const overall=vals.length?avgOf(vals.map(x=>norm(x.avg))):null;
   const partAvg=p=>{const v=it.filter(x=>x.part===p&&x.avg!=null);return v.length?avgOf(v.map(x=>norm(x.avg))):null};
+  const T=tplOf(f),parts=(T.parts||[]).map(p=>({id:p.id,title:p.title,short:String(p.title||"").replace(/^part\s*\d+\s*[:.\-–]\s*/i,""),perTrainer:!!p.perTrainer,avg:p.perTrainer?(()=>{const v=it.filter(x=>x.part===p.id&&x.avg!=null);return v.length?avgOf(v.map(x=>norm(x.avg))):null})():partAvg(p.id)}));
   const trainers=(f.trainers||[]).filter(Boolean).map((t,ti)=>{const v=it.filter(x=>x.ti===ti&&x.avg!=null);return{name:t,avg:v.length?avgOf(v.map(x=>norm(x.avg))):null}}).filter(t=>t.avg!=null);
   const rec={};R.forEach(r=>{if(r.rec)rec[r.rec]=(rec[r.rec]||0)+1});
-  return{R,n:R.length,items:it,overall,p1:partAvg("p1"),p2:partAvg("p2"),p3:partAvg("p3"),trainers,rec,comments:R.filter(r=>r.comment&&r.comment.trim())}}
+  return{R,n:R.length,items:it,overall,parts,trainers,rec,comments:R.filter(r=>r.comment&&r.comment.trim())}}
 function fbEditor(id){
   const f=id?clone(S.fbk[id]):{id:"f"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",module:"",date:localISO(),location:"",trainers:["",""],template:"ntd",validity:{mode:"day",hours:2},openUntil:{}};
-  f.trainers=(f.trainers||[]).concat(["",""]).slice(0,2);S.ex.fb=f;drawFbEditor();
+  f.trainers=(f.trainers||[]).concat(["",""]).slice(0,2);if(!f.tpl)f.tpl=clone(tplAll()[f.template]||FB_TEMPLATES.ntd);S.ex.fb=f;drawFbEditor();
 }
 function drawFbEditor(){const f=S.ex.fb,c=S.cohorts[f.smeId];
   const mods=c?[...new Map([].concat((c.trainerTopics||[]).map(t=>[t.module,t.trainer||""]),(c.sessions||[]).map(s=>[s.module,""]),(c.quizModules||[]).map(s=>[s.module,""])).filter(x=>x[0]).map(x=>[x[0],x])).values()]:[];
   let h=mhead(S.fbk[f.id]?"Edit feedback form":"New feedback form","Pick a template, the forum and its trainers")+'<div class="mb">'+
-    '<div class="field"><label>Template</label><div class="tplpick">'+Object.entries(FB_TEMPLATES).map(([k,t])=>'<label class="rp" style="--k:var(--s3)"><input type="radio" name="ef-tp" value="'+k+'"'+(f.template===k?" checked":"")+'><span><b>'+esc(t.name)+'</b><small>'+esc(t.desc)+'</small></span></label>').join("")+'</div></div>'+
+    '<div class="field"><label>Template</label><div class="tplpick">'+Object.entries(tplAll()).map(([k,t])=>'<label class="rp" style="--k:var(--s3)"><input type="radio" name="ef-tp" value="'+esc(k)+'"'+(f.template===k?" checked":"")+'><span><b>'+esc(t.name)+'</b><small>'+esc(t.desc)+'</small></span></label>').join("")+'</div>'+
+      '<div class="tplnow"><span><b>Questions in this form:</b> '+esc(tplDesc(f.tpl))+(f.tplEdited?' <span class="pill warn">edited for this form</span>':'')+'</span><button type="button" class="btn sm" id="efQ">'+I.edit+' Edit questions</button><button type="button" class="btn sm ghost" id="efTpls">Manage templates</button></div>'+
+      (S.fbk[f.id]&&extResp("fb",f.id).length?'<span class="hint">This form already has '+plural(extResp("fb",f.id).length,"response","responses")+'. Changing a question’s wording keeps its answers; removed questions drop out of the dashboard.</span>':'')+'</div>'+
     '<div class="frow"><div class="field"><label for="ev-s">Who answers</label>'+whoSelect(f.smeId)+'</div>'+
     (c&&mods.length?'<div class="field"><label for="ef-m">Module (from '+esc(c.name||f.smeId)+')</label><select id="ef-m"><option value="">Choose a module…</option>'+mods.map(m=>'<option value="'+esc(m[0])+'"'+(m[0]===f.module?" selected":"")+'>'+esc(m[0])+'</option>').join("")+'</select></div>':'')+
     '<div class="field"><label for="ef-t">Forum / subject title</label><input id="ef-t" type="text" value="'+esc(f.title)+'" placeholder="e.g. Critical Thinking & Problem Solving using AI"></div></div>'+
@@ -3513,18 +3592,79 @@ function drawFbEditor(){const f=S.ex.fb,c=S.cohorts[f.smeId];
     '<datalist id="trlist">'+S.trainers.map(t=>'<option value="'+esc(t)+'">').join("")+'</datalist><span class="hint">With two trainers, participants rate each trainer separately (Part 2 appears twice).</span>'+
     validityHtml(f.validity)+'<div class="err" id="eferr"></div><div class="mfoot"><button class="btn primary" id="efSave">Save</button><button class="btn" id="efPrev">Preview form</button>'+(S.fbk[f.id]?'<span style="flex:1"></span><button class="btn danger" id="efDel">'+I.trash+' Delete</button>':'')+'</div></div>';
   openModal(h);$(".modal").classList.add("wide");
-  const read=()=>{f.template=(document.querySelector('input[name="ef-tp"]:checked')||{}).value||"ntd";f.smeId=$("#ev-s").value;f.title=$("#ef-t").value.trim();f.date=$("#ef-d").value;f.location=$("#ef-l").value.trim();f.trainers=[$("#ef-t1").value.trim(),$("#ef-t2").value.trim()];f.validity=readValidity();const m=$("#ef-m");if(m)f.module=m.value};
+  const read=()=>{const tp=(document.querySelector('input[name="ef-tp"]:checked')||{}).value||"ntd";if(tp!==f.template){f.template=tp;f.tpl=clone(tplAll()[tp]||FB_TEMPLATES.ntd);f.tplEdited=false}f.smeId=$("#ev-s").value;f.title=$("#ef-t").value.trim();f.date=$("#ef-d").value;f.location=$("#ef-l").value.trim();f.trainers=[$("#ef-t1").value.trim(),$("#ef-t2").value.trim()];f.validity=readValidity();const m=$("#ef-m");if(m)f.module=m.value};
   $("#ev-s").addEventListener("change",()=>{read();f.module="";drawFbEditor()});
   const m=$("#ef-m");if(m)m.addEventListener("change",()=>{read();const x=mods.find(z=>z[0]===m.value);if(x){f.title=x[0];if(x[1]&&!f.trainers[0])f.trainers[0]=x[1]}drawFbEditor()});
   $("#efPrev").addEventListener("click",()=>{read();fbPreview(f)});
+  document.querySelectorAll('input[name="ef-tp"]').forEach(r=>r.addEventListener("change",()=>{read();drawFbEditor()}));
+  $("#efQ").addEventListener("click",()=>{read();tplEditor(f.tpl,{title:"Questions for this form",sub:f.title||"Feedback form",asForm:true,done:T=>{if(T){f.tpl=T.tpl;f.tplEdited=true;if(T.saveAs){const L=(S.fbTplList||[]).slice(),nt={...clone(T.tpl),id:"t"+extId()};nt.name=T.saveAs;L.push(nt);saveTplList(L).then(ok=>{if(ok){f.template=nt.id;f.tplEdited=false;toast("Saved as template “"+nt.name+"”");drawFbEditor()}})}}drawFbEditor()}})});
+  $("#efTpls").addEventListener("click",()=>{read();tplManager(()=>drawFbEditor())});
   $("#efSave").addEventListener("click",async()=>{read();if(!f.title){$("#eferr").textContent="Give the forum a title.";return}if(!f.trainers[0]&&!f.trainers[1]){$("#eferr").textContent="Add at least one trainer.";return}
-    f.trainers=f.trainers.filter(Boolean);f.tpl=FB_TEMPLATES[f.template];
+    f.trainers=f.trainers.filter(Boolean);
     if(await extSave("fb",f,"Feedback form saved")){const nw=f.trainers.filter(t=>!S.trainers.includes(t));if(nw.length)saveTrainers(S.trainers.concat(nw));closeModal();render()}});
   const del=$("#efDel");if(del){let armed=false;del.addEventListener("click",async()=>{if(!armed){armed=true;del.textContent="Click again to delete";return}try{await S.db.doc("feedback/"+f.id).delete();delete S.fbk[f.id];closeModal();toast("Deleted");render()}catch(e){toast("Could not delete")}})}
 }
-function fbPreview(f){const items=fbItems({...f,trainers:f.trainers.filter(Boolean),tpl:FB_TEMPLATES[f.template]}),T=FB_TEMPLATES[f.template];let last="";
-  openModal(mhead("Preview",T.name)+'<div class="mb"><ol class="fbprev">'+items.map(x=>{const head=x.ptitle+(x.trainer?" — "+x.trainer:"");const s=head!==last?'<li class="h">'+esc(head)+'</li>':'';last=head;return s+'<li>'+esc(x.q)+'</li>'}).join("")+(T.rec?'<li class="h">Recommendation</li><li>'+esc(T.rec.q)+' ('+T.rec.options.join(" / ")+')</li>':'')+'<li class="h">Comment</li><li>'+esc(T.comment)+'</li></ol><div class="mfoot"><button class="btn" id="pvBack">Back to editing</button></div></div>');
+function fbPreview(f){const T=f.tpl,items=fbItems({...f,trainers:f.trainers.filter(Boolean),tpl:T});let last="";
+  openModal(mhead("Preview",T.name)+'<div class="mb"><ol class="fbprev">'+items.map(x=>{const head=x.ptitle+(x.trainer?" — "+x.trainer:"");const s=head!==last?'<li class="h">'+esc(head)+'</li>':'';last=head;return s+'<li>'+esc(x.q)+'</li>'}).join("")+(T.rec?'<li class="h">Recommendation</li><li>'+esc(T.rec.q)+' ('+T.rec.options.join(" / ")+')</li>':'')+'<li class="h">Comment'+(T.commentReq===false?" (optional)":"")+'</li><li>'+esc(T.comment)+'</li></ol><div class="mfoot"><button class="btn" id="pvBack">Back to editing</button></div></div>');
   $("#pvBack").addEventListener("click",drawFbEditor)}
+/* ---- question editor (form or template) ---- */
+const tplUid=p=>p+Date.now().toString(36).slice(-4)+Math.random().toString(36).slice(2,6);
+function tplNorm(T){T=clone(T);T.parts=(T.parts||[]).map(p=>({...p,items:(p.items||[]).map(itN)}));T.rec=T.rec||null;if(T.commentReq==null)T.commentReq=true;return T}
+function tplEditor(T0,o){const T=tplNorm(T0);S.ex.tq={T,o};drawTplEditor()}
+function drawTplEditor(){const {T,o}=S.ex.tq;let n=0;
+  const h=mhead(o.title,o.sub||"")+'<div class="mb tqed">'+
+    (o.asForm?'':'<div class="field"><label for="tq-n">Template name</label><input id="tq-n" type="text" value="'+esc(T.name||"")+'" placeholder="e.g. Technical forum feedback"></div>')+
+    '<p class="hint">Each statement is rated 1 Disagree · 2 Satisfactory · 3 Agree. Tick “Rate each trainer” on a section to repeat it for Trainer 1 and Trainer 2.</p>'+
+    T.parts.map((p,pi)=>'<div class="tqpart"><div class="tqph"><span class="tqno">'+(pi+1)+'</span><input type="text" data-pt="'+pi+'" value="'+esc(p.title)+'" placeholder="Section title, e.g. Part 1: Forum material" aria-label="Section title"><label class="chk"><input type="checkbox" data-pp="'+pi+'"'+(p.perTrainer?" checked":"")+'> Rate each trainer</label>'+
+      '<button type="button" class="btn sm icon ghost" data-pmv="'+pi+'|-1" aria-label="Move section up"'+(pi?"":" disabled")+'>↑</button><button type="button" class="btn sm icon ghost" data-pmv="'+pi+'|1" aria-label="Move section down"'+(pi<T.parts.length-1?"":" disabled")+'>↓</button><button type="button" class="btn sm icon ghost" data-pdel="'+pi+'" aria-label="Delete section">'+I.trash+'</button></div>'+
+      '<div class="tqitems">'+p.items.map((x,ii)=>'<div class="tqi"><span class="num">'+(++n)+'.</span><textarea rows="1" data-iq="'+pi+'|'+ii+'" placeholder="Type the statement…" aria-label="Question">'+esc(x.q)+'</textarea><button type="button" class="btn sm icon ghost" data-imv="'+pi+'|'+ii+'|-1" aria-label="Move up"'+(ii?"":" disabled")+'>↑</button><button type="button" class="btn sm icon ghost" data-imv="'+pi+'|'+ii+'|1" aria-label="Move down"'+(ii<p.items.length-1?"":" disabled")+'>↓</button><button type="button" class="btn sm icon ghost" data-idel="'+pi+'|'+ii+'" aria-label="Delete question">'+I.x+'</button></div>').join("")+'</div>'+
+      '<button type="button" class="more" data-iadd="'+pi+'">'+I.plus+' Add question</button></div>').join("")+
+    '<button type="button" class="btn" id="tqAddP">'+I.plus+' Add section</button>'+
+    '<div class="tqpart"><div class="tqph"><label class="chk"><input type="checkbox" id="tq-r"'+(T.rec?" checked":"")+'> <b>Recommendation question</b> (pick one group)</label></div>'+(T.rec?'<div class="field"><input id="tq-rq" type="text" value="'+esc(T.rec.q)+'" aria-label="Recommendation question"></div><div class="field"><label for="tq-ro">Choices (one per line)</label><textarea id="tq-ro" rows="4">'+esc((T.rec.options||[]).join("\n"))+'</textarea></div>':'')+'</div>'+
+    '<div class="tqpart"><div class="tqph"><b>Comment box</b><label class="chk"><input type="checkbox" id="tq-cr"'+(T.commentReq!==false?" checked":"")+'> Required</label></div><div class="field"><input id="tq-c" type="text" value="'+esc(T.comment||"")+'" aria-label="Comment prompt"></div></div>'+
+    (o.asForm?'<div class="field"><label class="chk"><input type="checkbox" id="tq-sa"> Also save these questions as a new template</label><input id="tq-san" type="text" placeholder="Template name" hidden></div>':'')+
+    '<div class="err" id="tqerr"></div><div class="mfoot"><button class="btn primary" id="tqSave">'+(o.asForm?"Use these questions":"Save template")+'</button><button class="btn" id="tqCancel">Cancel</button><span style="flex:1"></span><span class="hint">'+plural(n,"question","questions")+'</span></div></div>';
+  openModal(h);$(".modal").classList.add("wide");
+  document.querySelectorAll(".tqi textarea").forEach(t=>{const fit=()=>{t.style.height="auto";t.style.height=t.scrollHeight+"px"};fit();t.addEventListener("input",fit)});
+  const read=()=>{const nm=$("#tq-n");if(nm)T.name=nm.value.trim();
+    document.querySelectorAll("[data-pt]").forEach(e=>T.parts[+e.dataset.pt].title=e.value.trim());
+    document.querySelectorAll("[data-pp]").forEach(e=>T.parts[+e.dataset.pp].perTrainer=e.checked);
+    document.querySelectorAll("[data-iq]").forEach(e=>{const [a,b]=e.dataset.iq.split("|").map(Number);T.parts[a].items[b].q=e.value.trim()});
+    const rq=$("#tq-rq");if(rq&&T.rec){T.rec.q=rq.value.trim();T.rec.options=$("#tq-ro").value.split("\n").map(x=>x.trim()).filter(Boolean)}
+    T.comment=$("#tq-c").value.trim();T.commentReq=$("#tq-cr").checked};
+  const redraw=f=>e=>{read();f(e.currentTarget.dataset);drawTplEditor()};
+  document.querySelectorAll("[data-iadd]").forEach(b=>b.addEventListener("click",e=>{read();const p=T.parts[+b.dataset.iadd];p.items.push({k:tplUid("q"),q:""});drawTplEditor();const L=document.querySelectorAll('[data-iq^="'+b.dataset.iadd+'|"]');if(L.length)L[L.length-1].focus()}));
+  document.querySelectorAll("[data-idel]").forEach(b=>b.addEventListener("click",redraw(d=>{const [a,i]=d.idel.split("|").map(Number);T.parts[a].items.splice(i,1)})));
+  document.querySelectorAll("[data-imv]").forEach(b=>b.addEventListener("click",redraw(d=>{const [a,i,m]=d.imv.split("|").map(Number),L=T.parts[a].items;[L[i],L[i+m]]=[L[i+m],L[i]]})));
+  document.querySelectorAll("[data-pdel]").forEach(b=>b.addEventListener("click",redraw(d=>{const p=T.parts[+d.pdel];if(p.items.some(x=>x.q)&&!confirm("Delete the section “"+(p.title||"untitled")+"” and its "+p.items.length+" questions?"))return;T.parts.splice(+d.pdel,1)})));
+  document.querySelectorAll("[data-pmv]").forEach(b=>b.addEventListener("click",redraw(d=>{const [i,m]=d.pmv.split("|").map(Number),L=T.parts;[L[i],L[i+m]]=[L[i+m],L[i]]})));
+  $("#tqAddP").addEventListener("click",()=>{read();T.parts.push({id:tplUid("p"),title:"",items:[{k:tplUid("q"),q:""}]});drawTplEditor();const L=document.querySelectorAll("[data-pt]");L[L.length-1].focus()});
+  $("#tq-r").addEventListener("change",e=>{read();T.rec=e.target.checked?{q:"I will recommend this course to my co-workers / others. Which group should attend this course in the future?",options:["Non Exec","Exec 12-13","Exec 14-15","Exec 16-17"]}:null;drawTplEditor()});
+  const sa=$("#tq-sa");if(sa)sa.addEventListener("change",()=>{$("#tq-san").hidden=!sa.checked;if(sa.checked)$("#tq-san").focus()});
+  $("#tqCancel").addEventListener("click",()=>o.done(null));
+  $("#tqSave").addEventListener("click",()=>{read();const err=$("#tqerr");
+    T.parts.forEach(p=>p.items=p.items.filter(x=>x.q));T.parts=T.parts.filter(p=>p.items.length);
+    if(!o.asForm&&!T.name){err.textContent="Give the template a name.";return}
+    if(!T.parts.length){drawTplEditor();$("#tqerr").textContent="Add at least one question.";return}
+    T.parts.forEach((p,i)=>{if(!p.title)p.title="Section "+(i+1)});
+    if(T.rec&&T.rec.options.length<2){err.textContent="The recommendation question needs at least 2 choices.";return}
+    if(!T.comment)T.comment="Please leave your comment or suggestion.";
+    const out={tpl:clone(T)};delete out.tpl.builtin;delete out.tpl.custom;out.tpl.desc=tplDesc(out.tpl);
+    if(sa&&sa.checked){const nm=$("#tq-san").value.trim();if(!nm){err.textContent="Type a name for the new template.";return}out.saveAs=nm;out.tpl.name=nm}
+    o.done(out)});
+}
+function tplManager(back){const A=tplAll();
+  openModal(mhead("Feedback templates",Object.keys(A).length+" templates · pick one when you create a feedback form")+'<div class="mb"><div class="tpllist">'+Object.values(A).map(t=>'<div class="tplrow"><span class="grow"><b>'+esc(t.name)+'</b>'+(t.builtin?(t.custom?' <span class="pill warn">edited</span>':' <span class="pill none">built-in</span>'):'')+'<small>'+esc(t.desc)+'</small></span>'+
+      '<button class="btn sm" data-tqe="'+esc(t.id)+'">'+I.edit+' Edit</button><button class="btn sm ghost" data-tqc="'+esc(t.id)+'">Duplicate</button>'+(t.custom?'<button class="btn sm icon ghost" data-tqd="'+esc(t.id)+'" aria-label="'+(t.builtin?"Restore original":"Delete")+'" title="'+(t.builtin?"Restore original questions":"Delete template")+'">'+(t.builtin?"↺":I.trash)+'</button>':'')+'</div>').join("")+'</div>'+
+    '<div class="mfoot"><button class="btn primary" id="tqNew">'+I.plus+' New template</button>'+(back?'<button class="btn" id="tqBack">Back to the form</button>':'')+'</div></div>');
+  const again=()=>tplManager(back);
+  const put=async(t)=>{const L=(S.fbTplList||[]).filter(x=>x.id!==t.id);L.push(t);if(await saveTplList(L))toast("Template saved");again()};
+  $("#tqNew").addEventListener("click",()=>tplEditor({name:"",parts:[{id:"p1",title:"Part 1: Forum material / content",items:[{k:"q1",q:""}]},{id:"p2",title:"Part 2: Trainer",perTrainer:true,items:[{k:"q1",q:""}]}],rec:null,comment:"Please leave your comment or suggestion for any improvement.",commentReq:true},{title:"New template",done:r=>r?put({...r.tpl,id:"t"+extId()}):again()}));
+  document.querySelectorAll("[data-tqe]").forEach(b=>b.addEventListener("click",()=>{const t=A[b.dataset.tqe];tplEditor(t,{title:"Edit template",sub:t.builtin?"Your edits replace the built-in questions (you can restore them later). Forms already created keep their own questions.":"Forms already created keep their own questions.",done:r=>r?put({...r.tpl,id:t.id}):again()})}));
+  document.querySelectorAll("[data-tqc]").forEach(b=>b.addEventListener("click",()=>{const t=clone(A[b.dataset.tqc]);t.name=t.name+" (copy)";tplEditor(t,{title:"New template",done:r=>r?put({...r.tpl,id:"t"+extId()}):again()})}));
+  document.querySelectorAll("[data-tqd]").forEach(b=>b.addEventListener("click",async()=>{const t=A[b.dataset.tqd];if(!confirm(t.builtin?"Restore the original questions of “"+t.name+"”?":"Delete the template “"+t.name+"”? Forms already created are not affected."))return;if(await saveTplList((S.fbTplList||[]).filter(x=>x.id!==t.id))){toast(t.builtin?"Restored":"Template deleted");again()}}));
+  const bk=$("#tqBack");if(bk)bk.addEventListener("click",back);
+}
 async function saveTrainers(names){names=[...new Set(names.map(x=>String(x).trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));try{await S.db.doc("config/trainers").set({names,updatedAt:new Date().toISOString()});S.trainers=names;return true}catch(e){toast("Could not save the trainer list");return false}}
 function trainersModal(){
   openModal(mhead("Trainers",S.trainers.length+" names · used in feedback forms")+'<div class="mb"><div class="trlist">'+(S.trainers.length?S.trainers.map((t,i)=>'<div class="tr"><span>'+esc(t)+'</span><button class="btn sm icon ghost" data-trdel="'+i+'" aria-label="Remove">'+I.x+'</button></div>').join(""):'<span class="hint">No trainers yet.</span>')+'</div>'+
@@ -3538,36 +3678,36 @@ function fbRunView(f){
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||f.smeId:"Open to anyone")+(f.location?' · '+esc(f.location):'')+'</span><h1>'+esc(f.title)+'</h1><p class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).join(" & ")].filter(Boolean).join(" · "))+'</p>'+
     '<div class="qrtag fb">FEEDBACK</div><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div><div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" data-copy="'+esc(link)+'">Copy link</button></div>'+
     '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+esc(leftTxt(until))+'</span><button class="btn danger" id="fbClose">Close</button>':'<span class="pill none" style="font-size:14px;padding:4px 14px">'+(until?"Closed":"Not open")+'</span><button class="btn primary" id="fbOpen">Open feedback</button>')+'</div><p class="hint">One response per person, from one phone.</p></section>'+
-    '<section class="panel"><div class="ph"><div class="t"><h3>Responses</h3><p>Live</p></div></div><div class="livek"><div><b class="num">'+R.length+'</b><span>'+(c?"of "+n:"")+' responded</span></div><div><b class="num">'+(()=>{const s=fbStats(f);return s.overall==null?"–":(s.overall*3).toFixed(2)})()+'</b><span>avg / 3</span></div><div><b class="num">'+R.filter(r=>r.comment).length+'</b><span>comments</span></div></div>'+
+    '<section class="panel"><div class="ph"><div class="t"><h3>Responses</h3><p>Live</p></div></div><div class="livek"><div><b class="num">'+R.length+'</b><span>'+(c?"of "+n:"")+' responded</span></div><div><b class="num">'+(()=>{const s=fbStats(f);return s.overall==null?"–":(1+s.overall*2).toFixed(2)})()+'</b><span>avg / 3</span></div><div><b class="num">'+R.filter(r=>r.comment).length+'</b><span>comments</span></div></div>'+
     '<div class="meter big"><i style="width:'+(n?Math.min(100,R.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:440px;overflow:auto">'+R.slice().sort((x,y)=>String(y.at).localeCompare(String(x.at))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(fmtTime(Date.parse(r.at)))+'</small></span></div>').join("")+(R.length?'':'<span class="hint">No responses yet.</span>')+'</div></section></div>';
   return h;
 }
 function fbDash(f){
-  const c=S.cohorts[f.smeId],s=fbStats(f),T=f.tpl||FB_TEMPLATES[f.template||"ntd"],sc=v=>v==null?"–":(v*3).toFixed(2);
+  const c=S.cohorts[f.smeId],s=fbStats(f),T=tplOf(f),sc=v=>v==null?"–":(1+v*2).toFixed(2);
   let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All feedback</button><span style="flex:1"></span><button class="btn" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button></div>';
   h+='<section class="banner fbb"><div class="grow"><span class="bk">'+esc(c?c.name||f.smeId:"Open to anyone")+' · feedback dashboard</span><h1>'+esc(f.title)+'</h1><div class="meta"><span>'+esc(fmtDay(f.date))+'</span>'+(f.location?'<span>'+esc(f.location)+'</span>':'')+'<span>Trainer'+((f.trainers||[]).length>1?"s":"")+': '+esc((f.trainers||[]).join(" & "))+'</span></div></div><div class="acts"><button class="btn onban" id="fbExport">'+I.down+' Export to Excel</button></div></section>';
   if(!s.n)return h+'<div class="empty"><b>No responses yet</b>Open the feedback QR so participants can answer.</div>';
-  h+='<div class="kpis">'+kpiH("Responses",s.n,c?"/"+(c.participants||[]).length:"",c?"Participants":"People","--s5",NAV[1][3],c?s.n/((c.participants||[]).length||1):null)+kpiH("Overall",sc(s.overall),"/ 3","All rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',s.overall)+kpiH("Material / content",sc(s.p1),"/ 3","Part 1","--s1",'<path d="M4 5h16v14H4zM8 9h8M8 13h5"/>',s.p1)+
-    s.trainers.map((t,i)=>kpiH("Trainer"+(s.trainers.length>1?" "+(i+1):""),sc(t.avg),"/ 3",t.name,i?"--s4":"--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',t.avg)).join("")+kpiH("General",sc(s.p3),"/ 3","Facilities & overall","--s2",'<path d="M3 21h18M5 21V9l7-5 7 5v12"/>',s.p3)+'</div>';
+  h+='<div class="kpis">'+kpiH("Responses",s.n,c?"/"+(c.participants||[]).length:"",c?"Participants":"People","--s5",NAV[1][3],c?s.n/((c.participants||[]).length||1):null)+kpiH("Overall",sc(s.overall),"/ 3","All rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',s.overall)+s.parts.filter(p=>!p.perTrainer&&p===s.parts.find(z=>!z.perTrainer)).map(p=>kpiH(p.short||p.title,sc(p.avg),"/ 3",p.title,"--s1",'<path d="M4 5h16v14H4zM8 9h8M8 13h5"/>',p.avg)).join("")+
+    s.trainers.map((t,i)=>kpiH("Trainer"+(s.trainers.length>1?" "+(i+1):""),sc(t.avg),"/ 3",t.name,i?"--s4":"--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',t.avg)).join("")+s.parts.filter(p=>!p.perTrainer).slice(1).map((p,i)=>kpiH(p.short||p.title,sc(p.avg),"/ 3",p.title,["--s2","--s4","--s5","--s6"][i%4],'<path d="M3 21h18M5 21V9l7-5 7 5v12"/>',p.avg)).join("")+'</div>';
   const distRow=x=>{const t=x.dist.reduce((a,b)=>a+b,0)||1;return '<div class="fbrow" data-tip="'+esc(x.q+(x.trainer?" ("+x.trainer+")":"")+"\nDisagree "+x.dist[0]+" · Satisfactory "+x.dist[1]+" · Agree "+x.dist[2]+"\nAverage "+(x.avg==null?"–":x.avg.toFixed(2)))+'"><span class="fq">'+esc(x.q)+'</span><div class="fstack">'+x.dist.map((v,i)=>v?'<i class="s'+i+'" style="flex:'+v+'">'+Math.round(v/t*100)+'%</i>':'').join("")+'</div><b class="num fav" style="color:var('+rateColor(x.avg==null?null:(x.avg-1)/2)+')">'+(x.avg==null?"–":x.avg.toFixed(2))+'</b></div>'};
   const groups=[];s.items.forEach(x=>{const g=x.ptitle+(x.trainer?" — "+x.trainer:"");let G=groups.find(z=>z.g===g);if(!G)groups.push(G={g,items:[]});G.items.push(x)});
   h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s3)"></i>Every question</div><h3>How participants answered</h3><p>Share of Disagree / Satisfactory / Agree, and the average (out of 3)</p></div></div><div class="fblegend"><span><i class="s0"></i>Disagree</span><span><i class="s1"></i>Satisfactory</span><span><i class="s2"></i>Agree</span></div>'+groups.map(G=>'<h4 class="fbg">'+esc(G.g)+'</h4>'+G.items.map(distRow).join("")).join("")+'</section>';
   const recE=Object.entries(s.rec);
-  h+='<div class="g2">'+(s.trainers.length>1?panel("fbTr",{title:"Trainer comparison",tag:"Part 2",tagColor:"--s3",sub:"Average per trainer question",opts:[["bar","Bar"]],render:()=>{const P2=T.parts.find(p=>p.perTrainer);return '<div class="cmpq">'+P2.items.map((q,i)=>{const a=s.items.find(x=>x.k===P2.id+"_"+i+"_t0"),b=s.items.find(x=>x.k===P2.id+"_"+i+"_t1");return '<div class="cq"><span class="ql">'+esc(q)+'</span><div class="cb"><i class="pre" style="width:'+(a&&a.avg?(a.avg/3*100):0)+'%"></i><i class="post" style="width:'+(b&&b.avg?(b.avg/3*100):0)+'%"></i></div><span class="num cv">'+(a&&a.avg?a.avg.toFixed(2):"–")+' · <b>'+(b&&b.avg?b.avg.toFixed(2):"–")+'</b></span></div>'}).join("")+'<div class="legend"><span><i class="pre"></i>'+esc(s.trainers[0].name)+'</span><span><i class="post"></i>'+esc((s.trainers[1]||{}).name||"")+'</span></div></div>'}}):panel("fbParts",{title:"Score by part",tag:"Summary",tagColor:"--s3",sub:"Average out of 3",opts:[["col","Column"]],render:()=>columns([["Material",s.p1],["Trainer",s.p2],["General",s.p3]].filter(x=>x[1]!=null).map(x=>({label:x[0],value:x[1]*3,text:sc(x[1]),color:rateColor(x[1])})),{max:3})}))+
+  h+='<div class="g2">'+(s.trainers.length>1?panel("fbTr",{title:"Trainer comparison",tag:"Part 2",tagColor:"--s3",sub:"Average per trainer question",opts:[["bar","Bar"]],render:()=>{const P2s=T.parts.filter(p=>p.perTrainer);return '<div class="cmpq">'+[].concat(...P2s.map(P2=>P2.items.map(itN).map(q=>[P2,q]))).map(([P2,x])=>{const q=x.q,a=s.items.find(z=>z.k===P2.id+"_"+x.k+"_t0"),b=s.items.find(z=>z.k===P2.id+"_"+x.k+"_t1");return '<div class="cq"><span class="ql">'+esc(q)+'</span><div class="cb"><i class="pre" style="width:'+(a&&a.avg?(a.avg/3*100):0)+'%"></i><i class="post" style="width:'+(b&&b.avg?(b.avg/3*100):0)+'%"></i></div><span class="num cv">'+(a&&a.avg?a.avg.toFixed(2):"–")+' · <b>'+(b&&b.avg?b.avg.toFixed(2):"–")+'</b></span></div>'}).join("")+'<div class="legend"><span><i class="pre"></i>'+esc(s.trainers[0].name)+'</span><span><i class="post"></i>'+esc((s.trainers[1]||{}).name||"")+'</span></div></div>'}}):panel("fbParts",{title:"Score by part",tag:"Summary",tagColor:"--s3",sub:"Average out of 3",opts:[["col","Column"]],render:()=>columns(s.parts.map(p=>[p.short||p.title,p.avg]).filter(x=>x[1]!=null).map(x=>({label:x[0],value:1+x[1]*2,text:sc(x[1]),color:rateColor(x[1])})),{max:3})}))+
     (T.rec?panel("fbRec",{title:"Who should attend next time",tag:"Recommendation",tagColor:"--s5",sub:T.rec.q,opts:[["pie","Donut"],["bar","Bar"]],render:t=>{const it=T.rec.options.map((o,i)=>({label:o,value:s.rec[o]||0,color:CAT[i%6]}));return t==="bar"?hbars(it.map(x=>({...x,text:x.value}))):donut(it,{center:recE.reduce((a,x)=>a+x[1],0),centerLabel:"ANSWERS"})}}):'')+'</div>';
   h+='<section class="panel"><div class="ph"><div class="t"><h3>Comments & suggestions</h3><p>'+plural(s.comments.length,"comment","comments")+'</p></div></div><div class="fbcomments">'+(s.comments.length?s.comments.map(r=>'<blockquote><p>'+esc(r.comment)+'</p><cite>'+esc(r.name)+(r.unit?' · '+esc(r.unit):'')+'</cite></blockquote>').join(""):'<span class="hint">No comments yet.</span>')+'</div></section>';
   h+='<section class="panel"><div class="ph"><div class="t"><h3>Responses</h3><p>Delete test or wrong entries with the bin icon.</p></div></div><div class="tblwrap"><table><thead><tr><th>#</th><th>Name</th><th>Department</th><th class="r">Average</th><th>Submitted</th><th></th></tr></thead><tbody>'+s.R.map((r,i)=>{const v=Object.values(r.ans||{}).filter(x=>typeof x==="number");return '<tr><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+'</small></div></td><td class="hint">'+esc(r.unit||"")+'</td><td class="r num">'+(v.length?avgOf(v).toFixed(2):"–")+'</td><td class="hint">'+esc(new Date(r.at).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r"><button class="btn sm icon ghost" data-fbrdel="'+esc(r.id)+'" aria-label="Delete">'+I.trash+'</button></td></tr>'}).join("")+'</tbody></table></div></section>';
   return h;
 }
 async function fbExport(f){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
-  const s=fbStats(f),T=f.tpl||FB_TEMPLATES[f.template||"ntd"],items=s.items;
+  const s=fbStats(f),T=tplOf(f),items=s.items;
   const head=["Name","Staff number","Department","Submitted"].concat(items.map(x=>x.q+(x.trainer?" ["+x.trainer+"]":"")),T.rec?["Recommend"]:[],["Comment"]);
   const rows=s.R.map(r=>[r.name,r.staffId||"",r.unit||"",new Date(r.at).toLocaleString("en-GB")].concat(items.map(x=>(r.ans||{})[x.k]??""),T.rec?[r.rec||""]:[],[r.comment||""]));
   const sum=[["Question","Trainer","Disagree","Satisfactory","Agree","Average (out of 3)"]].concat(items.map(x=>[x.q,x.trainer||"",x.dist[0],x.dist[1],x.dist[2],x.avg==null?"":Math.round(x.avg*100)/100]));
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sum),"Summary");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([head].concat(rows)),"Responses");
   try{await dl.save({filename:("Feedback_"+f.title).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_").slice(0,60)+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
 function bindFbAdmin(){
-  const tb=$("#fbTrainers");if(tb)tb.addEventListener("click",trainersModal);
+  const tb=$("#fbTrainers");if(tb)tb.addEventListener("click",trainersModal);const tq=$("#fbTpls");if(tq)tq.addEventListener("click",()=>tplManager(null));
   const v=S.extView&&S.fbk[S.extView.id];if(!v)return;const f=v;
   if(S.extView.mode==="run"){if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(extLink("fb",f.id),420)}).catch(()=>{});
     const o=$("#fbOpen");if(o)o.addEventListener("click",()=>extSave("fb",{...f,openUntil:{fb:untilFrom(f.validity||{})}},"Feedback is open").then(render));
@@ -3623,7 +3763,7 @@ function attTaker(a,e,tk){const day=(a.days||[]).find(x=>"d"+x.n===e.slot)||{lab
   return hero+'<div class="tkfacts"><span><b>'+esc(day.label.replace(/^Day\s*/i,""))+'</b>day</span><span><b>'+fmtTime(Date.now())+'</b>now</span><span><b>'+(until>=EXT_FOREVER?"Open":fmtTime(until))+'</b>'+(until>=EXT_FOREVER?"until closed":"closes")+'</span></div></div>'+
     '<div class="tkcard">'+extIdentity(a)+'<p class="hint tkrule">Check in only for yourself. One check-in per person per day.</p><div class="err" id="tkerr"></div><button class="btn primary big tkfin" id="exGo">Check in ✓</button></div>';
 }
-function fbTaker(f,e,tk){const T=f.tpl||FB_TEMPLATES[f.template||"ntd"],items=fbItems(f),open=extOpen(f,"fb");
+function fbTaker(f,e,tk){const T=tplOf(f),items=fbItems(f),open=extOpen(f,"fb");
   const hero='<div class="tkhero fbhero"><span class="tkchip">Forum feedback</span><h1>'+esc(f.title)+'</h1><p>'+esc([fmtDay(f.date),f.location].filter(Boolean).join(" · "))+'</p>'+((f.trainers||[]).length?'<div class="trchips">'+f.trainers.map(t=>'<span>'+esc(t)+'</span>').join("")+'</div>':'');
   if(tk.done)return '<div class="tkhero center fbhero"><div class="tkok big">✓</div><h1>'+(tk.prev?"Already submitted":"Thank you!")+'</h1><p>'+(tk.prev?"You already gave feedback for this forum from this phone.":"Your feedback helps us make every Genco Academy session better.")+'</p></div>'+(tk.saved===false?'<div class="notice">Your feedback could not be sent. Check the internet and try again.</div>':'');
   if(!open)return hero+'<p>'+(((f.openUntil||{}).fb||0)?"This feedback form is closed. Thank you!":"This feedback form is not open yet.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>';
@@ -3632,7 +3772,7 @@ function fbTaker(f,e,tk){const T=f.tpl||FB_TEMPLATES[f.template||"ntd"],items=fb
   items.forEach((x,i)=>{const g=x.ptitle+(x.trainer?"|"+x.trainer:"");if(g!==last){html+='<div class="fbsec"><b>'+esc(x.ptitle)+'</b>'+(x.trainer?'<span class="trname">'+esc(x.trainer)+'</span>':'')+'</div>';last=g}
     html+='<div class="tkcard fbq'+(ans[x.k]!=null?" ok":"")+'" id="q_'+x.k+'"><p>'+(i+1)+'. '+esc(x.q)+'</p><div class="fbscale">'+FB_SCALE.map(s=>'<button type="button" class="s'+s[0]+(ans[x.k]===s[0]?" on":"")+'" data-fbv="'+x.k+'|'+s[0]+'"><b>'+s[0]+'</b><small>'+s[1]+'</small></button>').join("")+'</div></div>'});
   if(T.rec)html+='<div class="fbsec"><b>Recommendation</b></div><div class="tkcard fbq'+(tk.rec?" ok":"")+'"><p>'+esc(T.rec.q)+'</p><div class="fbrec">'+T.rec.options.map(o=>'<button type="button" class="'+(tk.rec===o?"on":"")+'" data-fbrec="'+esc(o)+'">'+esc(o)+'</button>').join("")+'</div></div>';
-  html+='<div class="fbsec"><b>Comment</b></div><div class="tkcard"><label for="fb-c">'+esc(T.comment)+'</label><textarea id="fb-c" rows="4" placeholder="Your comment or suggestion">'+esc(tk.comment||"")+'</textarea></div>';
+  html+='<div class="fbsec"><b>Comment'+(T.commentReq===false?" (optional)":"")+'</b></div><div class="tkcard"><label for="fb-c">'+esc(T.comment)+'</label><textarea id="fb-c" rows="4" placeholder="Your comment or suggestion">'+esc(tk.comment||"")+'</textarea></div>';
   return '<div class="tkbar"><span class="eyebrow">'+esc(tk.who.name)+'</span><span class="num">'+done+' / '+items.length+' answered</span></div><div class="tkprog"><i style="width:'+(done/items.length*100)+'%"></i></div>'+html+'<div class="err" id="tkerr2"></div><button class="btn primary big tkfin" id="fbSend">Submit feedback ✓</button>';
 }
 function bindExtTaker(){
@@ -3648,14 +3788,131 @@ function bindExtTaker(){
     else{Object.assign(tk,{who,lock:L,ans:{}});render();window.scrollTo(0,0)}});
   document.querySelectorAll("[data-fbv]").forEach(b=>b.addEventListener("click",()=>{const [k,v]=b.dataset.fbv.split("|");const c=$("#fb-c");if(c)tk.comment=c.value;tk.ans[k]=+v;const y=window.scrollY;render();window.scrollTo(0,y)}));
   document.querySelectorAll("[data-fbrec]").forEach(b=>b.addEventListener("click",()=>{const c=$("#fb-c");if(c)tk.comment=c.value;tk.rec=b.dataset.fbrec;const y=window.scrollY;render();window.scrollTo(0,y)}));
-  const sd=$("#fbSend");if(sd)sd.addEventListener("click",async()=>{const items=fbItems(d),T=d.tpl||FB_TEMPLATES[d.template||"ntd"],miss=items.find(x=>tk.ans[x.k]==null);tk.comment=$("#fb-c").value.trim();
+  const sd=$("#fbSend");if(sd)sd.addEventListener("click",async()=>{const items=fbItems(d),T=tplOf(d),miss=items.find(x=>tk.ans[x.k]==null);tk.comment=$("#fb-c").value.trim();
     if(miss){$("#tkerr2").textContent="Please rate every statement (the highlighted one is missing).";const el=$("#q_"+miss.k);if(el){el.classList.add("miss");el.scrollIntoView({behavior:"smooth",block:"center"})}return}
-    if(!tk.comment){$("#tkerr2").textContent="Please leave a short comment or suggestion.";return}
+    if(!tk.comment&&T.commentReq!==false){$("#tkerr2").textContent="Please leave a short comment or suggestion.";return}
     sd.disabled=true;sd.textContent="Sending…";const w=tk.who;
     const res={name:w.name,staffId:w.staffId,pid:w.pid,unit:w.unit,key:tk.lock.key,uid:tk.lock.dev,slot:"fb",ans:tk.ans,rec:tk.rec||"",comment:tk.comment,at:new Date().toISOString()};
     try{await S.db.doc(col+"/"+d.id+"/responses/fb_"+tk.lock.dev).set(res);Object.assign(tk,{done:true,saved:true})}catch(x){sd.disabled=false;sd.textContent="Submit feedback ✓";$("#tkerr2").textContent="Could not send. Check the internet and try again.";return}
     render();window.scrollTo(0,0)});
 }
+
+/* ---------------- BLACK / GREEN BELT selection ---------------- */
+// Ranks an SME's participants on their final score, suggests Black Belt for the top share (default 10%)
+// and Green Belt for everyone else who completed the programme. An optional AI review writes an executive
+// summary per participant. Only anonymous codes and scores are sent to the AI, never names or staff numbers.
+S.beltSme="";S.beltDraft={};S.beltBusy=false;S.beltOpen={};
+const BELTS={black:{label:"Black Belt",cls:"bb"},green:{label:"Green Belt",cls:"gb"},none:{label:"Not completed",cls:"nb"}};
+const beltPill=(b,sm)=>'<span class="beltp '+(BELTS[b]||BELTS.none).cls+(sm?" sm":"")+'">'+(b==="black"||b==="green"?'<i></i>':'')+esc((BELTS[b]||BELTS.none).label)+'</span>';
+const beltIco='<path d="M4 9h16v4H4z"/><path d="M10 13l-2 7 4-2 4 2-2-7"/>';
+function beltCfg(c){return c.belt||{}}
+function beltPct(c){return beltCfg(c).pct||10}
+function beltQuota(c,n){return Math.max(1,Math.round(n*beltPct(c)/100))}
+function beltRows(c){
+  const sk=SKM(c),T=c.trainerTopics||[],PC=c.projectCriteria||[];
+  const rows=(c.participants||[]).map(p=>{const r=scoreP(c,p);
+    const tr=T.map(t=>[t.module,(p.trainer||{})[t.key]]).filter(x=>typeof x[1]==="number"&&x[1]>0).map(x=>[x[0],x[1]/sk]);
+    const pj=PC.map(t=>[t.module,(p.project||{})[t.key]]).filter(x=>typeof x[1]==="number"&&x[1]>0).map(x=>[x[0],x[1]/3]);
+    return{p,r,total:r.total,pass:r.pass,att:r.attRate,quiz:r.quizAvg,trainer:r.trainerAvg==null?null:r.trainerAvg/sk,project:r.projectAvg==null?null:r.projectAvg/3,tr,pj}});
+  rows.sort((a,b)=>(b.pass-a.pass)||(b.total-a.total)||String(a.p.name).localeCompare(String(b.p.name)));
+  rows.forEach((x,i)=>{x.rank=i+1;x.code="P"+String(i+1).padStart(2,"0")});
+  const q=beltQuota(c,rows.length);let k=0;
+  rows.forEach(x=>{x.rule=!x.pass?"none":(k++<q?"black":"green")});
+  const ai=beltCfg(c).ai,fin=beltCfg(c).final||{},dr=S.beltDraft[c.id]||{};
+  rows.forEach(x=>{x.ai=ai&&ai.items?ai.items[x.p.id]:null;x.sug=x.ai&&x.ai.belt?x.ai.belt:x.rule;x.saved=fin[x.p.id]||null;x.final=dr[x.p.id]||x.saved||null});
+  return rows;
+}
+function beltView(){
+  if(!S.admin)return loginGate("Sign in as an Editor or Admin to select Black and Green Belts.");
+  const ids=Object.keys(S.cohorts).sort((a,b)=>String(b).localeCompare(String(a),undefined,{numeric:true}));
+  if(!S.beltSme||!S.cohorts[S.beltSme])S.beltSme=S.cohorts[S.current]?S.current:(ids[0]||"");
+  const c=S.cohorts[S.beltSme];
+  const pick='<select id="beltSme" aria-label="Choose SME">'+PROGS.map(pg=>{const L=ids.filter(id=>progOf(S.cohorts[id])===pg[0]);return L.length?'<optgroup label="'+esc(pg[1])+'">'+L.map(id=>'<option value="'+esc(id)+'"'+(id===S.beltSme?" selected":"")+'>'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</optgroup>':''}).join("")+'</select>';
+  let h='<section class="banner beltb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Black / Green Belt selection</h1><div class="meta"><span>The best participants become Black Belt · everyone who completes the programme gets Green Belt</span></div></div></section>';
+  if(!c)return h+'<div class="empty"><b>No SME yet</b>Add an SME first.</div>';
+  const rows=beltRows(c),n=rows.length,q=beltQuota(c,n),cfg=beltCfg(c),st=stats(c).started,done=rows.filter(x=>x.pass).length;
+  const fin=rows.filter(x=>x.final),fb=fin.filter(x=>x.final==="black").length,fg=fin.filter(x=>x.final==="green").length,dirty=Object.keys(S.beltDraft[c.id]||{}).length>0;
+  h+='<div class="beltbar"><div class="field"><label for="beltSme">SME</label>'+pick+'</div>'+
+    '<div class="field"><label for="beltPct">Black Belt share</label><select id="beltPct">'+[5,10,15,20,25].map(v=>'<option value="'+v+'"'+(v===beltPct(c)?" selected":"")+'>Top '+v+'% · '+plural(Math.max(1,Math.round(n*v/100)),"person","people")+'</option>').join("")+'</select></div>'+
+    '<div class="acts"><button class="btn primary" id="beltAI"'+(S.beltBusy||!n?" disabled":"")+'>'+(S.beltBusy?'<span class="spin"></span> AI is reviewing…':'✦ '+(cfg.ai?"Re-run AI review":"Evaluate with AI"))+'</button>'+
+    '<button class="btn" id="beltAcc"'+(n?"":" disabled")+'>Use suggestions as final</button><button class="btn ghost" id="beltX">'+I.down+' Excel</button></div></div>';
+  h+='<div class="err" id="beltErr">'+esc(S.beltErr||"")+'</div>';
+  if(!st.project||!st.skill)h+='<div class="note warn">'+I.lock+' <span><b>Assessment not complete.</b> '+(!st.project?"Project ":"")+(!st.project&&!st.skill?"and ":"")+(!st.skill?"Trainer ":"")+'marks are not in yet, so the ranking may change. Best to select belts after the final assessment.</span></div>';
+  h+='<div class="kpis">'+kpiH("Participants",n,"",done+" completed (≥ "+passMark(c)+"%)","--s5",NAV[1][3])+
+    kpiH("Black Belt quota",q,"","Top "+beltPct(c)+"% of participants","--ink",beltIco)+
+    kpiH("Final Black Belt",fb,"/"+q,fin.length?(fb>q?"Above quota":fb<q?"Below quota":"On quota"):"Not decided yet","--ink",beltIco,q?Math.min(1,fb/q):0)+
+    kpiH("Final Green Belt",fg,"",fin.length?(cfg.decidedAt?"Saved "+new Date(cfg.decidedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"Not saved"):"Not decided yet","--good",beltIco)+'</div>';
+  // executive summary
+  const ai=cfg.ai;
+  h+='<section class="panel beltsum"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s4)"></i>'+(ai?"AI review · "+new Date(ai.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Executive summary")+'</div><h3>Executive summary · '+esc(c.name||c.id)+'</h3></div></div>'+
+    (ai&&ai.summary?'<p class="beltexec">'+esc(ai.summary)+'</p>':'<p class="hint">Press <b>Evaluate with AI</b> for a written executive summary of the cohort and of every participant. Until then the suggestion below is based on the final score only.</p>')+
+    '<div class="beltlegend">'+beltPill("black")+' top '+beltPct(c)+'% (best performers) '+beltPill("green")+' completed the programme '+beltPill("none")+' below the pass mark</div>'+
+    '<p class="hint">AI only suggests. You choose the final belt for each person, then press <b>Save final selection</b>. Names and staff numbers are not sent to the AI, only anonymous codes and scores.</p></section>';
+  // table
+  const pc=v=>v==null?'<span class="hint">–</span>':(v*100).toFixed(0)+"%";
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Ranking & selection</h3><p>Sorted by final score. Click a name for the AI summary.</p></div><div class="a"><button class="btn primary" id="beltSave"'+(dirty?"":" disabled")+'>Save final selection</button></div></div><div class="tblwrap"><table class="belttbl"><thead><tr><th>#</th><th>Participant</th><th class="r">Score</th><th class="r">Attend.</th><th class="r">Quiz</th><th class="r">Trainer</th><th class="r">Project</th><th>Suggested</th><th>Final belt</th></tr></thead><tbody>'+
+    rows.map(x=>{const o=S.beltOpen[x.p.id],a=x.ai;
+      return '<tr class="'+(x.final==="black"?"isbb":"")+'"><td class="num">'+x.rank+'</td><td><button class="linkish" data-beltopen="'+esc(x.p.id)+'"><b>'+esc(x.p.name)+'</b></button><small class="hint">'+esc(x.p.station||"")+'</small></td>'+
+        '<td class="r"><b class="num">'+x.total.toFixed(1)+'</b><div class="mbar"><i style="width:'+Math.min(100,x.total)+'%;background:var('+(x.pass?"--good":"--bad")+')"></i></div></td><td class="r num">'+pc(x.att)+'</td><td class="r num">'+pc(x.quiz)+'</td><td class="r num">'+pc(x.trainer)+'</td><td class="r num">'+pc(x.project)+'</td>'+
+        '<td>'+beltPill(x.sug,1)+(a?'<small class="hint">AI'+(a.belt!==x.rule?" · score says "+BELTS[x.rule].label:"")+'</small>':'<small class="hint">By score</small>')+'</td>'+
+        '<td><select class="beltsel '+(x.final?(BELTS[x.final]||{}).cls:"")+'" data-beltf="'+esc(x.p.id)+'" aria-label="Final belt for '+esc(x.p.name)+'"><option value="">– choose –</option>'+["black","green","none"].map(b=>'<option value="'+b+'"'+(x.final===b?" selected":"")+'>'+BELTS[b].label+'</option>').join("")+'</select>'+(S.beltDraft[c.id]&&S.beltDraft[c.id][x.p.id]?'<small class="hint">unsaved</small>':'')+'</td></tr>'+
+        (o?'<tr class="beltdet"><td></td><td colspan="8">'+(a?'<p>'+esc(a.summary||"")+'</p><div class="beltsg">'+(a.strengths&&a.strengths.length?'<div><b>Strengths</b><ul>'+a.strengths.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ul></div>':'')+(a.gaps&&a.gaps.length?'<div><b>To develop</b><ul>'+a.gaps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ul></div>':'')+'</div>':'<p class="hint">No AI summary yet.</p>')+
+          '<div class="beltsg"><div><b>Best trainer marks</b><ul>'+x.tr.slice().sort((p,q)=>q[1]-p[1]).slice(0,3).map(t=>'<li>'+esc(t[0])+' · '+(t[1]*100).toFixed(0)+'%</li>').join("")+'</ul></div><div><b>Best project criteria</b><ul>'+x.pj.slice().sort((p,q)=>q[1]-p[1]).slice(0,3).map(t=>'<li>'+esc(t[0])+' · '+(t[1]*3).toFixed(1)+'/3</li>').join("")+'</ul></div></div></td></tr>':'');
+    }).join("")+'</tbody></table></div></section>';
+  return h;
+}
+function beltPrompt(c,rows){
+  const w=weights(c),q=beltQuota(c,rows.length),r2=v=>v==null?null:Math.round(v*100)/100;
+  const data=rows.map(x=>({code:x.code,finalScore:Math.round(x.total*10)/10,completed:!!x.pass,attendance:r2(x.att),quiz:r2(x.quiz),trainer:r2(x.trainer),project:r2(x.project),
+    trainerMarks:Object.fromEntries(x.tr.map(t=>[t[0],r2(t[1])])),projectMarks:Object.fromEntries(x.pj.map(t=>[t[0],Math.round(t[1]*3*10)/10]))}));
+  return "You are a senior talent assessor for TNB Genco's Genco Academy SME (Subject Matter Expert) development programme.\n"+
+    "Final score (0-100) = attendance "+w.att+"% + quiz "+w.quiz+"% + trainer assessment "+w.skill+"% + project "+w.project+"%. Pass mark "+passMark(c)+". "+
+    "attendance/quiz/trainer/project are fractions 0-1; trainerMarks are 0-1 per topic; projectMarks are 1-3 per criterion.\n"+
+    "Task: recommend belts. Black Belt = the very best, about "+beltPct(c)+"% of participants, exactly "+q+" people at most: strong final score AND well-rounded strength, weighting the project (problem solving, structuring, business and financial thinking) and trainer-observed behaviour (critical thinking, attitude, drive) more than attendance. "+
+    "Green Belt = every other participant with completed=true. completed=false gets \"none\".\n"+
+    "Return ONLY JSON: {\"summary\":\"executive summary of the whole cohort, 4-6 sentences: overall level, standout strengths, common gaps, why the Black Belt picks stand out\",\"items\":[{\"code\":\"P01\",\"belt\":\"black|green|none\",\"summary\":\"2-3 sentence executive summary of this participant's performance\",\"strengths\":[\"max 3 short points\"],\"gaps\":[\"max 2 short points\"]}]}\n"+
+    "Include every code exactly once. Refer to people only by code. Plain professional English.\n\nPARTICIPANTS:\n"+JSON.stringify(data);
+}
+async function beltRunAI(){
+  const c=S.cohorts[S.beltSme];if(!c||S.beltBusy)return;const rows=beltRows(c);
+  let sample=null;try{sample=await window.claude.use("sample")}catch(e){}
+  if(!sample){S.beltErr=window.FB?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again. The score-based suggestion below still works.":"AI is not available in this view.";safeRender();return}
+  S.beltBusy=true;S.beltErr="";safeRender();
+  try{
+    const j=await sample.json(beltPrompt(c,rows),{modelTier:"default"});
+    const by={};rows.forEach(x=>by[x.code]=x);const items={};
+    (j&&j.items||[]).forEach(it=>{const x=by[String(it.code||"").trim().toUpperCase()];if(!x)return;let b=String(it.belt||"").toLowerCase();b=b.startsWith("black")?"black":b.startsWith("green")?"green":"none";if(!x.pass&&b!=="none")b="none";
+      items[x.p.id]={belt:b,summary:String(it.summary||"").slice(0,700),strengths:(it.strengths||[]).slice(0,3).map(s=>String(s).slice(0,160)),gaps:(it.gaps||[]).slice(0,2).map(s=>String(s).slice(0,160))}});
+    if(!Object.keys(items).length)throw new Error("empty");
+    // keep Black Belt within the quota (highest score first)
+    const q=beltQuota(c,rows.length),bl=rows.filter(x=>items[x.p.id]&&items[x.p.id].belt==="black");bl.slice(q).forEach(x=>items[x.p.id].belt="green");
+    rows.forEach(x=>{if(!items[x.p.id])items[x.p.id]={belt:x.rule,summary:"",strengths:[],gaps:[]}});
+    const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:{at:new Date().toISOString(),summary:String(j.summary||"").slice(0,2000),items}});
+    queueSave(cc,"AI belt review for "+(c.name||c.id));toast("AI review done — check the suggestions, then choose the final belts");
+  }catch(e){S.beltErr=e&&e.code==="not_granted"?"Permission for the AI was declined.":e&&e.code==="rate_limited"?"Too many AI requests. Try again in a minute.":e&&e.code==="not_enabled"?"AI is not switched on for this portal yet. In Firebase console open Build → AI Logic → Get started → Gemini Developer API, then try again.":"The AI review did not work this time. Try again; the score-based suggestion still works."}
+  S.beltBusy=false;safeRender();
+}
+async function beltExport(c){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
+  const rows=beltRows(c),P=v=>v==null?"":Math.round(v*1000)/10;
+  const A=[["Rank","Name","Staff number","Station","Final score","Attendance %","Quiz %","Trainer %","Project %","Suggested by score","AI suggestion","AI executive summary","Strengths","To develop","Final belt"]].concat(rows.map(x=>[x.rank,x.p.name,x.p.staffId||"",x.p.station||"",Math.round(x.total*10)/10,P(x.att),P(x.quiz),P(x.trainer),P(x.project),BELTS[x.rule].label,x.ai?BELTS[x.ai.belt].label:"",x.ai?x.ai.summary:"",x.ai?(x.ai.strengths||[]).join("; "):"",x.ai?(x.ai.gaps||[]).join("; "):"",x.final?BELTS[x.final].label:""]));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(A),"Belt selection");
+  const ai=beltCfg(c).ai;if(ai&&ai.summary)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Executive summary"],[ai.summary]]),"Summary");
+  try{await dl.save({filename:("Belt_selection_"+(c.name||c.id)).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_")+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
+function bindBelt(){
+  const c=S.cohorts[S.beltSme];
+  const sm=$("#beltSme");if(sm)sm.addEventListener("change",()=>{S.beltSme=sm.value;S.beltErr="";S.beltOpen={};safeRender()});
+  if(!c)return;
+  const pc=$("#beltPct");if(pc)pc.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{pct:+pc.value});queueSave(cc,"Black Belt share set to "+pc.value+"%");safeRender()});
+  const ai=$("#beltAI");if(ai)ai.addEventListener("click",beltRunAI);
+  const x=$("#beltX");if(x)x.addEventListener("click",()=>beltExport(c));
+  const acc=$("#beltAcc");if(acc)acc.addEventListener("click",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{};beltRows(c).forEach(r=>{if(r.saved!==r.sug)d[r.p.id]=r.sug;else delete d[r.p.id]});safeRender();toast("Suggestions copied — press Save final selection to keep them")});
+  document.querySelectorAll("[data-beltf]").forEach(s=>s.addEventListener("change",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{},id=s.dataset.beltf,sv=(beltCfg(c).final||{})[id]||"";if(s.value===sv)delete d[id];else d[id]=s.value;safeRender()}));
+  document.querySelectorAll("[data-beltopen]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.beltopen;S.beltOpen[id]=!S.beltOpen[id];safeRender()}));
+  const sv=$("#beltSave");if(sv)sv.addEventListener("click",()=>{const d=S.beltDraft[c.id]||{};const cc=clone(c),f=Object.assign({},(cc.belt||{}).final||{});Object.entries(d).forEach(([k,v])=>{if(v)f[k]=v;else delete f[k]});
+    cc.belt=Object.assign({},cc.belt||{},{final:f,decidedAt:new Date().toISOString(),decidedBy:S.admin||"admin"});const nb=Object.values(f).filter(v=>v==="black").length,ng=Object.values(f).filter(v=>v==="green").length;
+    delete S.beltDraft[c.id];queueSave(cc,"Final belts saved: "+nb+" Black, "+ng+" Green");toast("Saved: "+nb+" Black Belt, "+ng+" Green Belt");safeRender()});
+}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-beltmenu]");if(!t)return;S.extView=null;go("__belt")});
 
 /* ---------- STAFF DIRECTORY (lookup only, no menu tab) ---------- */
 S.staff=null;S.staffMeta=null;S.staffSub=false;
