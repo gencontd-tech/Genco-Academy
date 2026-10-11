@@ -795,6 +795,74 @@ body.taker{background:linear-gradient(180deg,#0b2a6b 0,#123c8f 240px,var(--bg) 2
 .tkrev small.right{color:var(--good)}
 .tkrev.ok small.right{display:none}
 @media (prefers-reduced-motion:reduce){.confetti,.tkmedal,.tkq{animation:none!important}.confetti{display:none}}
+.qrtag{font:800 13px/1 inherit;letter-spacing:.14em;padding:7px 14px;border-radius:999px;color:#fff;background:var(--s2)}
+.qrtag.pre{background:var(--s5)}
+.qrbox.pre{outline:6px solid color-mix(in srgb,var(--s5) 55%,transparent);outline-offset:-6px}
+.qrbox.post{outline:6px solid color-mix(in srgb,var(--s2) 55%,transparent);outline-offset:-6px}
+.tkopt:disabled{cursor:default;opacity:1}
+.tkq.locked .tkopt:not(.on){opacity:.45}
+.tkopt em.lk{margin-left:auto;font-style:normal;font-size:12px;font-weight:700;color:var(--oc)}
+.tkrule{margin:4px 0 0;font-size:12.5px}
+.btn.tkfin{background:#16a34a;border-color:#16a34a}
+/* attendance & feedback */
+.banner.attb{background:linear-gradient(115deg,#065f46 0%,#0f766e 55%,#0891b2 100%)}
+.banner.fbb{background:linear-gradient(115deg,#581c87 0%,#7c3aed 55%,#db2777 100%)}
+.dayrows{display:flex;flex-direction:column;gap:8px}
+.dayrow{display:grid;grid-template-columns:56px minmax(0,1fr) 160px minmax(0,1.3fr) 34px;gap:8px;align-items:center}
+.dayrow input,.dayrow select{min-width:0;width:100%;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink)}
+@media (max-width:640px){.dayrow{grid-template-columns:1fr 1fr}.dayrow b{grid-column:1/-1}}
+.daychips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.daychips button{display:flex;flex-direction:column;gap:2px;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:8px 12px;cursor:pointer;font:inherit;min-width:110px}
+.daychips button small{font-size:11.5px;color:var(--ink-3)}
+.daychips button.on{border-color:var(--s3);background:color-mix(in srgb,var(--s3) 10%,var(--surface))}
+.qrtag.fb{background:var(--s4)}
+details.notyet{margin-top:12px;font-size:13px}
+details.notyet summary{cursor:pointer;color:var(--ink-2);font-weight:600}
+details.notyet .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+details.notyet .chips span{background:var(--surface-2);border-radius:999px;padding:4px 10px;font-size:12px}
+.tplpick{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px}
+.fbprev{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.fbprev li.h{list-style:none;margin:10px 0 0 -20px;font-weight:700;color:var(--s4)}
+.trlist{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow:auto;margin-bottom:12px}
+.trlist .tr{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:9px;padding:6px 10px}
+.fbmini{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+.fbmini b{font:800 22px/1 var(--f-display)}
+.fbmini span{font-size:12px;color:var(--ink-3)}
+.fbmini .meter{flex-basis:100%}
+.fblegend{display:flex;gap:14px;font-size:12px;color:var(--ink-3);margin-bottom:6px}
+.fblegend i{display:inline-block;width:12px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.fbg{margin:16px 0 6px;font-size:13px;color:var(--s4);text-transform:uppercase;letter-spacing:.06em}
+.fbrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 44px;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.fbrow .fq{font-size:13px}
+.fstack{display:flex;height:20px;border-radius:6px;overflow:hidden;background:var(--surface-3)}
+.fstack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:10.5px;font-weight:700;color:#fff;min-width:0;overflow:hidden}
+.fstack i.s0,.fblegend i.s0{background:#e11d48}.fstack i.s1,.fblegend i.s1{background:#f59e0b}.fstack i.s2,.fblegend i.s2{background:#16a34a}
+.fbrow .fav{text-align:right}
+@media (max-width:640px){.fbrow{grid-template-columns:1fr 44px}.fbrow .fstack{grid-column:1/-1;grid-row:2}}
+.fbcomments{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:10px}
+.fbcomments blockquote{margin:0;background:var(--surface-2);border-left:4px solid var(--s4);border-radius:10px;padding:12px 14px}
+.fbcomments p{margin:0 0 6px;font-size:14px}
+.fbcomments cite{font-size:12px;color:var(--ink-3);font-style:normal}
+/* participant side */
+.tkphase.att{background:#dcfce7;color:#166534}.tkphase.fbk{background:#fae8ff;color:#86198f}
+.tkhero.fbhero{background:radial-gradient(120% 140% at 0% 0%,#a855f7 0,#7c3aed 45%,#db2777 100%)}
+.trchips{display:flex;flex-wrap:wrap;gap:6px}.trchips span{background:rgba(255,255,255,.18);border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:600}
+.tkok.big{width:84px;height:84px;font-size:46px;animation:pop .5s both}
+.tkhero p.big{font:700 20px/1.2 var(--f-display);color:#fff}
+.fbsec{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 2px 0;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.fbsec .trname{background:var(--s4);color:#fff;border-radius:999px;padding:3px 10px;text-transform:none;letter-spacing:0;font-weight:700}
+.fbq p{margin:0;font-weight:600;font-size:15px}
+.fbq.ok{border-color:color-mix(in srgb,#16a34a 45%,var(--line))}
+.fbq.miss{border-color:var(--bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--bad) 25%,transparent)}
+.fbscale{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fbscale button{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 4px;cursor:pointer;font:inherit}
+.fbscale b{font:800 20px/1 var(--f-display)}.fbscale small{font-size:11.5px;color:var(--ink-3)}
+.fbscale .s1.on{border-color:#e11d48;background:#ffe4e6}.fbscale .s2.on{border-color:#f59e0b;background:#fef3c7}.fbscale .s3.on{border-color:#16a34a;background:#dcfce7}
+.fbrec{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fbrec button{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px;cursor:pointer;font:600 14px/1.2 inherit}
+.fbrec button.on{border-color:var(--s4);background:color-mix(in srgb,var(--s4) 12%,var(--surface))}
+.tk textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;margin-top:6px}
+.fbsec{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 12px;color:var(--s4);font-weight:700}
 
 </style>
 
@@ -838,7 +906,8 @@ const A=await import(G+"firebase-auth.js");
 const F=await import(G+"firebase-firestore.js");
 const cfg=window.__fbCfg,app=initializeApp(cfg),auth=A.getAuth(app);
 const db=F.initializeFirestore(app,{ignoreUndefinedProperties:true});
-const taker=()=>/^#quiz-[A-Za-z0-9_-]+$/.test(location.hash);
+const TK=()=>{const m=(location.hash||"").match(/^#(quiz|att|fb)-([A-Za-z0-9_-]+)(\.[a-z0-9]+)?$/);return m?{col:{quiz:"quizzes",att:"attendance",fb:"feedback"}[m[1]],id:m[2]}:null};
+const taker=()=>!!TK();
 const owner=String(cfg.ownerEmail||"").trim().toLowerCase();
 const FB={user:null,email:"",role:"",member:false,owner:false,anon:true,
   signIn:(e,p)=>A.signInWithEmailAndPassword(auth,e,p),
@@ -856,13 +925,14 @@ const FB={user:null,email:"",role:"",member:false,owner:false,anon:true,
 window.FB=FB;
 const wrap=s=>({id:s.id,exists:s.exists(),data:()=>s.data()});
 const deny=err=>{setTimeout(()=>err&&err({code:"permission-denied"}),0);return()=>{}};
-function quizDocRef(){return F.doc(db,"quizzes/"+location.hash.slice(6))}
+function quizDocRef(){const t=TK();return F.doc(db,t.col+"/"+t.id)}
 const dbApi={
   collection:p=>({onSnapshot:(cb,err)=>{
     if(!FB.member){
-      if(taker()&&(p==="quizzes"||p==="cohorts"))return F.onSnapshot(quizDocRef(),s=>{
+      if(taker()&&(p===TK().col||p==="cohorts"))return F.onSnapshot(quizDocRef(),s=>{
         if(!s.exists()){cb({docs:[]});return}const q=s.data();q.id=q.id||s.id;
-        if(p==="quizzes")cb({docs:[{id:s.id,exists:true,data:()=>q}]});
+        if(p===TK().col)cb({docs:[{id:s.id,exists:true,data:()=>q}]});
+        else if(!q.smeId)cb({docs:[]});
         else cb({docs:[{id:q.smeId,exists:true,data:()=>({id:q.smeId,name:q.smeName||q.smeId,participants:(q.roster||[]).map(r=>({...r,att:{},quiz:{},trainer:{},project:{}}))})}]});
       },e=>err&&err(e));
       return deny(err)}
@@ -1426,7 +1496,7 @@ async function boot(){
     const first=!S.loaded;S.cohorts=m;S.loaded=true;setSync("Synced · "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}));
     if(first)S.anim=true;safeRender();
   },e=>{setSync("Connection error ("+e.code+")");S.loaded=true;render()});
-  subscribeHistory();subscribePhotos();
+  subscribeHistory();subscribePhotos();subscribeExt();
   subscribeUsers();
   subscribeQuizzes();
   S.db.doc("config/admin").onSnapshot(d=>{S.auth=d.exists?d.data():null;S.authLoaded=true},()=>{S.authLoaded=true});
@@ -1484,11 +1554,14 @@ function renderInner(){
   renderSide();renderTop();
   const app=$("#app");
   if(S.taker){app.innerHTML=takerView();bindTaker();return}
+  if(S.ext){app.innerHTML=extTakerView();bindExtTaker();return}
   if(S.current==="__admin"){S.current="__settings";S.setTab="data"}
   const sb=$("#openSearch");if(sb)sb.hidden=!(S.me?(can("people")||can("history")||can("sme")):(S.portal.guest||"all")==="all");
   const gt=gate();if(gt){app.innerHTML=gt;return}
   if(S.current==="__settings"){app.innerHTML=settingsView();bindSettings2();return}
   if(S.current==="__quiz"){app.innerHTML=quizView();const qq=S.qView&&S.quizzes[S.qView.id];if(qq&&S.admin){if(S.qView.mode==="run")bindQuizRun(qq);else bindQuizResult(qq)}return}
+  if(S.current==="__att"){app.innerHTML=attView();bindAttAdmin();return}
+  if(S.current==="__fb"){app.innerHTML=fbView();bindFbAdmin();return}
   if(S.current==="__history"){app.innerHTML=historyView();bindHistory();return}
   if(S.current==="__people"){app.innerHTML=peopleDirView();bindPeopleDir();return}
   if(!S.current||!S.cohorts[S.current]){app.innerHTML=homeView();return}
@@ -1510,7 +1583,7 @@ function renderSide(){
   const side=$("#side"),list=ids(),c=S.cohorts[S.current];
   let h='<button class="sbrand" data-home><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><span><b>Genco Academy</b><small>Assessment Portal</small></span></button>';
   h+='<nav class="snav"><button class="sitem'+(!S.current?" on":"")+'" data-home><span class="ico" style="--k:var(--ga)">'+navIco('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>')+'</span>Home</button><button class="sitem'+(S.current==="__history"?" on":"")+'" data-history><span class="ico" style="--k:var(--s3)">'+navIco('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>')+'</span>SME History'+(hBatches().length?'<span class="badge num">'+hBatches().length+'</span>':'')+'</button></nav>';
-  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button></nav>';
+  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__att"?" on":"")+'" data-attmenu><span class="ico" style="--k:var(--s3)">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+'</span>Attendance'+(Object.values(S.att||{}).some(a=>Object.keys(a.openUntil||{}).some(k=>extOpen(a,k)))?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__fb"?" on":"")+'" data-fbmenu><span class="ico" style="--k:var(--s4)">'+navIco('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>')+'</span>Forum feedback</button></nav>';
   h+='<div class="slabel">SME programme <span class="num">'+list.length+'</span></div><div class="ssel"><span class="dot" style="background:var('+(S.cohorts[S.current]?SME_COL(S.current):"--nav-ink-2")+')"></span><select id="sideSme" aria-label="Choose SME"><option value="">Select SME…</option>'+PROGS.map(pg=>{const L=list.filter(id=>progOf(S.cohorts[id])===pg[0]);return L.length?'<optgroup label="'+esc(pg[1])+'">'+L.map(id=>'<option value="'+esc(id)+'"'+(S.current===id?" selected":"")+'>'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</optgroup>':''}).join("")+'</select></div>';
   h+='<nav class="snav"><button class="sadd" data-act="newcohort">'+I.plus+' Add SME</button></nav>';
   if(c){
@@ -1524,7 +1597,7 @@ function renderSide(){
 }
 function renderTop(){
   const c=S.cohorts[S.current],tl=(NAV.find(n=>n[0]===S.tab)||NAV[0])[1];
-  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
+  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__att"?'<span>/</span><b>Attendance</b>':S.current==="__fb"?'<span>/</span><b>Forum feedback</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
 }
 
 /* ---------- HOME ---------- */
@@ -2542,7 +2615,7 @@ function can(page){
   const g=(S.portal&&S.portal.guest)||"all";
   if(g==="none")return false;if(g==="home")return page==="home";return true;
 }
-function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"?"quiz":"sme"}
+function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"||S.current==="__att"||S.current==="__fb"?"quiz":"sme"}
 function gate_orig(){ // returns html when the page must not render, else null
   if(S.db&&!S.usersLoaded)return '<div class="empty" style="margin-top:40px"><span class="spin"></span><b>Loading portal…</b></div>';
   const pg=pageOf();
@@ -2584,7 +2657,7 @@ function postSide(side){
   if(!can("history"))side.querySelectorAll("[data-history]").forEach(e=>e.remove());
   if(!can("people"))side.querySelectorAll("[data-people]").forEach(e=>e.remove());
   if(!can("sme")){side.querySelectorAll(".ssel").forEach(e=>{const l=e.previousElementSibling;if(l&&l.classList.contains("slabel"))l.remove();e.remove()})}
-  if(!S.admin)side.querySelectorAll(".sadd,[data-quizmenu]").forEach(e=>e.remove());
+  if(!S.admin)side.querySelectorAll(".sadd,[data-quizmenu],[data-attmenu],[data-fbmenu]").forEach(e=>e.remove());
   if(!S.me&&(S.portal.guest==="none"))side.querySelectorAll(".snav,.slabel,.ssel").forEach(e=>e.remove());
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-settings],[data-settab]");if(!t)return;
@@ -2727,7 +2800,7 @@ S.quizzes={};S.quizLoaded=false;S.qView=null;S.qResp={};S.qRespSub=null;S.taker=
 function subscribeQuizzes(){if(!S.db)return;S.db.collection("quizzes").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.quizzes=m;S.quizLoaded=true;if(S.current==="__quiz"||S.taker)safeRender();else renderSide()},()=>{S.quizLoaded=true})}
 function watchResponses(qid){if(!S.db||S.qRespSub===qid)return;if(S.qRespUnsub)S.qRespUnsub();S.qRespSub=qid;S.qRespUnsub=S.db.collection("quizzes/"+qid+"/responses").onSnapshot(sn=>{S.qResp[qid]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(S.current==="__quiz")safeRender()},()=>{})}
 const quizBase=()=>(S.portal&&S.portal.quizBase)||QUIZ_BASE_DEFAULT;
-const quizLink=q=>quizBase().replace(/#.*$/,"")+"#quiz-"+q.id;
+const quizLink=(q,ph)=>quizBase().replace(/#.*$/,"")+"#quiz-"+q.id+(ph?"."+ph:"");
 const qid=()=>"q"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const QSTAT={draft:["Draft","none"],open:["Open","good"],closed:["Closed","bad"]};
 async function saveQuiz_orig(q,msg){q=clone(q);q.updatedAt=new Date().toISOString();q.updatedBy=S.me?S.me.username:(S.admin||"");
@@ -2752,7 +2825,7 @@ function quizView(){
   if(!S.quizLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading quizzes…</b></div>';
   if(!Q.length)return h+'<div class="empty"><b>No quizzes yet</b>Create the first quiz for a module.<div class="acts"><button class="btn primary" data-qnew>'+I.plus+' New quiz</button></div></div>';
   h+='<div class="qcards">'+Q.map(q=>{const st=QSTAT[q.status||"draft"],c=S.cohorts[q.smeId],n=(q.questions||[]).length,r=(S.qResp[q.id]||[]).length;
-    return '<div class="qcard" style="--k:var('+(c?SME_COL(q.smeId):"--s0")+')"><div class="top"><span class="pill '+st[1]+'">'+st[0]+'</span><span class="hint">'+esc(c?c.name||q.smeId:"No SME")+'</span></div><b class="qt">'+esc(q.title||"Untitled quiz")+'</b><span class="hint">'+plural(n,"question","questions")+(q.savedAt?' · scores saved '+esc(new Date(q.savedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"})):'')+'</span>'+
+    return '<div class="qcard" style="--k:var('+(c?SME_COL(q.smeId):"--s0")+')"><div class="top"><span class="pill '+st[1]+'">'+st[0]+'</span><span class="hint">'+esc(c?c.name||q.smeId:q.smeId?q.smeId+" (not found)":"Open to anyone")+'</span></div><b class="qt">'+esc(q.title||"Untitled quiz")+'</b><span class="hint">'+plural(n,"question","questions")+(q.savedAt?' · scores saved '+esc(new Date(q.savedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"})):'')+'</span>'+
       '<div class="qacts"><button class="btn sm" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-qres="'+esc(q.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Results</button></div></div>'}).join("")+'</div>';
   return h;
 }
@@ -2767,8 +2840,9 @@ function drawEditor(){
   const q=S.qEdit,c=S.cohorts[q.smeId],qm=c?(c.quizModules||[]):[];
   let h=mhead(S.quizzes[q.id]?"Edit quiz":"New quiz",(q.questions||[]).length+" questions")+'<div class="mb"><div class="frow">'+
     '<div class="field"><label for="qe-t">Quiz title</label><input id="qe-t" type="text" value="'+esc(q.title)+'" placeholder="e.g. RCM post-quiz"></div>'+
-    '<div class="field"><label for="qe-s">SME</label><select id="qe-s">'+ids().map(i=>'<option value="'+esc(i)+'"'+(i===q.smeId?" selected":"")+'>'+esc(S.cohorts[i].name||i)+'</option>').join("")+'</select></div>'+
-    '<div class="field"><label for="qe-k">Save scores to</label><select id="qe-k"><option value="">New quiz column (uses the title)</option>'+qm.map(m=>'<option value="'+m.key+'"'+(m.key===q.quizKey?" selected":"")+'>'+esc(m.module)+(m.date?" · "+esc(fmtD(m.date)):"")+'</option>').join("")+'</select></div></div>'+
+    '<div class="field"><label for="qe-s">Who answers</label><select id="qe-s"><option value=""'+(!q.smeId?" selected":"")+'>Open to anyone (not linked to an SME)</option><optgroup label="Participants of an SME">'+ids().map(i=>'<option value="'+esc(i)+'"'+(i===q.smeId?" selected":"")+'>'+esc(S.cohorts[i].name||i)+'</option>').join("")+'</optgroup></select></div>'+
+    (q.smeId?'':'<div class="field"><label>Answers</label><p class="hint" style="margin:6px 0 0">Anyone with the QR code can answer by typing their name, staff number and department. Scores are kept in the quiz results (export to Excel), not in an SME.</p></div>')+
+    (!q.smeId?'':'<div class="field"><label for="qe-k">Save scores to</label><select id="qe-k"><option value="">New quiz column (uses the title)</option>'+qm.map(m=>'<option value="'+m.key+'"'+(m.key===q.quizKey?" selected":"")+'>'+esc(m.module)+(m.date?" · "+esc(fmtD(m.date)):"")+'</option>').join("")+'</select></div>')+'</div>'+
     '<div class="chkgrid"><label class="chk"><input type="checkbox" id="qe-sc"'+(q.showScore!==false?" checked":"")+'> Show participants their score after submitting</label><label class="chk"><input type="checkbox" id="qe-sh"'+(q.shuffle?" checked":"")+'> Shuffle question order</label></div>';
   h+='<div class="qlist">'+(q.questions||[]).map((x,i)=>'<div class="qitem"><div class="qh"><span class="qn">'+(i+1)+'</span><textarea rows="2" data-qtext="'+i+'" placeholder="Question">'+esc(x.text)+'</textarea><span class="ops"><button class="btn sm icon ghost" data-qmv="'+i+'|-1"'+(i?"":" disabled")+' aria-label="Move up">'+I.upA+'</button><button class="btn sm icon ghost" data-qmv="'+i+'|1"'+(i<q.questions.length-1?"":" disabled")+' aria-label="Move down">'+I.dnA+'</button><button class="btn sm icon ghost danger" data-qdel="'+i+'" aria-label="Delete question">'+I.trash+'</button></span></div>'+
     '<div class="qopts">'+x.options.map((o,j)=>'<label class="qo'+(x.answer===j?" ok":"")+'"><input type="radio" name="qa'+i+'" data-qans="'+i+'|'+j+'"'+(x.answer===j?" checked":"")+' aria-label="Correct answer"><span class="ql">'+String.fromCharCode(65+j)+'</span><input type="text" value="'+esc(o)+'" data-qopt="'+i+'|'+j+'" placeholder="Option '+String.fromCharCode(65+j)+'">'+(x.options.length>2?'<button class="btn sm icon ghost" data-qodel="'+i+'|'+j+'" aria-label="Remove option">'+I.x+'</button>':'')+'</label>').join("")+(x.options.length<6?'<button class="more" data-qoadd="'+i+'">'+I.plus+' Option</button>':'')+'</div></div>').join("")+'</div>';
@@ -2778,7 +2852,7 @@ function drawEditor(){
   h+='<div class="err" id="qeerr"></div><div class="mfoot"><button class="btn primary" id="qeSave">Save quiz</button>'+(S.quizzes[q.id]?'<span style="flex:1"></span><button class="btn danger" id="qeDel">'+I.trash+' Delete quiz</button>':'')+'</div></div>';
   const sc=$(".modal")?$(".modal").scrollTop:0;openModal(h);const m=$(".modal");m.classList.add("wide");m.scrollTop=sc;bindEditor();
 }
-function readEditor(){const q=S.qEdit;q.title=$("#qe-t").value.trim();q.smeId=$("#qe-s").value;q.quizKey=$("#qe-k").value;q.showScore=$("#qe-sc").checked;q.shuffle=$("#qe-sh").checked;
+function readEditor(){const q=S.qEdit;q.title=$("#qe-t").value.trim();q.smeId=$("#qe-s").value;q.quizKey=$("#qe-k")?$("#qe-k").value:"";q.showScore=$("#qe-sc").checked;q.shuffle=$("#qe-sh").checked;
   document.querySelectorAll("[data-qtext]").forEach(t=>{q.questions[+t.dataset.qtext].text=t.value});
   document.querySelectorAll("[data-qopt]").forEach(t=>{const [i,j]=t.dataset.qopt.split("|").map(Number);q.questions[i].options[j]=t.value})}
 function parsePasted(txt){
@@ -2806,7 +2880,7 @@ function bindEditor(){
   $("#qePasteBtn").addEventListener("click",()=>{$("#qePaste").hidden=!$("#qePaste").hidden;if(!$("#qePaste").hidden)$("#qe-p").focus()});
   $("#qePasteGo").addEventListener("click",()=>{readEditor();const add=parsePasted($("#qe-p").value);if(!add.length){$("#qePasteMsg").textContent="No questions recognised. Check the format above.";return}q.questions=q.questions.concat(add);drawEditor();toast(plural(add.length,"question","questions")+" added"+(add.some(x=>x.answer==null)?" · mark the missing answers":""))});
   $("#qeSave").addEventListener("click",async()=>{readEditor();const err=$("#qeerr");
-    if(!q.title){err.textContent="Give the quiz a title.";return}if(!q.smeId){err.textContent="Choose an SME.";return}
+    if(!q.title){err.textContent="Give the quiz a title.";return}
     if(!q.questions.length){err.textContent="Add at least one question.";return}
     const bad=q.questions.findIndex(x=>!x.text.trim()||x.answer==null||x.options.some(o=>!String(o).trim()));
     if(bad>=0){err.textContent="Question "+(bad+1)+" needs its text, all options filled and a correct answer.";return}
@@ -2866,7 +2940,7 @@ function bindQuizResult_old(q){
 }
 
 /* ---------- participant (QR) view ---------- */
-function readHash(){const m=(location.hash||"").match(/^#quiz-([A-Za-z0-9_-]+)$/);S.taker=m?m[1]:null;document.body.classList.toggle("taker",!!S.taker)}
+function readHash(){const m=(location.hash||"").match(/^#quiz-([A-Za-z0-9_-]+)(?:\.(pre|post))?$/);S.taker=m?m[1]:null;S.takerPhase=m&&m[2]?m[2]:null;document.body.classList.toggle("taker",!!S.taker)}
 window.addEventListener("hashchange",()=>{readHash();render()});
 readHash();
 function takerView_old(){
@@ -2976,31 +3050,31 @@ const qphLabel=p=>p==="pre"?"Pre-quiz":"Post-quiz";
 const rPhase=r=>r.phase==="pre"?"pre":"post";
 S.qPhaseView=null;S.qRunPhase={};
 function qBest(q,phase){const c=S.cohorts[q.smeId],R=(S.qResp[q.id]||[]).filter(r=>rPhase(r)===phase),best={};
-  R.forEach(r=>{const p=matchParticipant(c,r),k=p?p.id:"x"+String(r.name||"").toLowerCase().replace(/[^a-z]/g,"");if(!best[k]||String(r.submittedAt)<String(best[k].r.submittedAt))best[k]={r,p,k}});
+  R.forEach(r=>{const p=matchParticipant(c,r),k=p?p.id:(r.staffId?"s"+String(r.staffId).replace(/\D/g,""):"x"+String(r.name||"").toLowerCase().replace(/[^a-z]/g,""));if(!best[k]||String(r.submittedAt)<String(best[k].r.submittedAt))best[k]={r,p,k}});
   return{R,rows:Object.values(best).sort((a,b)=>(b.r.pct||0)-(a.r.pct||0)),counted:new Set(Object.values(best).map(x=>x.r.id))}}
 const pctTxt=v=>v==null?"–":Math.round(v*100)+"%";
 const avgOf=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
 
 /* ---- run screen ---- */
-function quizRunView(q){
+function quizRunView_v2(q){
   const c=S.cohorts[q.smeId],open=q.status==="open",ph=open?(q.phase||"post"):(S.qRunPhase[q.id]||q.phase||"pre");
   const {R,rows}=qBest(q,ph),n=(c&&c.participants||[]).length,link=quizLink(q);
   const avg=avgOf(rows.map(x=>x.r.pct||0));
   let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
-  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
+  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"Open to anyone")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
     '<div class="phasepick" role="group" aria-label="Quiz phase">'+PHASES.map(p=>'<button type="button" class="'+(ph===p[0]?"on ":"")+p[0]+'" data-qphase="'+p[0]+'"'+(open&&ph!==p[0]?' title="Switch the open quiz to '+p[1]+'"':'')+'><b>'+p[1]+'</b><small>'+p[2]+'</small></button>').join("")+'</div>'+
     '<div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
     '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" id="qCopy">Copy link</button></div>'+
     '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+qphLabel(ph)+'</span><button class="btn danger" id="qClose">Close '+qphLabel(ph).toLowerCase()+'</button>':'<span class="pill '+QSTAT[q.status||"draft"][1]+'" style="font-size:14px;padding:4px 14px">'+QSTAT[q.status||"draft"][0]+'</span><button class="btn primary" id="qOpen">Open '+qphLabel(ph).toLowerCase()+'</button>')+'</div>'+
     (open?'':'<p class="hint">Participants see “not open yet” until you open it. Run the Pre-quiz before the session and the Post-quiz after it, with the same QR code.</p>')+musicPanel()+'</section>';
-  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var('+(ph==="pre"?"--s5":"--s2")+')"></i>'+qphLabel(ph)+'</div><h3>Live answers</h3><p>Updates as participants submit</p></div></div><div class="livek"><div><b class="num">'+rows.length+'</b><span>of '+n+' answered</span></div><div><b class="num">'+pctTxt(avg)+'</b><span>average</span></div><div><b class="num">'+(q.questions||[]).length+'</b><span>questions</span></div></div>'+
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var('+(ph==="pre"?"--s5":"--s2")+')"></i>'+qphLabel(ph)+'</div><h3>Live answers</h3><p>Updates as participants submit</p></div></div><div class="livek"><div><b class="num">'+rows.length+'</b><span>'+(q.smeId?'of '+n+' answered':'answered')+'</span></div><div><b class="num">'+pctTxt(avg)+'</b><span>average</span></div><div><b class="num">'+(q.questions||[]).length+'</b><span>questions</span></div></div>'+
     '<div class="meter big"><i style="width:'+(n?Math.min(100,rows.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:420px;overflow:auto">'+
     R.slice().sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(new Date(r.submittedAt).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))+(r.secs?' · '+fmtSecs(r.secs):'')+'</small></span><b class="num">'+pctTxt(r.pct||0)+'</b></div>').join("")+
     (R.length?'':'<span class="hint">No answers yet.</span>')+'</div></section></div>';
   return h;
 }
 const fmtSecs=s=>{s=Math.round(s||0);return s<60?s+"s":Math.floor(s/60)+"m "+(s%60)+"s"};
-function bindQuizRun(q){
+function bindQuizRun_v2(q){
   if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(quizLink(q),420)}).catch(()=>{const b=$("#qrbox");if(b)b.innerHTML='<p class="hint">QR library could not load. Share the link below instead.</p>'});
   const cp=$("#qCopy");if(cp)cp.addEventListener("click",()=>{navigator.clipboard.writeText(quizLink(q)).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"))});
   bindMusic();
@@ -3013,23 +3087,23 @@ function bindQuizRun(q){
 }
 
 /* ---- results ---- */
-function quizResultView(q){
+function quizResultView_v2(q){
   const c=S.cohorts[q.smeId],Qs=q.questions||[],all=S.qResp[q.id]||[];
   const hasPre=all.some(r=>rPhase(r)==="pre"),hasPost=all.some(r=>rPhase(r)==="post");
   let v=S.qPhaseView||(hasPost?"post":hasPre?"pre":"post");if(v==="compare"&&!(hasPre&&hasPost))v=hasPost?"post":"pre";
   const PRE=qBest(q,"pre"),POST=qBest(q,"post");
   let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
   const matchedPost=POST.rows.filter(x=>x.p).length;
-  h+='<section class="banner quizb"><div class="grow"><span class="bk">'+esc(c?c.name||q.smeId:"")+' · results</span><h1>'+esc(q.title)+'</h1><div class="meta"><span>Pre-quiz: '+PRE.rows.length+' answered · avg '+pctTxt(avgOf(PRE.rows.map(x=>x.r.pct||0)))+'</span><span>Post-quiz: '+POST.rows.length+' answered · avg '+pctTxt(avgOf(POST.rows.map(x=>x.r.pct||0)))+'</span>'+(q.savedAt?'<span>Post scores saved '+esc(new Date(q.savedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</span>':'')+'</div></div>'+
-    '<div class="acts"><button class="btn onban solid" id="qPush"'+(matchedPost?"":" disabled")+' title="Only Post-quiz scores are saved">Save post-quiz scores to '+esc(c?c.name||q.smeId:"SME")+'</button></div></section>';
+  h+='<section class="banner quizb"><div class="grow"><span class="bk">'+esc(c?c.name||q.smeId:"Open to anyone")+' · results</span><h1>'+esc(q.title)+'</h1><div class="meta"><span>Pre-quiz: '+PRE.rows.length+' answered · avg '+pctTxt(avgOf(PRE.rows.map(x=>x.r.pct||0)))+'</span><span>Post-quiz: '+POST.rows.length+' answered · avg '+pctTxt(avgOf(POST.rows.map(x=>x.r.pct||0)))+'</span>'+(q.savedAt?'<span>Post scores saved '+esc(new Date(q.savedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</span>':'')+'</div></div>'+
+    '<div class="acts"><button class="btn onban" id="qExport">'+I.down+' Export to Excel</button>'+(q.smeId?'<button class="btn onban solid" id="qPush"'+(matchedPost?"":" disabled")+' title="Only Post-quiz scores are saved">Save post-quiz scores to '+esc(c?c.name||q.smeId:"SME")+'</button>':'')+'</div></section>';
   h+='<div class="qtabs2" role="tablist">'+[["pre","Pre-quiz",PRE.rows.length],["post","Post-quiz",POST.rows.length],["compare","Pre vs Post",null]].map(t=>'<button role="tab" class="'+(v===t[0]?"on":"")+'" data-qpv="'+t[0]+'"'+(t[0]==="compare"&&!(hasPre&&hasPost)?' disabled title="Needs both pre and post answers"':'')+'>'+t[1]+(t[2]!=null?' <span class="num">'+t[2]+'</span>':'')+'</button>').join("")+'</div>';
   if(v==="compare")return h+compareView(q,PRE,POST);
   const B=v==="pre"?PRE:POST,rows=B.rows;
   h+='<div class="g2">'+panel("qrDist",{title:"Score distribution",tag:qphLabel(v),tagColor:v==="pre"?"--s5":"--s2",sub:"Participants per score band",opts:[["col","Column"],["pie","Donut"]],render:t=>{const bs=bands(rows.map(x=>x.r.pct||0));return t==="pie"?donut(bs,{center:rows.length,centerLabel:"ANSWERED"}):columns(bs.map(b=>({label:b.label.split(" · ")[0],value:b.value,text:b.value,color:b.color,tip:b.label+": "+b.value})))}})+
     panel("qrItems",{title:"Question analysis",tag:"Questions",tagColor:"--s1",sub:"Share of participants who got each question right",opts:[["bar","Bar"]],render:()=>hbars(Qs.map((x,i)=>{const ok=rows.filter(r=>(r.r.answers||{})[x.id]===x.answer).length,vv=rows.length?ok/rows.length:null;return{label:"Q"+(i+1)+". "+x.text,value:vv,max:1,text:vv==null?"–":Math.round(vv*100)+"%",color:rateColor(vv),tip:x.text+"\nCorrect: "+x.options[x.answer]+"\n"+ok+" of "+rows.length+" right"}}),{max:1})})+'</div>';
   const list=B.R.slice().sort((a,b)=>String(a.name).localeCompare(String(b.name))||String(a.submittedAt).localeCompare(String(b.submittedAt)));
-  h+='<section class="panel"><div class="ph"><div class="t"><h3>'+qphLabel(v)+' submissions</h3><p>The first submission from each participant counts. Delete wrong or test entries with the bin icon.'+(v==="pre"?' Pre-quiz scores are not saved to the SME.':'')+'</p></div>'+(list.length&&S.admin?'<div class="a"><button class="btn sm danger" id="qClear" data-ph="'+v+'">'+I.trash+' Delete all '+qphLabel(v).toLowerCase()+' answers</button></div>':'')+'</div><div class="tblwrap"><table><thead><tr><th>#</th><th>Participant</th><th>Matched in SME</th><th class="r">Score</th><th class="r">%</th><th>Time</th><th>Submitted</th><th></th></tr></thead><tbody>'+
-    list.map((r,i)=>{const p=matchParticipant(c,r),cnt=B.counted.has(r.id);return '<tr'+(cnt?'':' class="dim"')+'><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+(cnt?'':' · duplicate, not counted')+'</small></div></td><td>'+(p?'<span class="pill good">'+esc(p.name)+'</span>':'<span class="pill bad">Not found</span>')+'</td><td class="r num">'+r.score+' / '+r.max+'</td><td class="r num rowsum">'+pctTxt(r.pct||0)+'</td><td class="hint">'+(r.secs?fmtSecs(r.secs):'–')+'</td><td class="hint">'+esc(new Date(r.submittedAt).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r">'+(S.admin?'<button class="btn sm icon ghost" data-rdel="'+esc(r.id)+'" aria-label="Delete this submission" title="Delete this submission">'+I.trash+'</button>':'')+'</td></tr>'}).join("")+
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>'+qphLabel(v)+' submissions</h3><p>The first submission from each participant counts. Delete wrong or test entries with the bin icon.'+(v==="pre"?' Pre-quiz scores are not saved to the SME.':'')+'</p></div>'+(list.length&&S.admin?'<div class="a"><button class="btn sm danger" id="qClear" data-ph="'+v+'">'+I.trash+' Delete all '+qphLabel(v).toLowerCase()+' answers</button></div>':'')+'</div><div class="tblwrap"><table><thead><tr><th>#</th><th>Participant</th><th>'+(q.smeId?'Matched in SME':'Department')+'</th><th class="r">Score</th><th class="r">%</th><th>Time</th><th>Submitted</th><th></th></tr></thead><tbody>'+
+    list.map((r,i)=>{const p=matchParticipant(c,r),cnt=B.counted.has(r.id);return '<tr'+(cnt?'':' class="dim"')+'><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+(cnt?'':' · duplicate, not counted')+'</small></div></td><td>'+(!q.smeId?'<span class="hint">'+esc(r.unit||"—")+'</span>':p?'<span class="pill good">'+esc(p.name)+'</span>':'<span class="pill bad">Not found</span>')+'</td><td class="r num">'+r.score+' / '+r.max+'</td><td class="r num rowsum">'+pctTxt(r.pct||0)+'</td><td class="hint">'+(r.secs?fmtSecs(r.secs):'–')+'</td><td class="hint">'+esc(new Date(r.submittedAt).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r">'+(S.admin?'<button class="btn sm icon ghost" data-rdel="'+esc(r.id)+'" aria-label="Delete this submission" title="Delete this submission">'+I.trash+'</button>':'')+'</td></tr>'}).join("")+
     (list.length?'':'<tr><td colspan="8" class="hint">No '+qphLabel(v).toLowerCase()+' submissions yet.</td></tr>')+'</tbody></table></div></section>';
   return h;
 }
@@ -3052,11 +3126,12 @@ function bindQuizResult(q){
   document.querySelectorAll("[data-qpv]").forEach(b=>b.addEventListener("click",()=>{if(b.disabled)return;S.qPhaseView=b.dataset.qpv;render()}));
   document.querySelectorAll("[data-rdel]").forEach(b=>{let armed=false;b.addEventListener("click",async()=>{
     if(!armed){armed=true;b.classList.add("armed");b.innerHTML="Delete?";setTimeout(()=>{if(document.body.contains(b)){armed=false;b.classList.remove("armed");b.innerHTML=I.trash}},4000);return}
-    try{await S.db.doc("quizzes/"+q.id+"/responses/"+b.dataset.rdel).delete();S.qResp[q.id]=(S.qResp[q.id]||[]).filter(r=>r.id!==b.dataset.rdel);toast("Submission deleted");render()}catch(e){toast("Could not delete this submission")}})});
+    try{const rr=(S.qResp[q.id]||[]).find(r=>r.id===b.dataset.rdel);await S.db.doc("quizzes/"+q.id+"/responses/"+b.dataset.rdel).delete();if(rr)await qFreeSlot(q,rr);S.qResp[q.id]=(S.qResp[q.id]||[]).filter(r=>r.id!==b.dataset.rdel);toast("Submission deleted");render()}catch(e){toast("Could not delete this submission")}})});
   const clr=$("#qClear");if(clr)clr.addEventListener("click",async()=>{const ph=clr.dataset.ph,L=(S.qResp[q.id]||[]).filter(r=>rPhase(r)===ph);
     if(!confirm("Delete all "+L.length+" "+qphLabel(ph).toLowerCase()+" answers for “"+q.title+"”? This cannot be undone."))return;
-    let n=0;for(const r of L){try{await S.db.doc("quizzes/"+q.id+"/responses/"+r.id).delete();n++}catch(e){}}
+    let n=0;for(const r of L){try{await S.db.doc("quizzes/"+q.id+"/responses/"+r.id).delete();await qFreeSlot(q,r);n++}catch(e){}}
     S.qResp[q.id]=(S.qResp[q.id]||[]).filter(r=>!(rPhase(r)===ph&&L.includes(r)));toast(n+" answers deleted");render()});
+  const ex=$("#qExport");if(ex)ex.addEventListener("click",()=>exportQuizResults(q));
   const b=$("#qPush");if(!b)return;
   b.addEventListener("click",async()=>{const c=S.cohorts[q.smeId];if(!c)return;const POST=qBest(q,"post"),best={};POST.rows.forEach(x=>{if(x.p)best[x.p.id]=x.r});
     let key=q.quizKey;const n=Object.keys(best).length;
@@ -3071,9 +3146,9 @@ function tkRing(p,size,stroke,col){const r=(size-stroke)/2,C=2*Math.PI*r;return 
 function tkBand(p){return p>=.9?{t:"Outstanding!",s:"You nailed it. Expert level.",m:"gold",c:"#f5b301"}:p>=.75?{t:"Great job!",s:"Strong understanding — well done.",m:"silver",c:"#22c55e"}:p>=.5?{t:"Good effort!",s:"You’re on the right track. Keep going!",m:"bronze",c:"#f97316"}:{t:"Keep learning!",s:"Every expert started here. You’ve got this.",m:"start",c:"#60a5fa"}}
 function tkMedal(m){const col={gold:["#fde047","#f59e0b"],silver:["#e5e7eb","#9ca3af"],bronze:["#fdba74","#c2410c"],start:["#bfdbfe","#3b82f6"]}[m];
   return '<svg class="tkmedal" viewBox="0 0 64 80" width="56" height="70" aria-hidden="true"><path d="M18 2h12l6 26H24z" fill="#ef4444"/><path d="M34 2h12l-6 26H28z" fill="#2563eb"/><circle cx="32" cy="50" r="24" fill="'+col[1]+'"/><circle cx="32" cy="50" r="18" fill="'+col[0]+'"/><path d="M32 38l3.5 7.5 8 .9-6 5.5 1.7 8L32 56l-7.2 3.9 1.7-8-6-5.5 8-.9z" fill="'+col[1]+'"/></svg>'}
-function takerView(){
+function takerView_v2(){
   const q=S.quizzes[S.taker],tk=S.tk,ph=q?(q.phase||"post"):"post";
-  const shell=(inner,cls)=>'<div class="tk '+(cls||"")+'"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(q?(S.cohorts[q.smeId]||{}).name||q.smeName||q.smeId:"Quiz")+'</small></div>'+(q?'<span class="tkphase '+ph+'">'+qphLabel(ph)+'</span>':'')+'</div>'+inner+'</div>';
+  const shell=(inner,cls)=>'<div class="tk '+(cls||"")+'"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(q?(S.cohorts[q.smeId]||{}).name||q.smeName||q.smeId||"Open quiz":"Quiz")+'</small></div>'+(q?'<span class="tkphase '+ph+'">'+qphLabel(ph)+'</span>':'')+'</div>'+inner+'</div>';
   if(!S.db)return shell('<div class="tkcard"><h2>Quiz unavailable</h2><p>Check your internet connection and open the link again.</p></div>');
   if(!S.quizLoaded)return shell('<div class="tkcard center"><span class="spin"></span> Loading quiz…</div>');
   if(!q)return shell('<div class="tkcard center"><h2>Quiz not found</h2><p>Check the QR code with your trainer.</p></div>');
@@ -3081,10 +3156,11 @@ function takerView(){
   if(q.status!=="open")return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><p>'+(q.status==="closed"?"This quiz is closed. Thank you!":"Not open yet — wait for your trainer, then tap Refresh.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>');
   const c=S.cohorts[q.smeId],ps=(c&&c.participants||[]).slice().sort((a,b)=>a.name.localeCompare(b.name)),Qs=q.questions||[];
   if(!tk.name)return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><div class="tkfacts"><span><b>'+Qs.length+'</b> questions</span><span><b>~'+Math.max(1,Math.round(Qs.length*.5))+'</b> min</span><span><b>'+(ph==="pre"?"Baseline":"Final")+'</b> score</span></div>'+
-    '<p class="tkintro">'+(ph==="pre"?"Let’s see what you already know. No pressure — this is your starting point.":"Show what you’ve learned! This score is recorded for your SME assessment.")+'</p></div>'+
+    '<p class="tkintro">'+(ph==="pre"?"Let’s see what you already know. No pressure — this is your starting point.":q.smeId?"Show what you’ve learned! This score is recorded for your SME assessment.":"Show what you’ve learned!")+'</p></div>'+
+    (!q.smeId?'<div class="tkcard"><div class="field"><label for="tk-on">Full name</label><input id="tk-on" type="text" autocomplete="name"></div><div class="field"><label for="tk-os">Staff number</label><input id="tk-os" type="text" inputmode="numeric"></div><div class="field"><label for="tk-ou">Department / station</label><input id="tk-ou" type="text" placeholder="e.g. SJ Kapar"></div><div class="err" id="tkerr"></div><button class="btn primary big" id="tkStart">Start '+qphLabel(ph).toLowerCase()+' →</button></div>':
     '<div class="tkcard"><div class="field"><label for="tk-n">Your name</label><select id="tk-n"><option value="">Select your name…</option>'+ps.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("")+'<option value="__other">My name is not listed</option></select></div>'+
     '<div id="tk-other" hidden><div class="field"><label for="tk-on">Full name</label><input id="tk-on" type="text"></div><div class="field"><label for="tk-os">Staff number</label><input id="tk-os" type="text" inputmode="numeric"></div></div>'+
-    '<div class="err" id="tkerr"></div><button class="btn primary big" id="tkStart">Start '+qphLabel(ph).toLowerCase()+' →</button></div>');
+    '<div class="err" id="tkerr"></div><button class="btn primary big" id="tkStart">Start '+qphLabel(ph).toLowerCase()+' →</button></div>'));
   const Qo=tk.order.map(i=>Qs[i]),i=Math.min(tk.cur||0,Qo.length-1),x=Qo[i],done=Object.keys(tk.ans).length;
   return shell('<div class="tkbar"><span class="eyebrow">'+esc(tk.name)+'</span><span class="num">'+done+' / '+Qo.length+' answered</span></div><div class="tksteps">'+Qo.map((y,j)=>'<i class="'+(j===i?"cur ":"")+(tk.ans[y.id]!=null?"ok":"")+'" data-tkgo="'+j+'"></i>').join("")+'</div>'+
     '<div class="tkcard tkq" style="--qc:'+TK_COLORS[i%TK_COLORS.length]+'"><b class="tkqn">Question '+(i+1)+' of '+Qo.length+'</b><p class="tkqt">'+esc(x.text)+'</p>'+x.options.map((o,j)=>'<button class="tkopt'+(tk.ans[x.id]===j?" on":"")+'" data-tka="'+esc(x.id)+'|'+j+'" style="--oc:'+TK_COLORS[j%TK_COLORS.length]+'"><span>'+String.fromCharCode(65+j)+'</span>'+esc(o)+'</button>').join("")+'</div>'+
@@ -3105,11 +3181,13 @@ function tkResult(q,tk,ph){
 const tkNotSaved=tk=>'<div class="notice" style="text-align:left">Your answers could not be sent. Show this screen to your trainer. Code: <b>'+esc(tk.code)+'</b></div>';
 function tkAnimate(){const a=document.querySelector(".tkring .arc");if(a)requestAnimationFrame(()=>requestAnimationFrame(()=>{a.style.strokeDashoffset=a.dataset.to}));
   const n=document.querySelector("[data-count]");if(n&&!n.dataset.done){n.dataset.done=1;const to=+n.dataset.count,t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1200);n.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}}
-function bindTaker(){
+function bindTaker_v2(){
   const q=S.quizzes[S.taker],tk=S.tk;if(!q)return;const ph=q.phase||"post";
   if(tk.done){tkAnimate();return}
   const sel=$("#tk-n");if(sel)sel.addEventListener("change",()=>{$("#tk-other").hidden=sel.value!=="__other"});
-  const st=$("#tkStart");if(st)st.addEventListener("click",()=>{const v=sel.value,c=S.cohorts[q.smeId];
+  const st=$("#tkStart");if(st)st.addEventListener("click",()=>{if(!sel){const n=$("#tk-on").value.trim(),sid=$("#tk-os").value.trim();if(n.length<3){$("#tkerr").textContent="Type your full name.";return}if(!sid){$("#tkerr").textContent="Type your staff number.";return}
+      tk.name=n;tk.staffId=sid;tk.unit=$("#tk-ou").value.trim();tk.pid=null;tk.ans={};tk.cur=0;tk.t0=Date.now();tk.order=(q.questions||[]).map((_,i)=>i);if(q.shuffle)tk.order.sort(()=>Math.random()-.5);render();window.scrollTo(0,0);return}
+    const v=sel.value,c=S.cohorts[q.smeId];
     if(!v){$("#tkerr").textContent="Choose your name.";return}
     if(v==="__other"){const n=$("#tk-on").value.trim();if(n.length<3){$("#tkerr").textContent="Type your full name.";return}tk.name=n;tk.staffId=$("#tk-os").value.trim();tk.pid=null}
     else{const p=c.participants.find(x=>x.id===v);tk.name=p.name;tk.staffId=p.staffId||"";tk.pid=p.id}
@@ -3125,11 +3203,458 @@ function bindTaker(){
     sb.disabled=true;sb.textContent="Sending…";
     const max=Qs.reduce((a,x)=>a+(x.points||1),0),score=Qs.reduce((a,x)=>a+(tk.ans[x.id]===x.answer?(x.points||1):0),0),secs=Math.round((Date.now()-(tk.t0||Date.now()))/1000);
     const rid="r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-    const resp={name:tk.name,staffId:tk.staffId,pid:tk.pid,answers:tk.ans,score,max,pct:max?score/max:0,phase:ph,secs,submittedAt:new Date().toISOString()};
+    const resp={name:tk.name,staffId:tk.staffId,pid:tk.pid,answers:tk.ans,score,max,pct:max?score/max:0,phase:ph,secs,submittedAt:new Date().toISOString()};if(tk.unit)resp.unit=tk.unit;
     let saved=false;try{await S.db.doc("quizzes/"+q.id+"/responses/"+rid).set(resp);saved=true}catch(e){}
-    const pk="ga-pre-"+q.id+"-"+(tk.pid||String(tk.name).toLowerCase().replace(/[^a-z]/g,""));let prePct=null;
+    const pk="ga-pre-"+q.id+"-"+(tk.pid||(tk.staffId?String(tk.staffId):String(tk.name).toLowerCase().replace(/[^a-z]/g,"")));let prePct=null;
     try{if(ph==="pre")localStorage.setItem(pk,String(resp.pct));else{const v=localStorage.getItem(pk);if(v!=null)prePct=+v}}catch(e){}
     Object.assign(tk,{done:true,saved,score,max,secs,prePct,code:rid.slice(-6).toUpperCase()+"-"+score+"/"+max});render();window.scrollTo(0,0)});
+}
+async function exportQuizResults(q){
+  let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}
+  try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
+  const c=S.cohorts[q.smeId],Qs=q.questions||[],R=(S.qResp[q.id]||[]).slice().sort((a,b)=>rPhase(a).localeCompare(rPhase(b))||String(a.name).localeCompare(String(b.name)));
+  const counted=new Set([...qBest(q,"pre").counted,...qBest(q,"post").counted]);
+  const head=["Phase","Name","Staff number","Department","Matched in SME","Score","Out of","%","Time (s)","Submitted","Counted"].concat(Qs.map((x,i)=>"Q"+(i+1)));
+  const rows=R.map(r=>{const p=matchParticipant(c,r);return [qphLabel(rPhase(r)),r.name,r.staffId||"",r.unit||"",p?p.name:"",r.score,r.max,Math.round((r.pct||0)*1000)/10,r.secs||"",r.submittedAt,counted.has(r.id)?"Yes":"Duplicate"].concat(Qs.map(x=>{const a=(r.answers||{})[x.id];return a==null?"":(a===x.answer?"✓ ":"✗ ")+String.fromCharCode(65+a)}))});
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([head].concat(rows)),"Submissions");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["#","Question","Correct answer"]].concat(Qs.map((x,i)=>[i+1,x.text,String.fromCharCode(65+x.answer)+". "+x.options[x.answer]]))),"Questions");
+  try{await dl.save({filename:("Quiz_"+q.title).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_").slice(0,60)+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}
+}
+
+/* ---------- QUIZ v3: one QR per phase, submit each answer, one attempt per person & per phone ---------- */
+function tkDevice(){if(window.FB&&FB.user&&FB.user.uid)return FB.user.uid;let d="";try{d=localStorage.getItem("ga-dev")||""}catch(e){}
+  if(!d){d="d"+Array.from(crypto.getRandomValues(new Uint8Array(10))).map(x=>x.toString(16).padStart(2,"0")).join("");try{localStorage.setItem("ga-dev",d)}catch(e){}}return d}
+const tkKey=(pid,staffId,name)=>pid?String(pid):staffId&&String(staffId).replace(/\D/g,"")?"s"+String(staffId).replace(/\D/g,""):"n"+String(name||"").toLowerCase().replace(/[^a-z]/g,"").slice(0,40);
+const qPath=(q,sub,id)=>"quizzes/"+q.id+"/"+sub+"/"+id;
+async function qFreeSlot(q,r){const ph=rPhase(r);try{if(r.key)await S.db.doc(qPath(q,"claims",ph+"_"+r.key)).delete()}catch(e){}try{if(r.uid)await S.db.doc(qPath(q,"devices",ph+"_"+r.uid)).delete()}catch(e){}}
+S.qClaims={};S.qClaimSub=null;
+function watchClaims(q){if(!S.db||S.qClaimSub===q.id)return;if(S.qClaimUnsub)S.qClaimUnsub();S.qClaimSub=q.id;
+  S.qClaimUnsub=S.db.collection("quizzes/"+q.id+"/claims").onSnapshot(sn=>{S.qClaims[q.id]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(S.current==="__quiz")safeRender()},()=>{})}
+
+/* run screen: choose which phase's QR to show; each phase has its own link */
+function quizRunView(q){
+  const c=S.cohorts[q.smeId],vp=S.qRunPhase[q.id]||(q.status==="open"?(q.phase||"post"):"pre"),isOpen=q.status==="open"&&(q.phase||"post")===vp,other=q.status==="open"&&!isOpen;
+  const {R,rows}=qBest(q,vp),n=(c&&c.participants||[]).length,link=quizLink(q,vp),avg=avgOf(rows.map(x=>x.r.pct||0));
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
+  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"Open to anyone")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
+    '<div class="phasepick" role="group" aria-label="Which QR code">'+PHASES.map(p=>{const live=q.status==="open"&&(q.phase||"post")===p[0];return '<button type="button" class="'+(vp===p[0]?"on ":"")+p[0]+'" data-qphase="'+p[0]+'"><b>'+p[1]+' QR'+(live?' <span class="pill good" style="font-size:10px;padding:1px 6px;margin-left:4px">LIVE</span>':'')+'</b><small>'+p[2]+'</small></button>'}).join("")+'</div>'+
+    '<div class="qrtag '+vp+'">'+qphLabel(vp).toUpperCase()+'</div><div class="qrbox '+vp+'" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
+    '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" id="qCopy">Copy link</button></div>'+
+    '<div class="runstate">'+(isOpen?'<span class="pill good" style="font-size:14px;padding:4px 14px">'+qphLabel(vp)+' is open</span><button class="btn danger" id="qClose">Close '+qphLabel(vp).toLowerCase()+'</button>':
+      '<span class="pill none" style="font-size:14px;padding:4px 14px">'+qphLabel(vp)+' '+(q.status==="closed"&&(q.phase||"post")===vp?"closed":"not open")+'</span><button class="btn primary" id="qOpen">Open '+qphLabel(vp).toLowerCase()+'</button>')+'</div>'+
+    (other?'<p class="hint">The '+qphLabel(q.phase||"post").toLowerCase()+' is open now. Opening the '+qphLabel(vp).toLowerCase()+' will close it.</p>':isOpen?'':'<p class="hint">Pre-quiz and post-quiz have different QR codes. A QR code only works while its quiz is open.</p>')+
+    '<p class="hint" style="margin-top:2px">Each person can answer once, from one phone. Reset a person in Results if they need another try.</p>'+musicPanel()+'</section>';
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var('+(vp==="pre"?"--s5":"--s2")+')"></i>'+qphLabel(vp)+'</div><h3>Live answers</h3><p>Updates as participants submit</p></div></div><div class="livek"><div><b class="num">'+rows.length+'</b><span>'+(q.smeId?'of '+n+' answered':'answered')+'</span></div><div><b class="num">'+pctTxt(avg)+'</b><span>average</span></div><div><b class="num">'+(q.questions||[]).length+'</b><span>questions</span></div></div>'+
+    '<div class="meter big"><i style="width:'+(n?Math.min(100,rows.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:420px;overflow:auto">'+
+    R.slice().sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(new Date(r.submittedAt).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))+(r.secs?' · '+fmtSecs(r.secs):'')+'</small></span><b class="num">'+pctTxt(r.pct||0)+'</b></div>').join("")+
+    (R.length?'':'<span class="hint">No answers yet.</span>')+'</div></section></div>';
+  return h;
+}
+function bindQuizRun(q){
+  const vp=()=>S.qRunPhase[q.id]||(q.status==="open"?(q.phase||"post"):"pre");
+  if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(quizLink(q,vp()),420)}).catch(()=>{const b=$("#qrbox");if(b)b.innerHTML='<p class="hint">QR library could not load. Share the link below instead.</p>'});
+  const cp=$("#qCopy");if(cp)cp.addEventListener("click",()=>{navigator.clipboard.writeText(quizLink(q,vp())).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"))});
+  bindMusic();
+  document.querySelectorAll("[data-qphase]").forEach(b=>b.addEventListener("click",()=>{S.qRunPhase[q.id]=b.dataset.qphase;render()}));
+  const o=$("#qOpen");if(o)o.addEventListener("click",()=>{const p=vp();if(S.music.auto&&!S.music.playing)musicPlay();
+    saveQuiz({...q,status:"open",phase:p,openedAt:new Date().toISOString()},qphLabel(p)+" is open").then(render)});
+  const cl=$("#qClose");if(cl)cl.addEventListener("click",()=>{if(S.music.auto&&S.music.playing)musicStop();
+    saveQuiz({...q,status:"closed",closedAt:new Date().toISOString()},qphLabel(q.phase||"post")+" closed").then(render)});
+}
+
+/* results: add "started but not submitted" with reset */
+function quizResultView(q){
+  watchClaims(q);let h=quizResultView_v2(q);
+  const R=S.qResp[q.id]||[],sent=new Set(R.map(r=>rPhase(r)+"_"+(r.key||""))),stuck=(S.qClaims[q.id]||[]).filter(c=>!sent.has(c.id));
+  if(stuck.length&&S.admin)h+='<section class="panel"><div class="ph"><div class="t"><h3>Started, not submitted</h3><p>These names are locked to a phone but no answers were sent. Reset one if the person needs to start again (for example on another phone).</p></div></div><div class="plist">'+
+    stuck.map(c=>'<div class="pitem"><span class="rk"><span class="pill '+(c.phase==="pre"?"brand":"warn")+'" style="font-size:10px">'+(c.phase==="pre"?"PRE":"POST")+'</span></span><span class="nm"><b>'+esc(c.name||c.key)+'</b><small>'+esc(c.at?new Date(c.at).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}):"")+'</small></span><button class="btn sm" data-qreset="'+esc(c.id)+'">Reset</button></div>').join("")+'</div></section>';
+  return h;
+}
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-qreset]");if(!b||!S.qView)return;const q=S.quizzes[S.qView.id];if(!q)return;
+  const c=(S.qClaims[q.id]||[]).find(x=>x.id===b.dataset.qreset);if(!c)return;b.disabled=true;
+  try{await S.db.doc(qPath(q,"claims",c.id)).delete();if(c.uid)await S.db.doc(qPath(q,"devices",c.phase+"_"+c.uid)).delete();toast((c.name||"Participant")+" can start again")}catch(err){toast("Could not reset")}});
+
+/* participant page */
+function takerView(){
+  const q=S.quizzes[S.taker],tk=S.tk,ph=S.takerPhase||(q?(q.phase||"post"):"post");
+  const shell=(inner,cls)=>'<div class="tk '+(cls||"")+'"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(q?(S.cohorts[q.smeId]||{}).name||q.smeName||q.smeId||"Open quiz":"Quiz")+'</small></div>'+(q?'<span class="tkphase '+ph+'">'+qphLabel(ph)+'</span>':'')+'</div>'+inner+'</div>';
+  if(!S.db)return shell('<div class="tkcard"><h2>Quiz unavailable</h2><p>Check your internet connection and open the link again.</p></div>');
+  if(!S.quizLoaded)return shell('<div class="tkcard center"><span class="spin"></span> Loading quiz…</div>');
+  if(!q)return shell('<div class="tkcard center"><h2>Quiz not found</h2><p>Check the QR code with your trainer.</p></div>');
+  if(tk.done)return shell(tk.already?tkAlready(q,tk,ph):tkResult(q,tk,ph),"done");
+  const open=q.status==="open"&&(q.phase||"post")===ph;
+  if(!open&&!tk.name)return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><p>'+(q.status==="closed"&&(q.phase||"post")===ph?"This "+qphLabel(ph).toLowerCase()+" is closed. Thank you!":"This "+qphLabel(ph).toLowerCase()+" is not open yet — wait for your trainer, then tap Refresh.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>');
+  const c=S.cohorts[q.smeId],ps=(c&&c.participants||[]).slice().sort((a,b)=>a.name.localeCompare(b.name)),Qs=q.questions||[];
+  if(!tk.name)return shell('<div class="tkhero"><span class="tkchip">'+qphLabel(ph)+'</span><h1>'+esc(q.title)+'</h1><div class="tkfacts"><span><b>'+Qs.length+'</b> questions</span><span><b>~'+Math.max(1,Math.round(Qs.length*.5))+'</b> min</span><span><b>1</b> attempt</span></div>'+
+    '<p class="tkintro">'+(ph==="pre"?"Let’s see what you already know. No pressure — this is your starting point.":q.smeId?"Show what you’ve learned! This score is recorded for your SME assessment.":"Show what you’ve learned!")+'</p></div>'+
+    '<div class="tkcard">'+(q.smeId?'<div class="field"><label for="tk-n">Your name</label><select id="tk-n"><option value="">Select your name…</option>'+ps.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("")+'<option value="__other">My name is not listed</option></select></div><div id="tk-other" hidden>':'<div>')+
+    '<div class="field"><label for="tk-on">Full name</label><input id="tk-on" type="text" autocomplete="name"></div><div class="field"><label for="tk-os">Staff number</label><input id="tk-os" type="text" inputmode="numeric"></div>'+(q.smeId?'':'<div class="field"><label for="tk-ou">Department / station</label><input id="tk-ou" type="text" placeholder="e.g. SJ Kapar"></div>')+'</div>'+
+    '<p class="hint tkrule">One attempt per person. Answer only for yourself — your name is locked to this phone.</p><div class="err" id="tkerr"></div><button class="btn primary big" id="tkStart">Start '+qphLabel(ph).toLowerCase()+' →</button></div>');
+  const Qo=tk.order.map(i=>Qs[i]),i=Math.min(tk.cur||0,Qo.length-1),x=Qo[i],done=Object.keys(tk.ans).length,locked=tk.ans[x.id]!=null,pick=locked?tk.ans[x.id]:tk.pick[x.id],all=done===Qo.length;
+  return shell('<div class="tkbar"><span class="eyebrow">'+esc(tk.name)+'</span><span class="num">'+done+' / '+Qo.length+' answered</span></div><div class="tksteps">'+Qo.map((y,j)=>'<i class="'+(j===i?"cur ":"")+(tk.ans[y.id]!=null?"ok":"")+'"'+(tk.ans[y.id]!=null||j<=done?' data-tkgo="'+j+'"':'')+'></i>').join("")+'</div>'+
+    '<div class="tkcard tkq'+(locked?" locked":"")+'" style="--qc:'+TK_COLORS[i%TK_COLORS.length]+'"><b class="tkqn">Question '+(i+1)+' of '+Qo.length+'</b><p class="tkqt">'+esc(x.text)+'</p>'+
+    x.options.map((o,j)=>'<button class="tkopt'+(pick===j?" on":"")+'" data-tka="'+esc(x.id)+'|'+j+'" style="--oc:'+TK_COLORS[j%TK_COLORS.length]+'"'+(locked?' disabled':'')+'><span>'+String.fromCharCode(65+j)+'</span>'+esc(o)+(locked&&pick===j?'<em class="lk">Submitted ✓</em>':'')+'</button>').join("")+'</div>'+
+    '<div class="tknav"><button class="btn big" id="tkPrev"'+(i===0?" disabled":"")+'>← Back</button>'+
+      (!locked?'<button class="btn primary big" id="tkAns"'+(pick==null?" disabled":"")+'>Submit answer</button>':!all?'<button class="btn primary big" id="tkNext">Next question →</button>':'<button class="btn primary big tkfin" id="tkSubmit">Finish &amp; see my result ✓</button>')+'</div><div class="err" id="tkerr2"></div>');
+}
+function tkAlready(q,tk,ph){const r=tk.prev||{};return '<div class="tkhero center"><div class="tkok">✓</div><h1>Already answered</h1><p>'+esc(r.name||tk.name||"You")+' already sent the '+qphLabel(ph).toLowerCase()+' from this phone'+(r.submittedAt?' on '+esc(new Date(r.submittedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})):'')+'.</p>'+(q.showScore!==false&&r.max?'<div class="tkfacts" style="width:100%"><span><b>'+pctTxt(r.pct||0)+'</b>score</span><span><b>'+r.score+'/'+r.max+'</b>correct</span><span><b>'+fmtSecs(r.secs)+'</b>time</span></div>':'')+'<p style="font-size:13px">Each person can answer once. If this is a mistake, ask your trainer to reset it.</p></div>'}
+async function tkLoadPrev(q,ph){try{const d=await S.db.doc(qPath(q,"responses",ph+"_"+tkDevice())).get();return d.exists?d.data():null}catch(e){return null}}
+function bindTaker(){
+  const q=S.quizzes[S.taker],tk=S.tk;if(!q)return;const ph=S.takerPhase||q.phase||"post";
+  if(tk.done){if(!tk.already)tkAnimate();return}
+  tk.pick=tk.pick||{};
+  if(!tk.name&&!tk.checked){tk.checked=true;tkLoadPrev(q,ph).then(r=>{if(r){Object.assign(tk,{done:true,already:true,prev:r});render()}})}
+  const sel=$("#tk-n");if(sel)sel.addEventListener("change",()=>{$("#tk-other").hidden=sel.value!=="__other"});
+  const st=$("#tkStart");if(st)st.addEventListener("click",async()=>{const err=$("#tkerr");err.textContent="";
+    if(!(q.status==="open"&&(q.phase||"post")===ph)){err.textContent="This "+qphLabel(ph).toLowerCase()+" is not open.";return}
+    let name,staffId,pid=null,unit="";
+    if(sel&&sel.value&&sel.value!=="__other"){const p=(S.cohorts[q.smeId].participants||[]).find(x=>x.id===sel.value);name=p.name;staffId=p.staffId||"";pid=p.id}
+    else{if(sel&&!sel.value){err.textContent="Choose your name.";return}name=$("#tk-on").value.trim();staffId=$("#tk-os").value.trim();unit=$("#tk-ou")?$("#tk-ou").value.trim():"";
+      if(name.length<3){err.textContent="Type your full name.";return}if(!String(staffId).replace(/\D/g,"")){err.textContent="Type your staff number.";return}}
+    st.disabled=true;st.textContent="Checking…";
+    const dev=tkDevice(),key=tkKey(pid,staffId,name),did=ph+"_"+dev,cid=ph+"_"+key,now=new Date().toISOString();
+    const fail=m=>{err.textContent=m;st.disabled=false;st.textContent="Start "+qphLabel(ph).toLowerCase()+" →"};
+    try{
+      const prev=await tkLoadPrev(q,ph);if(prev){Object.assign(tk,{done:true,already:true,prev});render();return}
+      const dv=await S.db.doc(qPath(q,"devices",did)).get(),cl=await S.db.doc(qPath(q,"claims",cid)).get();
+      if(dv.exists&&dv.data().key!==key)return fail("This phone was already used by "+(dv.data().name||"another person")+" for this "+qphLabel(ph).toLowerCase()+". Please use your own phone.");
+      if(cl.exists&&cl.data().uid!==dev)return fail(name+" has already started this "+qphLabel(ph).toLowerCase()+" on another phone. If this is a mistake, ask your trainer to reset it.");
+      if(!dv.exists)await S.db.doc(qPath(q,"devices",did)).set({phase:ph,key,name,at:now});
+      if(!cl.exists)await S.db.doc(qPath(q,"claims",cid)).set({phase:ph,key,uid:dev,name,at:now});
+    }catch(e){return fail("Could not start. Check the internet connection and that the quiz is still open.")}
+    Object.assign(tk,{name,staffId,pid,unit,key,dev,ans:{},pick:{},cur:0,t0:Date.now()});tk.order=(q.questions||[]).map((_,i)=>i);if(q.shuffle)tk.order.sort(()=>Math.random()-.5);render();window.scrollTo(0,0)});
+  const go=j=>{tk.cur=j;render();window.scrollTo(0,0)};
+  document.querySelectorAll("[data-tka]").forEach(b=>b.addEventListener("click",()=>{const [id,j]=b.dataset.tka.split("|");if(tk.ans[id]!=null)return;tk.pick[id]=+j;render()}));
+  const an=$("#tkAns");if(an)an.addEventListener("click",()=>{const Qs=q.questions||[],x=Qs[tk.order[tk.cur]];if(tk.pick[x.id]==null)return;tk.ans[x.id]=tk.pick[x.id];render()});
+  document.querySelectorAll("[data-tkgo]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.tkgo)));
+  const pv=$("#tkPrev");if(pv)pv.addEventListener("click",()=>go(Math.max(0,tk.cur-1)));
+  const nx=$("#tkNext");if(nx)nx.addEventListener("click",()=>{const Qs=q.questions||[],nxt=tk.order.findIndex((ix,j)=>j>tk.cur&&tk.ans[Qs[ix].id]==null);go(nxt>=0?nxt:Math.min(tk.cur+1,Qs.length-1))});
+  const sb=$("#tkSubmit");if(sb)sb.addEventListener("click",async()=>{const Qs=q.questions||[];if(Qs.some(x=>tk.ans[x.id]==null)){$("#tkerr2").textContent="Answer every question first.";return}
+    sb.disabled=true;sb.textContent="Sending…";
+    const max=Qs.reduce((a,x)=>a+(x.points||1),0),score=Qs.reduce((a,x)=>a+(tk.ans[x.id]===x.answer?(x.points||1):0),0),secs=Math.round((Date.now()-(tk.t0||Date.now()))/1000);
+    const rid=ph+"_"+tk.dev;
+    const resp={name:tk.name,staffId:tk.staffId,pid:tk.pid,answers:tk.ans,score,max,pct:max?score/max:0,phase:ph,secs,key:tk.key,uid:tk.dev,submittedAt:new Date().toISOString()};if(tk.unit)resp.unit=tk.unit;
+    let saved=false;try{await S.db.doc(qPath(q,"responses",rid)).set(resp);saved=true}catch(e){}
+    const pk="ga-pre-"+q.id+"-"+tk.key;let prePct=null;
+    try{if(ph==="pre")localStorage.setItem(pk,String(resp.pct));else{const v=localStorage.getItem(pk);if(v!=null)prePct=+v}}catch(e){}
+    Object.assign(tk,{done:true,saved,score,max,secs,prePct,code:rid.slice(-6).toUpperCase()+"-"+score+"/"+max});render();window.scrollTo(0,0)});
+}
+
+/* ================= ATTENDANCE (QR check-in) & FORUM FEEDBACK ================= */
+S.att={};S.fbk={};S.attLoaded=false;S.fbkLoaded=false;S.trainers=[];S.extResp={};S.extSub={};S.extView=null;S.ext=null;S.ex={};
+const EXT_FOREVER=4102444800000;
+const FB_SCALE=[[1,"Disagree"],[2,"Satisfactory"],[3,"Agree"]];
+const FB_TEMPLATES={
+  ntd:{name:"Genco Academy feedback form (NTD)",desc:"21 questions · Forum material, Trainer, General, recommendation and comment",parts:[
+    {id:"p1",title:"Part 1: Forum material / content",items:["The course is relevant to my job.","The course achieved its stated objective(s).","The information in the course materials was easy to read and understand.","The examples and explanations presented to help explain important concepts were very helpful.","Classroom activities such as discussions, case studies, role plays etc. were sufficient and helpful.","There was enough time allocated for practice, questions and discussion.","The training has increased my capability to perform current and future job tasks."]},
+    {id:"p2",title:"Part 2: Trainer",perTrainer:true,items:["The trainer was well prepared.","The trainer was helpful in developing my skills and confidence.","The trainer was knowledgeable about the subject.","The trainer was able to encourage me during the class.","The trainer’s presentation was effective.","The trainer was able to answer the relevant questions.","The trainer was able to relate course contents with the latest information."]},
+    {id:"p3",title:"Part 3: General",items:["The course facilities / training platform provided a quality environment to support my training experience.","Overall, I am very satisfied with the course."]}],
+    rec:{q:"I will recommend this course to my co-workers / others. Which group should attend this course in the future?",options:["Non Exec","Exec 12-13","Exec 14-15","Exec 16-17"]},
+    comment:"Please leave your comment or suggestion for any improvement."},
+  quick:{name:"Quick feedback (6 questions)",desc:"Short form for short sessions",parts:[
+    {id:"p1",title:"The session",items:["The session is relevant to my job.","The content was easy to understand.","There was enough time for questions and discussion."]},
+    {id:"p2",title:"Trainer",perTrainer:true,items:["The trainer was knowledgeable and well prepared.","The trainer’s presentation was effective."]},
+    {id:"p3",title:"Overall",items:["Overall, I am very satisfied with the session."]}],
+    rec:null,comment:"Any comment or suggestion?"}
+};
+const fbItems=f=>{const T=f.tpl||FB_TEMPLATES[f.template||"ntd"],tr=(f.trainers||[]).filter(Boolean),out=[];
+  T.parts.forEach(p=>{if(p.perTrainer)(tr.length?tr:["Trainer"]).forEach((t,ti)=>p.items.forEach((q,i)=>out.push({k:p.id+"_"+i+"_t"+ti,part:p.id,ptitle:p.title,q,trainer:t,ti})));else p.items.forEach((q,i)=>out.push({k:p.id+"_"+i,part:p.id,ptitle:p.title,q}))});return out};
+const extCol=t=>t==="att"?"attendance":"feedback";
+const extStore=t=>t==="att"?S.att:S.fbk;
+const extLink=(t,id,slot)=>quizBase().replace(/#.*$/,"")+"#"+t+"-"+id+(slot&&t==="att"?"."+slot:"");
+const extOpen=(d,slot)=>((d.openUntil||{})[slot]||0)>Date.now();
+const fmtDay=s=>{if(!s)return"";const d=new Date(s+"T00:00:00");return isNaN(d)?s:d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"})};
+const fmtTime=ms=>new Date(ms).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+const localISO=d=>{d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const extId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function subscribeExt(){if(!S.db)return;
+  S.db.collection("attendance").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.att=m;S.attLoaded=true;if(S.current==="__att"||S.ext)safeRender()},()=>{S.attLoaded=true});
+  S.db.collection("feedback").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.fbk=m;S.fbkLoaded=true;if(S.current==="__fb"||S.ext)safeRender()},()=>{S.fbkLoaded=true});
+  S.db.doc("config/trainers").onSnapshot(d=>{S.trainers=d.exists?(d.data().names||[]):[];if(S.current==="__fb")safeRender()},()=>{});
+}
+function watchExt(t,id){const p=extCol(t)+"/"+id+"/responses";if(!S.db||S.extSub[p])return;S.extSub[p]=S.db.collection(p).onSnapshot(sn=>{S.extResp[p]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(S.current==="__att"||S.current==="__fb")safeRender()},()=>{})}
+const extResp=(t,id)=>S.extResp[extCol(t)+"/"+id+"/responses"]||[];
+async function extSave(t,d,msg){d=clone(d);d.updatedAt=new Date().toISOString();d.updatedBy=S.me?S.me.username:"";const c=S.cohorts[d.smeId];
+  if(c){d.smeName=c.name||d.smeId;d.roster=(c.participants||[]).filter(p=>!/withdraw/i.test(p.remark||"")).map(p=>({id:p.id,name:p.name}))}else{delete d.roster;delete d.smeName}
+  try{await S.db.doc(extCol(t)+"/"+d.id).set(d);extStore(t)[d.id]=d;if(msg)toast(msg);return true}catch(e){toast("Could not save.");return false}}
+function validityHtml(v){v=v||{mode:"day",hours:2};return '<div class="field"><label>QR code valid for</label><div class="chkgrid"><label class="chk"><input type="radio" name="ev-m" value="day"'+(v.mode==="day"?" checked":"")+'> The whole day (until 11:59 pm)</label><label class="chk"><input type="radio" name="ev-m" value="hours"'+(v.mode==="hours"?" checked":"")+'> <select id="ev-h">'+[1,2,3,4,6,8,12].map(h=>'<option'+(+v.hours===h?" selected":"")+'>'+h+'</option>').join("")+'</select> hours after I open it</label><label class="chk"><input type="radio" name="ev-m" value="manual"'+(v.mode==="manual"?" checked":"")+'> Until I close it</label></div></div>'}
+const readValidity=()=>({mode:(document.querySelector('input[name="ev-m"]:checked')||{}).value||"day",hours:+(($("#ev-h")||{}).value||2)});
+function untilFrom(v){const now=new Date();if(v.mode==="hours")return now.getTime()+(v.hours||2)*3600000;if(v.mode==="manual")return EXT_FOREVER;const e=new Date(now);e.setHours(23,59,59,0);return e.getTime()}
+const leftTxt=ms=>{const s=Math.max(0,Math.round((ms-Date.now())/60000));return ms>=EXT_FOREVER?"until you close it":s>=60?Math.floor(s/60)+"h "+(s%60)+"m left":s+" min left"};
+function whoSelect(sel){return '<select id="ev-s"><option value=""'+(!sel?" selected":"")+'>Open to anyone (type name, staff no., department)</option><optgroup label="Participants of an SME">'+ids().map(i=>'<option value="'+esc(i)+'"'+(i===sel?" selected":"")+'>'+esc(S.cohorts[i].name||i)+'</option>').join("")+'</optgroup></select>'}
+
+/* ---------------- ATTENDANCE: admin ---------------- */
+function attView(){
+  if(!S.admin)return loginGate("Sign in as an Editor or Admin to manage attendance.");
+  const v=S.extView&&S.extView.t==="att"&&S.att[S.extView.id];if(v)return S.extView.mode==="run"?attRunView(v):attDash(v);
+  const L=Object.values(S.att).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
+  let h='<section class="banner attb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Attendance</h1><div class="meta"><span>'+plural(L.length,"course","courses")+'</span><span>QR check-in for SME participants or anyone</span></div></div><div class="acts"><button class="btn onban solid" data-attnew>'+I.plus+' New attendance</button></div></section>';
+  h+='<div class="qsteps">'+[["1","Set up","Course, location, days and how long the QR stays valid.","--s1"],["2","Show QR","Open the QR for the day. It closes by itself.","--s2"],["3","Check in","Participants scan and tap Check in — once per day.","--s3"],["4","Dashboard","See who came each day and save it to the SME.","--s4"]].map(s=>'<div style="--k:var('+s[3]+')"><i>'+s[0]+'</i><b>'+s[1]+'</b><span>'+s[2]+'</span></div>').join("")+'</div>';
+  if(!S.attLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
+  if(!L.length)return h+'<div class="empty"><b>No attendance yet</b>Create one for your next course.<div class="acts"><button class="btn primary" data-attnew>'+I.plus+' New attendance</button></div></div>';
+  return h+'<div class="qcards">'+L.map(a=>{const c=S.cohorts[a.smeId],live=(a.days||[]).find(d=>extOpen(a,"d"+d.n));
+    return '<div class="qcard" style="--k:var('+(c?SME_COL(a.smeId):"--s1")+')"><div class="top">'+(live?'<span class="pill good">Open · '+esc(live.label)+'</span>':'<span class="pill none">Closed</span>')+'<span class="hint">'+esc(c?c.name||a.smeId:"Open to anyone")+'</span></div><b class="qt">'+esc(a.title)+'</b><span class="hint">'+esc(a.location||"")+(a.days&&a.days.length?' · '+plural(a.days.length,"day","days")+' from '+esc(fmtDay(a.days[0].date)):'')+'</span>'+
+      '<div class="qacts"><button class="btn sm" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-attdash="'+esc(a.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
+}
+function attEditor(id){
+  const a=id?clone(S.att[id]):{id:"a"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",location:"",days:[{n:1,label:"Day 1",date:localISO(),sess:""}],validity:{mode:"day",hours:2},openUntil:{}};
+  S.ex.att=a;drawAttEditor();
+}
+function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions||[]):[];
+  let h=mhead(S.att[a.id]?"Edit attendance":"New attendance",a.days.length+" day"+(a.days.length>1?"s":""))+'<div class="mb"><div class="frow">'+
+    '<div class="field"><label for="ea-t">Course / forum title</label><input id="ea-t" type="text" value="'+esc(a.title)+'" placeholder="e.g. Critical Thinking & Problem Solving"></div>'+
+    '<div class="field"><label for="ea-l">Location</label><input id="ea-l" type="text" value="'+esc(a.location||"")+'" placeholder="e.g. TNB MITC, Bangi"></div>'+
+    '<div class="field"><label for="ev-s">Who checks in</label>'+whoSelect(a.smeId)+'</div></div>'+
+    '<div class="field"><label>Days</label><div class="dayrows">'+a.days.map((d,i)=>'<div class="dayrow"><b>Day '+d.n+'</b><input type="text" data-dl="'+i+'" value="'+esc(d.label)+'" aria-label="Label"><input type="date" data-dd="'+i+'" value="'+esc(d.date||"")+'" aria-label="Date">'+(c?'<select data-ds="'+i+'" aria-label="Save to SME attendance session"><option value="">Don’t save to SME</option>'+ss.map(s=>'<option value="'+s.key+'"'+(s.key===d.sess?" selected":"")+'>'+esc(s.module)+(s.date?" · "+esc(fmtD(s.date)):"")+'</option>').join("")+'</select>':'')+(a.days.length>1?'<button class="btn sm icon ghost" data-ddel="'+i+'" aria-label="Remove day">'+I.x+'</button>':'')+'</div>').join("")+'</div>'+
+    '<button class="more" id="eaAdd">'+I.plus+' Add day</button>'+(c?'<span class="hint">Pick the SME attendance session for each day so check-ins can be saved to the SME.</span>':'')+'</div>'+
+    validityHtml(a.validity)+'<div class="err" id="eaerr"></div><div class="mfoot"><button class="btn primary" id="eaSave">Save</button>'+(S.att[a.id]?'<span style="flex:1"></span><button class="btn danger" id="eaDel">'+I.trash+' Delete</button>':'')+'</div></div>';
+  openModal(h);$(".modal").classList.add("wide");
+  const read=()=>{a.title=$("#ea-t").value.trim();a.location=$("#ea-l").value.trim();a.smeId=$("#ev-s").value;a.validity=readValidity();
+    document.querySelectorAll("[data-dl]").forEach(e=>a.days[+e.dataset.dl].label=e.value.trim()||"Day "+a.days[+e.dataset.dl].n);document.querySelectorAll("[data-dd]").forEach(e=>a.days[+e.dataset.dd].date=e.value);document.querySelectorAll("[data-ds]").forEach(e=>a.days[+e.dataset.ds].sess=e.value)};
+  $("#ev-s").addEventListener("change",()=>{read();a.days.forEach(d=>d.sess="");drawAttEditor()});
+  $("#eaAdd").addEventListener("click",()=>{read();const last=a.days[a.days.length-1],n=Math.max(...a.days.map(d=>d.n))+1;let dt="";if(last.date){const x=new Date(last.date+"T00:00:00");x.setDate(x.getDate()+1);dt=localISO(x)}a.days.push({n,label:"Day "+n,date:dt,sess:""});drawAttEditor()});
+  document.querySelectorAll("[data-ddel]").forEach(b=>b.addEventListener("click",()=>{read();a.days.splice(+b.dataset.ddel,1);drawAttEditor()}));
+  $("#eaSave").addEventListener("click",async()=>{read();if(!a.title){$("#eaerr").textContent="Give it a title.";return}if(a.days.some(d=>!d.date)){$("#eaerr").textContent="Every day needs a date.";return}
+    if(await extSave("att",a,"Attendance saved")){closeModal();render()}});
+  const del=$("#eaDel");if(del){let armed=false;del.addEventListener("click",async()=>{if(!armed){armed=true;del.textContent="Click again to delete";return}try{await S.db.doc("attendance/"+a.id).delete();delete S.att[a.id];closeModal();toast("Deleted");render()}catch(e){toast("Could not delete")}})}
+}
+function attRunView(a){
+  const c=S.cohorts[a.smeId],days=a.days||[];let dn=S.ex.attDay&&S.ex.attDay[a.id];if(!dn||!days.some(d=>d.n===dn)){const live=days.find(d=>extOpen(a,"d"+d.n)),today=localISO();dn=(live||days.find(d=>d.date===today)||days[0]||{}).n}
+  const d=days.find(x=>x.n===dn)||{},slot="d"+dn,open=extOpen(a,slot),until=(a.openUntil||{})[slot]||0,R=extResp("att",a.id).filter(r=>r.slot===slot),link=extLink("att",a.id,slot),n=c?(c.participants||[]).length:0;
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All attendance</button><span style="flex:1"></span><button class="btn" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn" data-attdash="'+esc(a.id)+'">Dashboard</button></div>';
+  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1>'+
+    '<div class="daychips">'+days.map(x=>'<button type="button" class="'+(x.n===dn?"on":"")+'" data-attday="'+x.n+'"><b>'+esc(x.label)+(extOpen(a,"d"+x.n)?' <span class="pill good" style="font-size:10px;padding:1px 6px">LIVE</span>':'')+'</b><small>'+esc(fmtDay(x.date))+'</small></button>').join("")+'</div>'+
+    '<div class="qrtag">CHECK-IN · '+esc((d.label||"").toUpperCase())+'</div><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
+    '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" data-copy="'+esc(link)+'">Copy link</button></div>'+
+    '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+esc(leftTxt(until))+(until<EXT_FOREVER?' · closes '+fmtTime(until):'')+'</span><button class="btn danger" id="attClose">Close now</button>':'<span class="pill none" style="font-size:14px;padding:4px 14px">'+(until?'Closed':'Not open')+'</span><button class="btn primary" id="attOpen">Open check-in for '+esc(d.label||"")+'</button>')+'</div>'+
+    '<p class="hint">'+({day:"QR stays valid until 11:59 pm today.",hours:"QR stays valid for "+((a.validity||{}).hours||2)+" hours after you open it.",manual:"QR stays valid until you close it."})[(a.validity||{}).mode||"day"]+' One check-in per person per day, from one phone.</p></section>';
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s3)"></i>'+esc(d.label||"")+'</div><h3>Checked in</h3><p>'+esc(fmtDay(d.date))+'</p></div></div><div class="livek"><div><b class="num">'+R.length+'</b><span>'+(c?'of '+n+' checked in':'checked in')+'</span></div><div><b class="num">'+(c&&n?Math.round(R.length/n*100)+"%":"–")+'</b><span>attendance</span></div><div><b class="num">'+(R.length?fmtTime(Math.min(...R.map(r=>Date.parse(r.at)))):"–")+'</b><span>first in</span></div></div>'+
+    '<div class="meter big"><i style="width:'+(n?Math.min(100,R.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:440px;overflow:auto">'+R.slice().sort((x,y)=>String(y.at).localeCompare(String(x.at))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc([r.staffId,r.unit].filter(Boolean).join(" · "))+'</small></span><b class="num">'+fmtTime(Date.parse(r.at))+'</b></div>').join("")+(R.length?'':'<span class="hint">No check-ins yet.</span>')+'</div>'+
+    (c?'<details class="notyet"><summary>Not checked in yet ('+Math.max(0,n-new Set(R.map(r=>r.pid).filter(Boolean)).size)+')</summary><div class="chips">'+(c.participants||[]).filter(p=>!R.some(r=>r.pid===p.id)).map(p=>'<span>'+esc(p.name)+'</span>').join("")+'</div></details>':'')+'</section></div>';
+  return h;
+}
+function attDash(a){
+  const c=S.cohorts[a.smeId],days=a.days||[],R=extResp("att",a.id),people={};
+  R.forEach(r=>{const k=r.key||r.pid||r.name;(people[k]=people[k]||{name:r.name,staffId:r.staffId,unit:r.unit,pid:r.pid,d:{}}).d[r.slot]=r.at});
+  if(c)(c.participants||[]).forEach(p=>{const k=p.id;if(!people[k])people[k]={name:p.name,staffId:p.staffId,unit:p.station,pid:p.id,d:{}}});
+  const P=Object.values(people).sort((x,y)=>x.name.localeCompare(y.name)),N=c?(c.participants||[]).length:P.length;
+  const per=days.map(d=>R.filter(r=>r.slot==="d"+d.n).length),uniq=new Set(R.map(r=>r.key||r.name)).size,rate=N&&days.length?avgOf(per.map(x=>x/N)):null;
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All attendance</button><span style="flex:1"></span><button class="btn" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button></div>';
+  h+='<section class="banner attb"><div class="grow"><span class="bk">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1><div class="meta"><span>'+plural(days.length,"day","days")+'</span><span>'+esc(days.length?fmtDay(days[0].date)+(days.length>1?" – "+fmtDay(days[days.length-1].date):""):"")+'</span></div></div><div class="acts"><button class="btn onban" id="attExport">'+I.down+' Export to Excel</button>'+(c&&days.some(d=>d.sess)?'<button class="btn onban solid" id="attPush">Save to '+esc(c.name||a.smeId)+' attendance</button>':'')+'</div></section>';
+  h+='<div class="kpis">'+kpiH("Days",days.length,"",a.location||"","--s1",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>')+kpiH("People checked in",uniq,c?"/"+N:"","At least one day","--s5",NAV[1][3],N?uniq/N:null)+kpiH("Check-ins",R.length,"","All days","--s3",'<path d="M9 11l3 3 8-8"/>')+kpiH("Average attendance",rate==null?"–":Math.round(rate*100),rate==null?"":"%",c?"Per day, of "+N+" participants":"Needs an SME roster","--good",'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',rate)+'</div>';
+  h+=panel("attDays",{title:"Check-ins per day",tag:"Attendance",tagColor:"--s3",sub:c?"Bars show checked in out of "+N:"Number of people who checked in",opts:[["col","Column"],["bar","Bar"]],render:t=>{const it=days.map((d,i)=>({label:d.label,value:per[i],text:per[i]+(c?"/"+N:""),color:c&&N?rateColor(per[i]/N):"--s3",tip:d.label+" · "+fmtDay(d.date)+": "+per[i]}));return t==="bar"?hbars(it,{max:c?N:undefined}):columns(it,{max:c?N:undefined})}});
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Who came each day</h3><p>✓ with check-in time · blank = not checked in</p></div></div><div class="tblwrap"><table><thead><tr><th>#</th><th>Name</th><th>'+(c?"Station":"Department")+'</th>'+days.map(d=>'<th class="r">'+esc(d.label)+'<br><small class="hint">'+esc(fmtDay(d.date).replace(/^\w+, /,""))+'</small></th>').join("")+'<th class="r">Days</th></tr></thead><tbody>'+
+    P.map((p,i)=>{const nd=days.filter(d=>p.d["d"+d.n]).length;return '<tr><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(p.name)+'</b><small>'+esc(p.staffId||"")+'</small></div></td><td class="hint">'+esc(p.unit||"")+'</td>'+days.map(d=>{const t=p.d["d"+d.n];return '<td class="r">'+(t?'<span class="pill good">✓ '+fmtTime(Date.parse(t))+'</span>':'<span class="hint">–</span>')+'</td>'}).join("")+'<td class="r num">'+nd+'/'+days.length+'</td></tr>'}).join("")+(P.length?'':'<tr><td colspan="'+(days.length+4)+'" class="hint">No check-ins yet.</td></tr>')+'</tbody></table></div></section>';
+  return h;
+}
+async function attExport(a){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
+  const R=extResp("att",a.id),days=a.days||[];const rows=[["Day","Date","Name","Staff number","Department / station","Check-in time","Matched in SME"]].concat(R.slice().sort((x,y)=>String(x.slot).localeCompare(String(y.slot))||String(x.name).localeCompare(String(y.name))).map(r=>{const d=days.find(x=>"d"+x.n===r.slot)||{};return[d.label||r.slot,d.date||"",r.name,r.staffId||"",r.unit||"",new Date(r.at).toLocaleString("en-GB"),r.pid?"Yes":""]}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),"Check-ins");
+  try{await dl.save({filename:("Attendance_"+a.title).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_").slice(0,60)+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
+function bindAttAdmin(){
+  const v=S.extView&&S.att[S.extView.id];if(!v)return;const a=v;
+  if(S.extView.mode==="run"){const dn=()=>{const b=document.querySelector("[data-attday].on");return b?+b.dataset.attday:1};
+    if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(extLink("att",a.id,"d"+dn()),420)}).catch(()=>{});
+    document.querySelectorAll("[data-attday]").forEach(b=>b.addEventListener("click",()=>{S.ex.attDay=S.ex.attDay||{};S.ex.attDay[a.id]=+b.dataset.attday;render()}));
+    const o=$("#attOpen");if(o)o.addEventListener("click",()=>{const ou={};ou["d"+dn()]=untilFrom(a.validity||{});extSave("att",{...a,openUntil:ou},"Check-in is open").then(render)});
+    const cl=$("#attClose");if(cl)cl.addEventListener("click",()=>{const ou={...(a.openUntil||{})};ou["d"+dn()]=0;extSave("att",{...a,openUntil:ou},"Check-in closed").then(render)});
+    clearInterval(S.ex.tick);S.ex.tick=setInterval(()=>{if(S.current!=="__att"||!S.extView||S.extView.mode!=="run"){clearInterval(S.ex.tick);return}const p=document.querySelector(".runstate .pill");if(p&&extOpen(a,"d"+dn()))p.textContent="Open · "+leftTxt(a.openUntil["d"+dn()])+(a.openUntil["d"+dn()]<EXT_FOREVER?" · closes "+fmtTime(a.openUntil["d"+dn()]):"");else if(p&&!/Not open|Closed/.test(p.textContent))render()},30000);
+  }else{
+    const ex=$("#attExport");if(ex)ex.addEventListener("click",()=>attExport(a));
+    const pu=$("#attPush");if(pu)pu.addEventListener("click",async()=>{const c=S.cohorts[a.smeId],R=extResp("att",a.id);let n=0;
+      if(!confirm("Mark checked-in participants as Present and the others as Absent for the mapped days in "+(c.name||a.smeId)+"?"))return;
+      upd(a.smeId,cc=>{(a.days||[]).filter(d=>d.sess).forEach(d=>{const ins=new Set(R.filter(r=>r.slot==="d"+d.n&&r.pid).map(r=>r.pid));cc.participants.forEach(p=>{p.att=p.att||{};p.att[d.sess]=ins.has(p.id)?"P":(p.att[d.sess]==="R"?"R":"A");if(ins.has(p.id))n++})})},"Attendance “"+a.title+"” saved from QR check-in");
+      toast(n+" check-ins saved to "+(c.name||a.smeId))});
+  }
+}
+
+/* ---------------- FEEDBACK: admin ---------------- */
+function fbView(){
+  if(!S.admin)return loginGate("Sign in as an Editor or Admin to manage feedback.");
+  const v=S.extView&&S.extView.t==="fb"&&S.fbk[S.extView.id];if(v)return S.extView.mode==="run"?fbRunView(v):fbDash(v);
+  const L=Object.values(S.fbk).sort((a,b)=>String(b.date||b.updatedAt||"").localeCompare(String(a.date||a.updatedAt||"")));
+  L.forEach(f=>watchExt("fb",f.id));
+  let h='<section class="banner fbb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Forum feedback</h1><div class="meta"><span>'+plural(L.length,"forum","forums")+'</span><span>Feedback form per subject, scanned by QR</span></div></div><div class="acts"><button class="btn onban" id="fbTrainers">Trainers ('+S.trainers.length+')</button><button class="btn onban solid" data-fbnew>'+I.plus+' New feedback form</button></div></section>';
+  if(!S.fbkLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
+  if(!L.length)return h+'<div class="empty"><b>No feedback forms yet</b>Create one for each subject or forum. Pick a template, the module and up to two trainers.<div class="acts"><button class="btn primary" data-fbnew>'+I.plus+' New feedback form</button></div></div>';
+  // overview dashboard
+  const stat=L.map(f=>({f,...fbStats(f)})),all=stat.filter(s=>s.n),tot=stat.reduce((x,s)=>x+s.n,0),ov=avgOf(all.map(s=>s.overall));
+  const tr={};all.forEach(s=>s.trainers.forEach(t=>{(tr[t.name]=tr[t.name]||{name:t.name,v:[],forums:0,n:0});tr[t.name].v.push(t.avg);tr[t.name].forums++;tr[t.name].n+=s.n}));const TR=Object.values(tr).map(t=>({...t,avg:avgOf(t.v)})).sort((x,y)=>y.avg-x.avg);
+  h+='<div class="kpis">'+kpiH("Forums",L.length,"",all.length+" with responses","--s1",'<path d="M4 5h16v11H8l-4 4z"/>')+kpiH("Responses",tot,"","All forums","--s5",NAV[1][3])+kpiH("Overall satisfaction",ov==null?"–":(ov*100).toFixed(0),ov==null?"":"%","Average of all rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',ov)+kpiH("Trainers rated",TR.length,"",TR[0]?"Top: "+TR[0].name:"","--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+'</div>';
+  if(all.length)h+='<div class="g2">'+panel("fbForums",{title:"Satisfaction by forum",tag:"Forums",tagColor:"--s1",sub:"Average of all rating items (3 = Agree). Click to open.",opts:[["bar","Bar"]],render:()=>hbars(all.slice().sort((x,y)=>y.overall-x.overall).map(s=>({label:s.f.title,sub:(s.f.date?fmtDay(s.f.date)+" · ":"")+s.n+" responses",value:s.overall,max:1,text:(s.overall*3).toFixed(2)+" / 3",color:rateColor(s.overall),act:'data-fbdash="'+esc(s.f.id)+'"'})),{max:1})})+
+    panel("fbTrainerBoard",{title:"Trainer ratings",tag:"Trainers",tagColor:"--s3",sub:"Average of Part 2 (Trainer) across all forums",opts:[["bar","Bar"]],render:()=>TR.length?hbars(TR.map(t=>({label:t.name,sub:plural(t.forums,"forum","forums")+" · "+t.n+" responses",value:t.avg,max:1,text:(t.avg*3).toFixed(2)+" / 3",color:rateColor(t.avg)})),{max:1}):emptyChart("No trainer ratings yet.")})+'</div>';
+  h+='<div class="sechead"><div><h2>Feedback forms</h2></div></div><div class="qcards">'+stat.map(s=>{const f=s.f,c=S.cohorts[f.smeId],open=extOpen(f,"fb");
+    return '<div class="qcard" style="--k:var('+(c?SME_COL(f.smeId):"--s3")+')"><div class="top">'+(open?'<span class="pill good">Open</span>':'<span class="pill none">Closed</span>')+'<span class="hint">'+esc(c?c.name||f.smeId:"Open to anyone")+'</span></div><b class="qt">'+esc(f.title)+'</b><span class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).filter(Boolean).join(" & ")].filter(Boolean).join(" · "))+'</span>'+
+      (s.n?'<div class="fbmini"><b class="num">'+(s.overall*3).toFixed(2)+'</b><span>/ 3 · '+s.n+' responses</span><div class="meter"><i style="width:'+s.overall*100+'%"></i></div></div>':'<span class="hint">No responses yet</span>')+
+      '<div class="qacts"><button class="btn sm" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-fbdash="'+esc(f.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
+  return h;
+}
+function fbStats(f){const R=extResp("fb",f.id),items=fbItems(f),avgK=k=>avgOf(R.map(r=>(r.ans||{})[k]).filter(v=>typeof v==="number"));
+  const it=items.map(x=>({...x,avg:avgK(x.k),dist:FB_SCALE.map(s=>R.filter(r=>(r.ans||{})[x.k]===s[0]).length)}));
+  const norm=v=>v==null?null:(v-1)/2; // 1..3 → 0..1
+  const vals=it.filter(x=>x.avg!=null);const overall=vals.length?avgOf(vals.map(x=>norm(x.avg))):null;
+  const partAvg=p=>{const v=it.filter(x=>x.part===p&&x.avg!=null);return v.length?avgOf(v.map(x=>norm(x.avg))):null};
+  const trainers=(f.trainers||[]).filter(Boolean).map((t,ti)=>{const v=it.filter(x=>x.ti===ti&&x.avg!=null);return{name:t,avg:v.length?avgOf(v.map(x=>norm(x.avg))):null}}).filter(t=>t.avg!=null);
+  const rec={};R.forEach(r=>{if(r.rec)rec[r.rec]=(rec[r.rec]||0)+1});
+  return{R,n:R.length,items:it,overall,p1:partAvg("p1"),p2:partAvg("p2"),p3:partAvg("p3"),trainers,rec,comments:R.filter(r=>r.comment&&r.comment.trim())}}
+function fbEditor(id){
+  const f=id?clone(S.fbk[id]):{id:"f"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",module:"",date:localISO(),location:"",trainers:["",""],template:"ntd",validity:{mode:"day",hours:2},openUntil:{}};
+  f.trainers=(f.trainers||[]).concat(["",""]).slice(0,2);S.ex.fb=f;drawFbEditor();
+}
+function drawFbEditor(){const f=S.ex.fb,c=S.cohorts[f.smeId];
+  const mods=c?[...new Map([].concat((c.trainerTopics||[]).map(t=>[t.module,t.trainer||""]),(c.sessions||[]).map(s=>[s.module,""]),(c.quizModules||[]).map(s=>[s.module,""])).filter(x=>x[0]).map(x=>[x[0],x])).values()]:[];
+  let h=mhead(S.fbk[f.id]?"Edit feedback form":"New feedback form","Pick a template, the forum and its trainers")+'<div class="mb">'+
+    '<div class="field"><label>Template</label><div class="tplpick">'+Object.entries(FB_TEMPLATES).map(([k,t])=>'<label class="rp" style="--k:var(--s3)"><input type="radio" name="ef-tp" value="'+k+'"'+(f.template===k?" checked":"")+'><span><b>'+esc(t.name)+'</b><small>'+esc(t.desc)+'</small></span></label>').join("")+'</div></div>'+
+    '<div class="frow"><div class="field"><label for="ev-s">Who answers</label>'+whoSelect(f.smeId)+'</div>'+
+    (c&&mods.length?'<div class="field"><label for="ef-m">Module (from '+esc(c.name||f.smeId)+')</label><select id="ef-m"><option value="">Choose a module…</option>'+mods.map(m=>'<option value="'+esc(m[0])+'"'+(m[0]===f.module?" selected":"")+'>'+esc(m[0])+'</option>').join("")+'</select></div>':'')+
+    '<div class="field"><label for="ef-t">Forum / subject title</label><input id="ef-t" type="text" value="'+esc(f.title)+'" placeholder="e.g. Critical Thinking & Problem Solving using AI"></div></div>'+
+    '<div class="frow"><div class="field"><label for="ef-d">Date</label><input id="ef-d" type="date" value="'+esc(f.date||"")+'"></div><div class="field"><label for="ef-l">Location</label><input id="ef-l" type="text" value="'+esc(f.location||"")+'" placeholder="e.g. TNB MITC"></div></div>'+
+    '<div class="frow"><div class="field"><label for="ef-t1">Trainer 1</label><input id="ef-t1" list="trlist" type="text" value="'+esc(f.trainers[0]||"")+'" placeholder="Choose or type a name"></div><div class="field"><label for="ef-t2">Trainer 2 <span class="hint">(optional)</span></label><input id="ef-t2" list="trlist" type="text" value="'+esc(f.trainers[1]||"")+'" placeholder="Leave blank if only one trainer"></div></div>'+
+    '<datalist id="trlist">'+S.trainers.map(t=>'<option value="'+esc(t)+'">').join("")+'</datalist><span class="hint">With two trainers, participants rate each trainer separately (Part 2 appears twice).</span>'+
+    validityHtml(f.validity)+'<div class="err" id="eferr"></div><div class="mfoot"><button class="btn primary" id="efSave">Save</button><button class="btn" id="efPrev">Preview form</button>'+(S.fbk[f.id]?'<span style="flex:1"></span><button class="btn danger" id="efDel">'+I.trash+' Delete</button>':'')+'</div></div>';
+  openModal(h);$(".modal").classList.add("wide");
+  const read=()=>{f.template=(document.querySelector('input[name="ef-tp"]:checked')||{}).value||"ntd";f.smeId=$("#ev-s").value;f.title=$("#ef-t").value.trim();f.date=$("#ef-d").value;f.location=$("#ef-l").value.trim();f.trainers=[$("#ef-t1").value.trim(),$("#ef-t2").value.trim()];f.validity=readValidity();const m=$("#ef-m");if(m)f.module=m.value};
+  $("#ev-s").addEventListener("change",()=>{read();f.module="";drawFbEditor()});
+  const m=$("#ef-m");if(m)m.addEventListener("change",()=>{read();const x=mods.find(z=>z[0]===m.value);if(x){f.title=x[0];if(x[1]&&!f.trainers[0])f.trainers[0]=x[1]}drawFbEditor()});
+  $("#efPrev").addEventListener("click",()=>{read();fbPreview(f)});
+  $("#efSave").addEventListener("click",async()=>{read();if(!f.title){$("#eferr").textContent="Give the forum a title.";return}if(!f.trainers[0]&&!f.trainers[1]){$("#eferr").textContent="Add at least one trainer.";return}
+    f.trainers=f.trainers.filter(Boolean);f.tpl=FB_TEMPLATES[f.template];
+    if(await extSave("fb",f,"Feedback form saved")){const nw=f.trainers.filter(t=>!S.trainers.includes(t));if(nw.length)saveTrainers(S.trainers.concat(nw));closeModal();render()}});
+  const del=$("#efDel");if(del){let armed=false;del.addEventListener("click",async()=>{if(!armed){armed=true;del.textContent="Click again to delete";return}try{await S.db.doc("feedback/"+f.id).delete();delete S.fbk[f.id];closeModal();toast("Deleted");render()}catch(e){toast("Could not delete")}})}
+}
+function fbPreview(f){const items=fbItems({...f,trainers:f.trainers.filter(Boolean),tpl:FB_TEMPLATES[f.template]}),T=FB_TEMPLATES[f.template];let last="";
+  openModal(mhead("Preview",T.name)+'<div class="mb"><ol class="fbprev">'+items.map(x=>{const head=x.ptitle+(x.trainer?" — "+x.trainer:"");const s=head!==last?'<li class="h">'+esc(head)+'</li>':'';last=head;return s+'<li>'+esc(x.q)+'</li>'}).join("")+(T.rec?'<li class="h">Recommendation</li><li>'+esc(T.rec.q)+' ('+T.rec.options.join(" / ")+')</li>':'')+'<li class="h">Comment</li><li>'+esc(T.comment)+'</li></ol><div class="mfoot"><button class="btn" id="pvBack">Back to editing</button></div></div>');
+  $("#pvBack").addEventListener("click",drawFbEditor)}
+async function saveTrainers(names){names=[...new Set(names.map(x=>String(x).trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));try{await S.db.doc("config/trainers").set({names,updatedAt:new Date().toISOString()});S.trainers=names;return true}catch(e){toast("Could not save the trainer list");return false}}
+function trainersModal(){
+  openModal(mhead("Trainers",S.trainers.length+" names · used in feedback forms")+'<div class="mb"><div class="trlist">'+(S.trainers.length?S.trainers.map((t,i)=>'<div class="tr"><span>'+esc(t)+'</span><button class="btn sm icon ghost" data-trdel="'+i+'" aria-label="Remove">'+I.x+'</button></div>').join(""):'<span class="hint">No trainers yet.</span>')+'</div>'+
+    '<div class="field"><label for="tr-add">Add trainers</label><textarea id="tr-add" rows="4" placeholder="One name per line, e.g.&#10;Dr. Rahman&#10;Ir. Siti Aminah"></textarea></div><div class="mfoot"><button class="btn primary" id="trSave">Add</button></div></div>');
+  document.querySelectorAll("[data-trdel]").forEach(b=>b.addEventListener("click",async()=>{const L=S.trainers.slice();L.splice(+b.dataset.trdel,1);if(await saveTrainers(L))trainersModal()}));
+  $("#trSave").addEventListener("click",async()=>{const add=$("#tr-add").value.split(/\n|,/).map(x=>x.trim()).filter(Boolean);if(!add.length)return;if(await saveTrainers(S.trainers.concat(add))){toast(plural(add.length,"trainer","trainers")+" added");trainersModal()}});
+}
+function fbRunView(f){
+  const c=S.cohorts[f.smeId],open=extOpen(f,"fb"),until=(f.openUntil||{}).fb||0,R=extResp("fb",f.id),link=extLink("fb",f.id),n=c?(c.participants||[]).length:0;
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All feedback</button><span style="flex:1"></span><button class="btn" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn" data-fbdash="'+esc(f.id)+'">Dashboard</button></div>';
+  h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||f.smeId:"Open to anyone")+(f.location?' · '+esc(f.location):'')+'</span><h1>'+esc(f.title)+'</h1><p class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).join(" & ")].filter(Boolean).join(" · "))+'</p>'+
+    '<div class="qrtag fb">FEEDBACK</div><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div><div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" data-copy="'+esc(link)+'">Copy link</button></div>'+
+    '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+esc(leftTxt(until))+'</span><button class="btn danger" id="fbClose">Close</button>':'<span class="pill none" style="font-size:14px;padding:4px 14px">'+(until?"Closed":"Not open")+'</span><button class="btn primary" id="fbOpen">Open feedback</button>')+'</div><p class="hint">One response per person, from one phone.</p></section>'+
+    '<section class="panel"><div class="ph"><div class="t"><h3>Responses</h3><p>Live</p></div></div><div class="livek"><div><b class="num">'+R.length+'</b><span>'+(c?"of "+n:"")+' responded</span></div><div><b class="num">'+(()=>{const s=fbStats(f);return s.overall==null?"–":(s.overall*3).toFixed(2)})()+'</b><span>avg / 3</span></div><div><b class="num">'+R.filter(r=>r.comment).length+'</b><span>comments</span></div></div>'+
+    '<div class="meter big"><i style="width:'+(n?Math.min(100,R.length/n*100):0)+'%"></i></div><div class="plist" style="margin-top:12px;max-height:440px;overflow:auto">'+R.slice().sort((x,y)=>String(y.at).localeCompare(String(x.at))).map((r,i)=>'<div class="pitem"><span class="rk num">'+(R.length-i)+'</span><span class="nm"><b>'+esc(r.name)+'</b><small>'+esc(fmtTime(Date.parse(r.at)))+'</small></span></div>').join("")+(R.length?'':'<span class="hint">No responses yet.</span>')+'</div></section></div>';
+  return h;
+}
+function fbDash(f){
+  const c=S.cohorts[f.smeId],s=fbStats(f),T=f.tpl||FB_TEMPLATES[f.template||"ntd"],sc=v=>v==null?"–":(v*3).toFixed(2);
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All feedback</button><span style="flex:1"></span><button class="btn" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button></div>';
+  h+='<section class="banner fbb"><div class="grow"><span class="bk">'+esc(c?c.name||f.smeId:"Open to anyone")+' · feedback dashboard</span><h1>'+esc(f.title)+'</h1><div class="meta"><span>'+esc(fmtDay(f.date))+'</span>'+(f.location?'<span>'+esc(f.location)+'</span>':'')+'<span>Trainer'+((f.trainers||[]).length>1?"s":"")+': '+esc((f.trainers||[]).join(" & "))+'</span></div></div><div class="acts"><button class="btn onban" id="fbExport">'+I.down+' Export to Excel</button></div></section>';
+  if(!s.n)return h+'<div class="empty"><b>No responses yet</b>Open the feedback QR so participants can answer.</div>';
+  h+='<div class="kpis">'+kpiH("Responses",s.n,c?"/"+(c.participants||[]).length:"",c?"Participants":"People","--s5",NAV[1][3],c?s.n/((c.participants||[]).length||1):null)+kpiH("Overall",sc(s.overall),"/ 3","All rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',s.overall)+kpiH("Material / content",sc(s.p1),"/ 3","Part 1","--s1",'<path d="M4 5h16v14H4zM8 9h8M8 13h5"/>',s.p1)+
+    s.trainers.map((t,i)=>kpiH("Trainer"+(s.trainers.length>1?" "+(i+1):""),sc(t.avg),"/ 3",t.name,i?"--s4":"--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',t.avg)).join("")+kpiH("General",sc(s.p3),"/ 3","Facilities & overall","--s2",'<path d="M3 21h18M5 21V9l7-5 7 5v12"/>',s.p3)+'</div>';
+  const distRow=x=>{const t=x.dist.reduce((a,b)=>a+b,0)||1;return '<div class="fbrow" data-tip="'+esc(x.q+(x.trainer?" ("+x.trainer+")":"")+"\nDisagree "+x.dist[0]+" · Satisfactory "+x.dist[1]+" · Agree "+x.dist[2]+"\nAverage "+(x.avg==null?"–":x.avg.toFixed(2)))+'"><span class="fq">'+esc(x.q)+'</span><div class="fstack">'+x.dist.map((v,i)=>v?'<i class="s'+i+'" style="flex:'+v+'">'+Math.round(v/t*100)+'%</i>':'').join("")+'</div><b class="num fav" style="color:var('+rateColor(x.avg==null?null:(x.avg-1)/2)+')">'+(x.avg==null?"–":x.avg.toFixed(2))+'</b></div>'};
+  const groups=[];s.items.forEach(x=>{const g=x.ptitle+(x.trainer?" — "+x.trainer:"");let G=groups.find(z=>z.g===g);if(!G)groups.push(G={g,items:[]});G.items.push(x)});
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s3)"></i>Every question</div><h3>How participants answered</h3><p>Share of Disagree / Satisfactory / Agree, and the average (out of 3)</p></div></div><div class="fblegend"><span><i class="s0"></i>Disagree</span><span><i class="s1"></i>Satisfactory</span><span><i class="s2"></i>Agree</span></div>'+groups.map(G=>'<h4 class="fbg">'+esc(G.g)+'</h4>'+G.items.map(distRow).join("")).join("")+'</section>';
+  const recE=Object.entries(s.rec);
+  h+='<div class="g2">'+(s.trainers.length>1?panel("fbTr",{title:"Trainer comparison",tag:"Part 2",tagColor:"--s3",sub:"Average per trainer question",opts:[["bar","Bar"]],render:()=>{const P2=T.parts.find(p=>p.perTrainer);return '<div class="cmpq">'+P2.items.map((q,i)=>{const a=s.items.find(x=>x.k===P2.id+"_"+i+"_t0"),b=s.items.find(x=>x.k===P2.id+"_"+i+"_t1");return '<div class="cq"><span class="ql">'+esc(q)+'</span><div class="cb"><i class="pre" style="width:'+(a&&a.avg?(a.avg/3*100):0)+'%"></i><i class="post" style="width:'+(b&&b.avg?(b.avg/3*100):0)+'%"></i></div><span class="num cv">'+(a&&a.avg?a.avg.toFixed(2):"–")+' · <b>'+(b&&b.avg?b.avg.toFixed(2):"–")+'</b></span></div>'}).join("")+'<div class="legend"><span><i class="pre"></i>'+esc(s.trainers[0].name)+'</span><span><i class="post"></i>'+esc((s.trainers[1]||{}).name||"")+'</span></div></div>'}}):panel("fbParts",{title:"Score by part",tag:"Summary",tagColor:"--s3",sub:"Average out of 3",opts:[["col","Column"]],render:()=>columns([["Material",s.p1],["Trainer",s.p2],["General",s.p3]].filter(x=>x[1]!=null).map(x=>({label:x[0],value:x[1]*3,text:sc(x[1]),color:rateColor(x[1])})),{max:3})}))+
+    (T.rec?panel("fbRec",{title:"Who should attend next time",tag:"Recommendation",tagColor:"--s5",sub:T.rec.q,opts:[["pie","Donut"],["bar","Bar"]],render:t=>{const it=T.rec.options.map((o,i)=>({label:o,value:s.rec[o]||0,color:CAT[i%6]}));return t==="bar"?hbars(it.map(x=>({...x,text:x.value}))):donut(it,{center:recE.reduce((a,x)=>a+x[1],0),centerLabel:"ANSWERS"})}}):'')+'</div>';
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Comments & suggestions</h3><p>'+plural(s.comments.length,"comment","comments")+'</p></div></div><div class="fbcomments">'+(s.comments.length?s.comments.map(r=>'<blockquote><p>'+esc(r.comment)+'</p><cite>'+esc(r.name)+(r.unit?' · '+esc(r.unit):'')+'</cite></blockquote>').join(""):'<span class="hint">No comments yet.</span>')+'</div></section>';
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>Responses</h3><p>Delete test or wrong entries with the bin icon.</p></div></div><div class="tblwrap"><table><thead><tr><th>#</th><th>Name</th><th>Department</th><th class="r">Average</th><th>Submitted</th><th></th></tr></thead><tbody>'+s.R.map((r,i)=>{const v=Object.values(r.ans||{}).filter(x=>typeof x==="number");return '<tr><td class="num">'+(i+1)+'</td><td><div class="who"><b>'+esc(r.name)+'</b><small>'+esc(r.staffId||"")+'</small></div></td><td class="hint">'+esc(r.unit||"")+'</td><td class="r num">'+(v.length?avgOf(v).toFixed(2):"–")+'</td><td class="hint">'+esc(new Date(r.at).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r"><button class="btn sm icon ghost" data-fbrdel="'+esc(r.id)+'" aria-label="Delete">'+I.trash+'</button></td></tr>'}).join("")+'</tbody></table></div></section>';
+  return h;
+}
+async function fbExport(f){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
+  const s=fbStats(f),T=f.tpl||FB_TEMPLATES[f.template||"ntd"],items=s.items;
+  const head=["Name","Staff number","Department","Submitted"].concat(items.map(x=>x.q+(x.trainer?" ["+x.trainer+"]":"")),T.rec?["Recommend"]:[],["Comment"]);
+  const rows=s.R.map(r=>[r.name,r.staffId||"",r.unit||"",new Date(r.at).toLocaleString("en-GB")].concat(items.map(x=>(r.ans||{})[x.k]??""),T.rec?[r.rec||""]:[],[r.comment||""]));
+  const sum=[["Question","Trainer","Disagree","Satisfactory","Agree","Average (out of 3)"]].concat(items.map(x=>[x.q,x.trainer||"",x.dist[0],x.dist[1],x.dist[2],x.avg==null?"":Math.round(x.avg*100)/100]));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sum),"Summary");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([head].concat(rows)),"Responses");
+  try{await dl.save({filename:("Feedback_"+f.title).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_").slice(0,60)+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
+function bindFbAdmin(){
+  const tb=$("#fbTrainers");if(tb)tb.addEventListener("click",trainersModal);
+  const v=S.extView&&S.fbk[S.extView.id];if(!v)return;const f=v;
+  if(S.extView.mode==="run"){if(!window.qrcode)loadLib("qr").then(()=>{const b=$("#qrbox");if(b)b.innerHTML=qrSvg(extLink("fb",f.id),420)}).catch(()=>{});
+    const o=$("#fbOpen");if(o)o.addEventListener("click",()=>extSave("fb",{...f,openUntil:{fb:untilFrom(f.validity||{})}},"Feedback is open").then(render));
+    const cl=$("#fbClose");if(cl)cl.addEventListener("click",()=>extSave("fb",{...f,openUntil:{fb:0}},"Feedback closed").then(render))}
+  else{const ex=$("#fbExport");if(ex)ex.addEventListener("click",()=>fbExport(f));
+    document.querySelectorAll("[data-fbrdel]").forEach(b=>{let armed=false;b.addEventListener("click",async()=>{if(!armed){armed=true;b.classList.add("armed");b.innerHTML="Delete?";return}
+      const r=extResp("fb",f.id).find(x=>x.id===b.dataset.fbrdel);try{await S.db.doc("feedback/"+f.id+"/responses/"+b.dataset.fbrdel).delete();if(r){try{await S.db.doc("feedback/"+f.id+"/claims/fb_"+r.key).delete()}catch(e){}try{await S.db.doc("feedback/"+f.id+"/devices/fb_"+r.uid).delete()}catch(e){}}toast("Response deleted")}catch(e){toast("Could not delete")}})})}
+}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-attmenu],[data-fbmenu],[data-attnew],[data-attedit],[data-attrun],[data-attdash],[data-fbnew],[data-fbedit],[data-fbrun],[data-fbdash],[data-extback],[data-copy]");if(!t)return;const d=t.dataset;
+  if(d.copy){navigator.clipboard.writeText(d.copy).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"));return}
+  if(d.attmenu!==undefined){S.extView=null;go("__att");return}if(d.fbmenu!==undefined){S.extView=null;go("__fb");return}
+  if(d.attnew!==undefined){attEditor(null);return}if(d.attedit){attEditor(d.attedit);return}
+  if(d.fbnew!==undefined){fbEditor(null);return}if(d.fbedit){fbEditor(d.fbedit);return}
+  const open=(tt,id,mode,page)=>{S.extView={t:tt,id,mode};watchExt(tt,id);if(S.current!==page)go(page);else render();window.scrollTo(0,0)};
+  if(d.attrun){open("att",d.attrun,"run","__att");return}if(d.attdash){open("att",d.attdash,"dash","__att");return}
+  if(d.fbrun){open("fb",d.fbrun,"run","__fb");return}if(d.fbdash){open("fb",d.fbdash,"dash","__fb");return}
+  if(d.extback!==undefined){S.extView=null;render()}});
+
+/* ---------------- participant pages (#att-<id>.d<n>, #fb-<id>) ---------------- */
+function readExtHash(){const m=(location.hash||"").match(/^#(att|fb)-([A-Za-z0-9_-]+)(?:\.(d\d+))?$/);S.ext=m?{t:m[1],id:m[2],slot:m[1]==="fb"?"fb":(m[3]||"d1")}:null;if(S.ext){S.ex.tk=S.ex.tk||{};document.body.classList.add("taker")}}
+window.addEventListener("hashchange",()=>{readExtHash();render()});readExtHash();
+function extDoc(){const e=S.ext;return e?extStore(e.t)[e.id]:null}
+function extIdentity(d){const c=S.cohorts[d.smeId],ps=(c&&c.participants||[]).slice().sort((a,b)=>a.name.localeCompare(b.name));
+  return (c?'<div class="field"><label for="tk-n">Your name</label><select id="tk-n"><option value="">Select your name…</option>'+ps.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("")+'<option value="__other">My name is not listed</option></select></div><div id="tk-other" hidden>':'<div>')+
+    '<div class="field"><label for="tk-on">Full name</label><input id="tk-on" type="text" autocomplete="name"></div><div class="field"><label for="tk-os">Staff number</label><input id="tk-os" type="text" inputmode="numeric"></div><div class="field"><label for="tk-ou">Department / station</label><input id="tk-ou" type="text" placeholder="e.g. SJ Kapar"></div></div>'}
+function extReadIdentity(d){const sel=$("#tk-n"),c=S.cohorts[d.smeId];
+  if(sel&&sel.value&&sel.value!=="__other"){const p=(c.participants||[]).find(x=>x.id===sel.value);return{name:p.name,staffId:p.staffId||"",pid:p.id,unit:p.station||""}}
+  if(sel&&!sel.value)return{err:"Choose your name."};const name=$("#tk-on").value.trim(),staffId=$("#tk-os").value.trim(),unit=$("#tk-ou").value.trim();
+  if(name.length<3)return{err:"Type your full name."};if(!staffId.replace(/\D/g,""))return{err:"Type your staff number."};return{name,staffId,pid:null,unit}}
+async function extLock(col,id,slot,who){const dev=tkDevice(),key=tkKey(who.pid,who.staffId,who.name),base=col+"/"+id+"/",now=new Date().toISOString();
+  const prev=await S.db.doc(base+"responses/"+slot+"_"+dev).get();if(prev.exists)return{prev:prev.data()};
+  const dv=await S.db.doc(base+"devices/"+slot+"_"+dev).get(),cl=await S.db.doc(base+"claims/"+slot+"_"+key).get();
+  if(dv.exists&&dv.data().key!==key)return{err:"This phone was already used by "+(dv.data().name||"another person")+". Please use your own phone."};
+  if(cl.exists&&cl.data().uid!==dev)return{err:who.name+" has already responded from another phone. If this is a mistake, ask the organiser to reset it."};
+  if(!dv.exists)await S.db.doc(base+"devices/"+slot+"_"+dev).set({slot,key,name:who.name,at:now});
+  if(!cl.exists)await S.db.doc(base+"claims/"+slot+"_"+key).set({slot,key,uid:dev,name:who.name,at:now});
+  return{dev,key}}
+async function extPrev(col,id,slot){try{const p=await S.db.doc(col+"/"+id+"/responses/"+slot+"_"+tkDevice()).get();return p.exists?p.data():null}catch(e){return null}}
+function extTakerView(){
+  const e=S.ext,d=extDoc(),tk=S.ex.tk,loaded=e.t==="att"?S.attLoaded:S.fbkLoaded;
+  const shell=(inner,cls)=>'<div class="tk '+(cls||"")+'"><div class="tkhead"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div><b>Genco Academy</b><small>'+esc(d?(S.cohorts[d.smeId]||{}).name||d.smeName||(d.smeId?d.smeId:"")||(e.t==="att"?"Attendance":"Feedback"):"")+'</small></div><span class="tkphase '+(e.t==="att"?"att":"fbk")+'">'+(e.t==="att"?"Attendance":"Feedback")+'</span></div>'+inner+'</div>';
+  if(!S.db)return shell('<div class="tkcard"><h2>Unavailable</h2><p>Check your internet connection and open the link again.</p></div>');
+  if(!loaded)return shell('<div class="tkcard center"><span class="spin"></span> Loading…</div>');
+  if(!d)return shell('<div class="tkcard center"><h2>Not found</h2><p>Check the QR code with the organiser.</p></div>');
+  if(e.t==="att")return shell(attTaker(d,e,tk),tk.done?"done":"");
+  return shell(fbTaker(d,e,tk),tk.done?"done":"");
+}
+function attTaker(a,e,tk){const day=(a.days||[]).find(x=>"d"+x.n===e.slot)||{label:e.slot},open=extOpen(a,e.slot);
+  const hero='<div class="tkhero'+(tk.done?" center res":"")+'" style="--bc:#16a34a"><span class="tkchip">'+esc(day.label)+' · '+esc(fmtDay(day.date))+'</span><h1>'+esc(a.title)+'</h1><p>'+esc(a.location||"")+'</p>';
+  if(tk.done){const r=tk.prev||tk.res;return hero.replace('<h1>','<div class="tkok big">✓</div><h1>')+'<p class="big">'+(tk.prev?"Already checked in":"You’re checked in!")+'</p></div><div class="tktiles"><div style="--k:#16a34a"><b class="num">'+fmtTime(Date.parse(r.at))+'</b><span>Check-in time</span></div><div style="--k:#2563eb"><b>'+esc(day.label)+'</b><span>'+esc(fmtDay(day.date).replace(/^\w+, /,""))+'</span></div></div><div class="tkcard center"><b>'+esc(r.name)+'</b><span class="hint">'+esc([r.staffId,r.unit].filter(Boolean).join(" · "))+'</span></div>'}
+  if(!open)return hero+'<p>'+(((a.openUntil||{})[e.slot]||0)?"Check-in for "+esc(day.label)+" is closed.":"Check-in for "+esc(day.label)+" is not open yet. Wait for the organiser, then tap Refresh.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>';
+  const until=a.openUntil[e.slot];
+  return hero+'<div class="tkfacts"><span><b>'+esc(day.label.replace(/^Day\s*/i,""))+'</b>day</span><span><b>'+fmtTime(Date.now())+'</b>now</span><span><b>'+(until>=EXT_FOREVER?"Open":fmtTime(until))+'</b>'+(until>=EXT_FOREVER?"until closed":"closes")+'</span></div></div>'+
+    '<div class="tkcard">'+extIdentity(a)+'<p class="hint tkrule">Check in only for yourself. One check-in per person per day.</p><div class="err" id="tkerr"></div><button class="btn primary big tkfin" id="exGo">Check in ✓</button></div>';
+}
+function fbTaker(f,e,tk){const T=f.tpl||FB_TEMPLATES[f.template||"ntd"],items=fbItems(f),open=extOpen(f,"fb");
+  const hero='<div class="tkhero fbhero"><span class="tkchip">Forum feedback</span><h1>'+esc(f.title)+'</h1><p>'+esc([fmtDay(f.date),f.location].filter(Boolean).join(" · "))+'</p>'+((f.trainers||[]).length?'<div class="trchips">'+f.trainers.map(t=>'<span>'+esc(t)+'</span>').join("")+'</div>':'');
+  if(tk.done)return '<div class="tkhero center fbhero"><div class="tkok big">✓</div><h1>'+(tk.prev?"Already submitted":"Thank you!")+'</h1><p>'+(tk.prev?"You already gave feedback for this forum from this phone.":"Your feedback helps us make every Genco Academy session better.")+'</p></div>'+(tk.saved===false?'<div class="notice">Your feedback could not be sent. Check the internet and try again.</div>':'');
+  if(!open)return hero+'<p>'+(((f.openUntil||{}).fb||0)?"This feedback form is closed. Thank you!":"This feedback form is not open yet.")+'</p><button class="btn big onhero" onclick="location.reload()">Refresh</button></div>';
+  if(!tk.who)return hero+'<p class="tkintro">'+items.length+' quick ratings, about 3 minutes. Your honest answers help improve the programme.</p></div><div class="tkcard">'+extIdentity(f)+'<p class="hint tkrule">One response per person.</p><div class="err" id="tkerr"></div><button class="btn primary big" id="exGo">Start →</button></div>';
+  const ans=tk.ans||{},done=items.filter(x=>ans[x.k]!=null).length;let last="",html="";
+  items.forEach((x,i)=>{const g=x.ptitle+(x.trainer?"|"+x.trainer:"");if(g!==last){html+='<div class="fbsec"><b>'+esc(x.ptitle)+'</b>'+(x.trainer?'<span class="trname">'+esc(x.trainer)+'</span>':'')+'</div>';last=g}
+    html+='<div class="tkcard fbq'+(ans[x.k]!=null?" ok":"")+'" id="q_'+x.k+'"><p>'+(i+1)+'. '+esc(x.q)+'</p><div class="fbscale">'+FB_SCALE.map(s=>'<button type="button" class="s'+s[0]+(ans[x.k]===s[0]?" on":"")+'" data-fbv="'+x.k+'|'+s[0]+'"><b>'+s[0]+'</b><small>'+s[1]+'</small></button>').join("")+'</div></div>'});
+  if(T.rec)html+='<div class="fbsec"><b>Recommendation</b></div><div class="tkcard fbq'+(tk.rec?" ok":"")+'"><p>'+esc(T.rec.q)+'</p><div class="fbrec">'+T.rec.options.map(o=>'<button type="button" class="'+(tk.rec===o?"on":"")+'" data-fbrec="'+esc(o)+'">'+esc(o)+'</button>').join("")+'</div></div>';
+  html+='<div class="fbsec"><b>Comment</b></div><div class="tkcard"><label for="fb-c">'+esc(T.comment)+'</label><textarea id="fb-c" rows="4" placeholder="Your comment or suggestion">'+esc(tk.comment||"")+'</textarea></div>';
+  return '<div class="tkbar"><span class="eyebrow">'+esc(tk.who.name)+'</span><span class="num">'+done+' / '+items.length+' answered</span></div><div class="tkprog"><i style="width:'+(done/items.length*100)+'%"></i></div>'+html+'<div class="err" id="tkerr2"></div><button class="btn primary big tkfin" id="fbSend">Submit feedback ✓</button>';
+}
+function bindExtTaker(){
+  const e=S.ext,d=extDoc(),tk=S.ex.tk;if(!d||tk.done)return;const col=extCol(e.t);
+  if(!tk.checked){tk.checked=true;extPrev(col,d.id,e.slot).then(p=>{if(p){Object.assign(tk,{done:true,prev:p});render()}})}
+  const sel=$("#tk-n");if(sel)sel.addEventListener("change",()=>{$("#tk-other").hidden=sel.value!=="__other"});
+  const go=$("#exGo");if(go)go.addEventListener("click",async()=>{const err=$("#tkerr");err.textContent="";if(!extOpen(d,e.slot)){err.textContent="This is closed.";return}
+    const who=extReadIdentity(d);if(who.err){err.textContent=who.err;return}go.disabled=true;const lbl=go.textContent;go.textContent="Checking…";
+    let L;try{L=await extLock(col,d.id,e.slot,who)}catch(x){go.disabled=false;go.textContent=lbl;err.textContent="Could not continue. Check the internet and that it is still open.";return}
+    if(L.prev){Object.assign(tk,{done:true,prev:L.prev});render();return}if(L.err){go.disabled=false;go.textContent=lbl;err.textContent=L.err;return}
+    if(e.t==="att"){const res={name:who.name,staffId:who.staffId,pid:who.pid,unit:who.unit,key:L.key,uid:L.dev,slot:e.slot,at:new Date().toISOString()};
+      try{await S.db.doc(col+"/"+d.id+"/responses/"+e.slot+"_"+L.dev).set(res);Object.assign(tk,{done:true,res});render()}catch(x){go.disabled=false;go.textContent=lbl;err.textContent="Could not check in. Try again."}}
+    else{Object.assign(tk,{who,lock:L,ans:{}});render();window.scrollTo(0,0)}});
+  document.querySelectorAll("[data-fbv]").forEach(b=>b.addEventListener("click",()=>{const [k,v]=b.dataset.fbv.split("|");const c=$("#fb-c");if(c)tk.comment=c.value;tk.ans[k]=+v;const y=window.scrollY;render();window.scrollTo(0,y)}));
+  document.querySelectorAll("[data-fbrec]").forEach(b=>b.addEventListener("click",()=>{const c=$("#fb-c");if(c)tk.comment=c.value;tk.rec=b.dataset.fbrec;const y=window.scrollY;render();window.scrollTo(0,y)}));
+  const sd=$("#fbSend");if(sd)sd.addEventListener("click",async()=>{const items=fbItems(d),T=d.tpl||FB_TEMPLATES[d.template||"ntd"],miss=items.find(x=>tk.ans[x.k]==null);tk.comment=$("#fb-c").value.trim();
+    if(miss){$("#tkerr2").textContent="Please rate every statement (the highlighted one is missing).";const el=$("#q_"+miss.k);if(el){el.classList.add("miss");el.scrollIntoView({behavior:"smooth",block:"center"})}return}
+    if(!tk.comment){$("#tkerr2").textContent="Please leave a short comment or suggestion.";return}
+    sd.disabled=true;sd.textContent="Sending…";const w=tk.who;
+    const res={name:w.name,staffId:w.staffId,pid:w.pid,unit:w.unit,key:tk.lock.key,uid:tk.lock.dev,slot:"fb",ans:tk.ans,rec:tk.rec||"",comment:tk.comment,at:new Date().toISOString()};
+    try{await S.db.doc(col+"/"+d.id+"/responses/fb_"+tk.lock.dev).set(res);Object.assign(tk,{done:true,saved:true})}catch(x){sd.disabled=false;sd.textContent="Submit feedback ✓";$("#tkerr2").textContent="Could not send. Check the internet and try again.";return}
+    render();window.scrollTo(0,0)});
 }
 
 /* ---------- STAFF DIRECTORY (lookup only, no menu tab) ---------- */
@@ -3310,7 +3835,7 @@ async function phPrep(file){
 
 /* sign-in */
 function gate(){
-  if(S.taker)return null;
+  if(S.taker||S.ext)return null;
   if(!window.FB)return '<div class="empty" style="margin-top:40px"><span class="spin"></span><b>Connecting…</b></div>';
   if(!FB.member){
     if(FB.user&&!FB.user.isAnonymous)return '<section class="gate"><div class="gcard"><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><h1>No access yet</h1><p>You are signed in as <b>'+esc(FB.email)+'</b>, but this e-mail has not been given access to the portal. Ask a Genco Academy admin to add you in Settings → Users & access.</p><button class="btn" data-act="logout">Sign out</button></div></section>';
