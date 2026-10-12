@@ -962,6 +962,11 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 .btbl td{vertical-align:middle}
 .btbl .nowrap{white-space:nowrap}.btbl .nowrap .btn{margin-left:4px}
 .btbl td .hint{font-size:12px}
+.tplprev{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-top:12px}
+.tplprev>div{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);font-size:13.5px}
+.tplprev .num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2,#f1f5f9);font-size:12px;font-weight:700;flex:none}
+.tplprev small{margin-left:auto;color:var(--muted);font-size:11.5px;white-space:nowrap}
+@media (min-width:1101px){.kpis.k7{grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.kpis.k7 .kpi{padding-left:12px;padding-right:12px}}
 
 </style>
 
@@ -1569,7 +1574,7 @@ function pScores(c,ds,full){
     opts:[["bar","Bar by "+D.item],["pie",ds==="project"?"Rating mix (pie)":"Score bands (pie)"],["line","Trend line"],["people","Bar by participant"],["heat","Heatmap"]],
     render:t=>{
       if(!agg.length)return emptyChart("No "+D.items+" set up yet.");
-      if(!parts.length)return emptyChart(plural(agg.length,D.item,D.items)+" set up · not assessed yet. Charts fill in once scores are entered"+(S.admin?" in the "+D.label+" tab.":"."));
+      if(!parts.length)return hbars(agg.map(a=>({label:a.col.module,sub:"Not scored yet",value:0,text:"–",tip:a.col.module+": not scored yet"})),{max:1,color:D.color})+'<p class="note">'+plural(agg.length,D.item,D.items)+' ready · scores appear here once entered'+(S.admin?' in the '+esc(D.label)+' tab':'')+'.</p>';
       if(t==="heat")return heatmap(c,ds);
       if(t==="pie"){
         if(ds==="project"){const k=[0,0,0];(c.participants||[]).forEach(p=>Object.values(p.project||{}).forEach(v=>{if(v>=1&&v<=3)k[Math.round(v)-1]++}));
@@ -1731,13 +1736,17 @@ function cohortView(c){
   const cvr=phCover(c.id);let h='<section class="banner'+(cvr?' hascover':'')+'"'+(cvr?' style="--cover:url(\''+phSrc(cvr)+'\')"':'')+'><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">'+esc(c.title||"SME Foundation Programme")+'</span><h1>'+esc(c.name||c.id)+' Participant Assessment</h1>'+
     '<div class="meta">'+(c.period?'<span>'+esc(c.period)+'</span>':'')+'<span>'+plural((c.participants||[]).length,"participant","participants")+'</span><span>'+plural(ses,"session","sessions")+'</span><span>'+plural((c.quizModules||[]).length,"quiz","quizzes")+'</span><span>'+plural((c.trainerTopics||[]).length,"trainer module","trainer modules")+'</span>'+(c.updatedAt?'<span>Updated '+esc(new Date(c.updatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}))+'</span>':'')+'</div></div>'+
     '<div class="acts"><button class="btn onban" data-act="export">'+I.down+' Export Excel</button><button class="btn onban solid" data-act="importto">'+I.up+' Import data</button></div></section>';
-  h+='<div class="kpis">'+
+  h+='<div class="kpis k7">'+
     kpi("Participants",s.n,"",stationCounts(c).length+" stations","--s5",NAV[1][3],null,"people")+
     kpi("Average score",s.avg==null?"–":s.avg.toFixed(1),"%","Out of 100%","--s4",'<path d="M4 20V10M10 20V4M16 20v-7"/>',s.avg==null?null:s.avg/100,"people")+
     kpi("Passed (≥"+passMark(c)+"%)",s.pass,"/"+s.n,s.started.project?"Eligible for certification":"Project not yet assessed","--good",'<circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-3 5 3-1.5-8"/>',s.n?s.pass/s.n:0,"people")+
     kpi("Attendance rate",s.attRate==null?"–":(s.attRate*100).toFixed(1),"%","Present ÷ sessions held","--s1",NAV[2][3],s.attRate,"att")+
     kpi("Quiz average",s.quizAvg==null?"–":(s.quizAvg*100).toFixed(1),"%","Forum understanding","--s2",NAV[3][3],s.quizAvg,"quiz")+
-    kpi("Assessed",Math.round(s.assessed*100),"%","Trainer & project scores in","--s6",'<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',s.assessed,"trainer")+'</div>';
+    (()=>{const ps=c.participants||[],ck='<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>';
+      const done=(ds,fld)=>{const cols=c[DS[ds].list]||[],tot=ps.length*cols.length;let f=0;ps.forEach(p=>cols.forEach(col=>{const v=(p[fld]||{})[col.key];if(typeof v==="number"&&v>0)f++}));const a=avg(ps.map(p=>partAvg(c,ds,p)).filter(v=>v!=null));return{r:tot?f/tot:null,a,cols:cols.length}};
+      const t=done("trainer","trainer"),pj=done("project","project");
+      return kpi("Trainer assessed",t.r==null?"–":Math.round(t.r*100),t.r==null?"":"%",t.cols?(t.a==null?"No marks yet":"Average "+(t.a*100).toFixed(0)+"% ("+(t.a*SKM(c)).toFixed(1)+" / "+SKM(c)+")"):"No modules set up","--s3",ck,t.r,"trainer")+
+        kpi("Project assessed",pj.r==null?"–":Math.round(pj.r*100),pj.r==null?"":"%",pj.cols?(pj.a==null?"No ratings yet":"Average "+(pj.a*100).toFixed(0)+"% ("+(pj.a*3).toFixed(2)+" / 3)"):"No criteria set up","--s6",ck,pj.r,"project")})()+'</div>';
   const t=S.tab;
   h+='<div class="mtabs">'+NAV.filter(n=>!n[4]||S.admin).map(n=>'<button class="tab" data-tab="'+n[0]+'" aria-selected="'+(t===n[0])+'">'+n[1]+'</button>').join("")+'</div>';
   if(t==="people")h+=peopleTab(c);
@@ -1755,7 +1764,7 @@ function overviewTab(c){
     '<div class="g2">'+pAtt(c)+pScores(c,"quiz")+'</div><div class="g2">'+pScores(c,"trainer")+pScores(c,"project")+'</div>';
 }
 function startEmpty(c){
-  return '<div class="empty" style="padding:36px"><b>'+esc(c.name||c.id)+' has no participants yet</b>Import the participant assessment Excel, or add participants, sessions, quizzes and trainer modules by hand.<div class="acts"><button class="btn primary" data-act="importto">'+I.up+' Import data</button><button class="btn" data-act="addperson">'+I.plus+' Add participants</button><button class="btn" data-manage="att">'+I.list+' Set up sessions</button><button class="btn" data-manage="quiz">'+I.list+' Set up quizzes</button><button class="btn" data-manage="trainer">'+I.list+' Set up trainer modules</button></div></div>';
+  return '<div class="empty" style="padding:36px"><b>'+esc(c.name||c.id)+' has no participants yet</b>Import the participant assessment Excel, or add participants, sessions, quizzes and trainer modules by hand.<div class="acts"><button class="btn primary" data-act="importto">'+I.up+' Import data</button><button class="btn" data-act="addperson">'+I.plus+' Add participants</button><button class="btn" data-manage="att">'+I.list+' Set up sessions</button><button class="btn" data-manage="quiz">'+I.list+' Set up quizzes</button><button class="btn" data-manage="trainer">'+I.list+' Set up trainer modules</button></div></div>'+((c.trainerTopics||[]).length||(c.projectCriteria||[]).length?'<div class="g2">'+pScores(c,"trainer")+pScores(c,"project")+'</div>':'');
 }
 function peopleTab(c){
   const s=stats(c),w=weights(c),q=S.q.toLowerCase(),stns=stationCounts(c).map(e=>e[0]);
@@ -1804,7 +1813,7 @@ function dataTab(c,ds){
   if(ds==="att")h+='<div class="legend"><span><span class="st P">P</span> Present</span><span><span class="st A">A</span> Absent</span><span><span class="st R">E</span> Excused</span><span><span class="st N">–</span> Not started</span></div>';
   h+='<button class="btn'+(cols.length?"":" primary")+'" data-manage="'+ds+'">'+I.list+' Manage '+(ds==="trainer"?"trainer modules":D.items)+'</button></div>';
   if(!cols.length){h+='<div class="empty"><b>No '+(ds==="trainer"?"trainer modules":D.items)+' yet</b>Add them with “Manage '+(ds==="trainer"?"trainer modules":D.items)+'”, or import a file.<div class="acts">'+((ds==="trainer"||ds==="project")&&adm?'<button class="btn primary" data-stdtpl="'+ds+'">'+I.list+' Use standard template</button>':'')+'<button class="btn'+((ds==="trainer"||ds==="project")&&adm?"":" primary")+'" data-manage="'+ds+'">'+I.plus+' Add '+D.items+'</button></div></div>';return h}
-  if(!ps.length){h+='<div class="empty"><b>No participants yet</b><div class="acts"><button class="btn primary" data-act="addperson">'+I.plus+' Add participants</button></div></div>';return h}
+  if(!ps.length){h+='<div class="empty"><b>No participants yet</b>'+(ds!=="att"?'The '+plural(cols.length,D.item,D.items)+' below are ready. Add participants and a scoring row appears for each person.':'')+'<div class="acts"><button class="btn primary" data-act="addperson">'+I.plus+' Add participants</button></div></div>'+(ds!=="att"?'<div class="tplprev">'+cols.map((col,i)=>'<div><span class="num">'+(i+1)+'</span>'+esc(col.module)+'<small>'+(ds==="trainer"?"out of "+SKM(c):ds==="project"?"1–3":"%")+'</small></div>').join("")+'</div>':'');return h}
   h+='<div class="tblwrap"><table class="matrix"><thead><tr><th class="namecell">Participant</th><th class="r">'+(ds==="att"?"Present":"Average")+'</th>';
   cols.forEach(col=>{h+='<th class="mc'+(ds==="att"&&adm?" wide":"")+'"><button class="colhd" '+(ds==="att"?'data-reg="'+col.key+'"':'data-coldetail="'+ds+'|'+col.key+'"')+' title="'+esc(col.module)+'">'+esc(short(col.module,32))+'</button>'+(col.date?'<small>'+esc(fmtD(col.date))+'</small>':'')+(col.trainer?'<small>'+esc(short(col.trainer,22))+'</small>':'')+'</th>'});
   h+='</tr></thead><tbody>';
