@@ -967,6 +967,34 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 .tplprev .num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2,#f1f5f9);font-size:12px;font-weight:700;flex:none}
 .tplprev small{margin-left:auto;color:var(--muted);font-size:11.5px;white-space:nowrap}
 @media (min-width:1101px){.kpis.k7{grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.kpis.k7 .kpi{padding-left:12px;padding-right:12px}}
+/* trainers */
+.banner.trb{background:linear-gradient(115deg,#0c4a6e 0%,#0e7490 55%,#14b8a6 100%)}
+.trsubs,.trchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.trchips{margin:0}
+.trchip{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--ink);font-size:13px;font-weight:600}
+.trchip.sm{font-size:11.5px;padding:3px 8px;font-weight:500}
+.trsess{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.trinfo{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface-2,#f1f5f9);font-size:13px}
+.trinfo select{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;background:var(--surface);color:var(--ink)}
+.trtbl th.c{vertical-align:bottom;height:150px;padding:6px 2px;width:46px}
+.trtbl th .vh{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11.5px;white-space:nowrap;display:inline-block;max-height:140px;overflow:hidden;text-overflow:ellipsis}
+.trtbl td.c{padding:4px 2px;text-align:center}
+.trtbl .namecell small{display:block;color:var(--muted);font-size:11.5px}
+.trs{width:44px;border:1px solid var(--line);border-radius:7px;padding:5px 2px;font:inherit;font-size:13px;text-align:center;background:var(--surface);color:var(--ink)}
+.trs.v1{background:#fee2e2}.trs.v2{background:#ffedd5}.trs.v3{background:#fef9c3}.trs.v4{background:#dcfce7}.trs.v5{background:#bbf7d0}
+:root[data-theme="dark"] .trs[class*=" v"]:not(.v0){color:#111}
+.trrem{width:140px;border:1px solid var(--line);border-radius:7px;padding:5px 8px;font:inherit;font-size:12.5px;background:var(--surface);color:var(--ink)}
+.trfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.trfoot .grow{flex:1}
+.trfilter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.trfilter input,.trfilter select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink);min-width:220px}
+.trdir td small{display:block}
+.trmodpick{max-height:240px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px}
+.credbox{display:grid;gap:8px;margin-bottom:10px}
+.credbox div{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;background:var(--surface-2,#f1f5f9)}
+.credbox span{color:var(--muted)}.credbox b{font-family:ui-monospace,monospace;word-break:break-all;text-align:right}
+.trhook{background:color-mix(in srgb,var(--s2) 10%,transparent);padding:10px 12px;border-radius:10px}
+.trtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
 
 </style>
 
@@ -1608,7 +1636,7 @@ async function boot(){
     const first=!S.loaded;S.cohorts=m;S.loaded=true;setSync("Synced · "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}));
     if(first)S.anim=true;safeRender();
   },e=>{setSync("Connection error ("+e.code+")");S.loaded=true;render()});
-  subscribeHistory();subscribePhotos();subscribeExt();
+  subscribeHistory();subscribePhotos();subscribeExt();subscribeTrainers();
   subscribeUsers();
   subscribeQuizzes();
   S.db.doc("config/admin").onSnapshot(d=>{S.auth=d.exists?d.data():null;S.authLoaded=true},()=>{S.authLoaded=true});
@@ -1671,11 +1699,12 @@ function renderInner(){
   const sb=$("#openSearch");if(sb)sb.hidden=!(S.me?(can("people")||can("history")||can("sme")):(S.portal.guest||"all")==="all");
   const gt=gate();if(gt){app.innerHTML=gt;return}
   if(S.current==="__settings"){app.innerHTML=settingsView();bindSettings2();return}
-  if(S.current==="__quiz"){app.innerHTML=quizView();const qq=S.qView&&S.quizzes[S.qView.id];if(qq&&S.admin){if(S.qView.mode==="run")bindQuizRun(qq);else bindQuizResult(qq)}return}
-  if(S.current==="__att"){app.innerHTML=attView();bindAttAdmin();return}
-  if(S.current==="__fb"){app.innerHTML=fbView();bindFbAdmin();return}
+  if(S.current==="__quiz"){app.innerHTML=quizView();const qq=S.qView&&S.quizzes[S.qView.id];if(qq&&(S.admin||S.trainer)){if(S.qView.mode==="run")bindQuizRun(qq);else bindQuizResult(qq)}return}
+  if(S.current==="__att"){app.innerHTML=attView();bindAttAdmin();trPost();return}
+  if(S.current==="__fb"){app.innerHTML=fbView();bindFbAdmin();trPost();return}
   if(S.current!=="__belt"&&typeof beltClear==="function")beltClear();
   if(S.current==="__belt"){app.innerHTML=beltView();bindBelt();return}
+  if(S.current==="__trainer"){app.innerHTML=trainerView();bindTrainer();return}
   if(S.cohorts[S.current]&&typeof stdAuto==="function")stdAuto(S.cohorts[S.current]);
   if(S.current==="__history"){app.innerHTML=historyView();bindHistory();return}
   if(S.current==="__people"){app.innerHTML=peopleDirView();bindPeopleDir();return}
@@ -1698,7 +1727,7 @@ function renderSide(){
   const side=$("#side"),list=ids(),c=S.cohorts[S.current];
   let h='<button class="sbrand" data-home><span class="plate"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><span><b>Genco Academy</b><small>Assessment Portal</small></span></button>';
   h+='<nav class="snav"><button class="sitem'+(!S.current?" on":"")+'" data-home><span class="ico" style="--k:var(--ga)">'+navIco('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>')+'</span>Home</button><button class="sitem'+(S.current==="__history"?" on":"")+'" data-history><span class="ico" style="--k:var(--s3)">'+navIco('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>')+'</span>SME History'+(hBatches().length?'<span class="badge num">'+hBatches().length+'</span>':'')+'</button></nav>';
-  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__att"?" on":"")+'" data-attmenu><span class="ico" style="--k:var(--s3)">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+'</span>Attendance'+(Object.values(S.att||{}).some(a=>Object.keys(a.openUntil||{}).some(k=>extOpen(a,k)))?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__fb"?" on":"")+'" data-fbmenu><span class="ico" style="--k:var(--s4)">'+navIco('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>')+'</span>Forum feedback</button><button class="sitem'+(S.current==="__belt"?" on":"")+'" data-beltmenu><span class="ico" style="--k:var(--ink)">'+navIco(beltIco)+'</span>Belt selection</button></nav>';
+  h+='<nav class="snav"><button class="sitem'+(S.current==="__people"?" on":"")+'" data-people><span class="ico" style="--k:var(--s5)">'+navIco(NAV[1][3])+'</span>All participants</button><button class="sitem'+(S.current==="__quiz"?" on":"")+'" data-quizmenu><span class="ico" style="--k:var(--s2)">'+qrIco+'</span>Quiz'+(Object.values(S.quizzes||{}).some(q=>q.status==="open")?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__att"?" on":"")+'" data-attmenu><span class="ico" style="--k:var(--s3)">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+'</span>Attendance'+(Object.values(S.att||{}).some(a=>Object.keys(a.openUntil||{}).some(k=>extOpen(a,k)))?'<span class="badge" style="background:var(--good)">Live</span>':'')+'</button><button class="sitem'+(S.current==="__fb"?" on":"")+'" data-fbmenu><span class="ico" style="--k:var(--s4)">'+navIco('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>')+'</span>Forum feedback</button><button class="sitem'+(S.current==="__belt"?" on":"")+'" data-beltmenu><span class="ico" style="--k:var(--ink)">'+navIco(beltIco)+'</span>Belt selection</button><button class="sitem'+(S.current==="__trainer"?" on":"")+'" data-trmenu><span class="ico" style="--k:var(--s2)">'+navIco('<circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/><path d="M17 3l2 2 3-3"/>')+'</span>'+(S.admin?"Trainers":"My trainer page")+'</button></nav>';
   h+='<div class="slabel">SME programme <span class="num">'+list.length+'</span></div><div class="ssel"><span class="dot" style="background:var('+(S.cohorts[S.current]?SME_COL(S.current):"--nav-ink-2")+')"></span><select id="sideSme" aria-label="Choose SME"><option value="">Select SME…</option>'+PROGS.map(pg=>{const L=list.filter(id=>progOf(S.cohorts[id])===pg[0]);return L.length?'<optgroup label="'+esc(pg[1])+'">'+L.map(id=>'<option value="'+esc(id)+'"'+(S.current===id?" selected":"")+'>'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</optgroup>':''}).join("")+'</select></div>';
   h+='<nav class="snav"><button class="sadd" data-act="newcohort">'+I.plus+' Add SME</button></nav>';
   if(c){
@@ -1712,7 +1741,7 @@ function renderSide(){
 }
 function renderTop(){
   const c=S.cohorts[S.current],tl=(NAV.find(n=>n[0]===S.tab)||NAV[0])[1];
-  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__att"?'<span>/</span><b>Attendance</b>':S.current==="__fb"?'<span>/</span><b>Forum feedback</b>':S.current==="__belt"?'<span>/</span><b>Belt selection</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
+  $("#crumb").innerHTML='<button class="crumbl" data-home>Home</button>'+(S.current==="__quiz"?'<span>/</span><b>Quiz</b>':S.current==="__att"?'<span>/</span><b>Attendance</b>':S.current==="__fb"?'<span>/</span><b>Forum feedback</b>':S.current==="__belt"?'<span>/</span><b>Belt selection</b>':S.current==="__trainer"?'<span>/</span><b>'+(S.admin?"Trainers":"My trainer page")+'</b>':S.current==="__settings"?'<span>/</span><b>Settings</b>':S.current==="__people"?'<span>/</span><b>All participants</b>':S.current==="__history"?'<span>/</span><b>SME History</b>':S.current==="__admin"?'<span>/</span><b>Admin</b>':c?'<span>/</span><button class="crumbl" data-go="'+esc(c.id)+'">'+esc(c.name||c.id)+'</button><span>/</span><b>'+tl+'</b>':'');
 }
 
 /* ---------- HOME ---------- */
@@ -1934,7 +1963,7 @@ function newCohortModal(){
     '<div class="field"><label for="nc-id">SME code</label><input id="nc-id" type="text" value="'+nextSme()+'" required></div>'+
     '<div class="field"><label for="nc-period">Period</label><input id="nc-period" type="text" placeholder="e.g. Jan – Dec 2027"></div></div>'+
     '<div class="field"><label for="nc-prog">SME group</label><select id="nc-prog">'+PROGS.map(p=>'<option value="'+p[0]+'"'+((S.prog||"GENCO")===p[0]?" selected":"")+'>'+p[1]+'</option>').join("")+'</select></div>'+'<div class="field"><label for="nc-title">Programme</label><input id="nc-title" type="text" value="SME Foundation Programme"></div>'+
-    '<div class="field"><label for="nc-from">Start from</label><select id="nc-from"><option value="">Blank SME</option>'+list.map(id=>'<option value="'+esc(id)+'">Copy sessions, quizzes, trainer modules and criteria from '+esc(id)+'</option>').join("")+'</select><span class="hint">Copying brings over the structure only. Participants, dates and scores start empty. Trainer assessment (10 competencies, out of 5) and Project assessment (12 criteria, 1–3) are always set up for you.</span></div>'+
+    '<div class="field"><label for="nc-from">Start from</label><select id="nc-from"><option value="">Blank SME</option>'+list.map(id=>'<option value="'+esc(id)+'">Copy sessions, quizzes, trainer modules and criteria from '+esc(id)+'</option>').join("")+'</select><span class="hint">Copying brings over the structure only. Participants, dates and scores start empty. Trainer modules (copied from the latest SME, marks out of 20 — filled in by each trainer) and Project assessment (12 criteria, 1–3) are always set up for you.</span></div>'+
     '<div class="err" id="ncerr"></div><button class="btn primary" type="submit">'+I.plus+' Create SME</button></form>',true);
   $("#ncf").addEventListener("submit",e=>{e.preventDefault();
     const id=cohortId($("#nc-id").value);if(!id){$("#ncerr").textContent="Use letters, numbers or hyphens.";return}
@@ -2717,7 +2746,7 @@ function subscribeUsers(){
   S.db.doc("config/users").onSnapshot(d=>{S.users=d.exists?d.data():null;S.portal=(S.users&&S.users.portal)||{guest:"all"};S.usersLoaded=true;reconcileMe();safeRender()},()=>{S.usersLoaded=true;render()});
 }
 function applyMe(u){
-  S.me=u?{...u}:null;S.role=u?u.role:null;S.admin=u&&(u.role==="admin"||u.role==="editor")?u.username:null;
+  S.me=u?{...u}:null;S.role=u?u.role:null;S.admin=u&&(u.role==="admin"||u.role==="editor")?u.username:null;S.trainer=u&&u.role==="trainer"?(u.staffId||u.username):null;
   if(u){ssSet("ga-user",u.username)}else{ssSet("ga-user",null)}ssSet("ga-admin",S.admin);
   applyTheme();
 }
@@ -2727,20 +2756,22 @@ function reconcileMe_orig(){
   if(u){const first=!S.me;applyMe(u);if(first&&S.pendingUser)goHomePref()}else{applyMe(null);toast("You have been signed out")}
   S.pendingUser=null;
 }
-function goHomePref(){const h=S.me&&S.me.home;if(!h||S.current)return;if(h==="history"&&can("history"))S.current="__history";else if(h==="people"&&can("people"))S.current="__people";else if(h&&S.cohorts[h]&&canSme(h))S.current=h;if(S.me.year)S.homeYear=S.me.year}
+function goHomePref(){if(S.me&&S.me.role==="trainer"){if(!S.current||!["__trainer","__quiz","__att","__fb","__settings"].includes(S.current))S.current="__trainer";return}const h=S.me&&S.me.home;if(!h||S.current)return;if(h==="history"&&can("history"))S.current="__history";else if(h==="people"&&can("people"))S.current="__people";else if(h&&S.cohorts[h]&&canSme(h))S.current=h;if(S.me.year)S.homeYear=S.me.year}
 function canSme(id){const u=S.me;if(!u||u.role!=="viewer")return true;return !u.smes||u.smes==="all"||(Array.isArray(u.smes)&&u.smes.includes(id))}
 function can(page){
   const u=S.me;
-  if(u){if(u.role!=="viewer")return true;return !u.pages||u.pages.includes(page)}
+  if(u){if(u.role==="trainer")return ["trainer","quiz","settings"].includes(page);if(u.role!=="viewer")return true;return !u.pages||u.pages.includes(page)}
   const g=(S.portal&&S.portal.guest)||"all";
   if(g==="none")return false;if(g==="home")return page==="home";return true;
 }
-function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"||S.current==="__att"||S.current==="__fb"||S.current==="__belt"?"quiz":"sme"}
+function pageOf(){return !S.current?"home":S.current==="__history"?"history":S.current==="__people"?"people":S.current==="__settings"||S.current==="__admin"?"settings":S.current==="__quiz"||S.current==="__att"||S.current==="__fb"||S.current==="__belt"?"quiz":S.current==="__trainer"?"trainer":"sme"}
 function gate_orig(){ // returns html when the page must not render, else null
+  if(S.me&&S.me.role==="trainer"&&!can(pageOf()))S.current="__trainer";
   if(S.db&&!S.usersLoaded)return '<div class="empty" style="margin-top:40px"><span class="spin"></span><b>Loading portal…</b></div>';
   const pg=pageOf();
   if(pg==="settings")return S.me?null:loginGate("Sign in to open Settings.");
-  if(pg==="quiz")return S.admin?null:loginGate("Sign in as an Editor or Admin to manage quizzes.");
+  if(pg==="quiz")return S.admin||(S.trainer&&S.current!=="__belt")?null:loginGate("Sign in as an Editor or Admin to manage quizzes.");
+  if(pg==="trainer")return S.admin||S.trainer?null:loginGate("Sign in with your staff number to open the trainer page.");
   if(!S.me&&S.portal.guest==="none")return loginGate("This portal requires sign-in.");
   if(!can(pg)||(pg==="sme"&&!canSme(S.current))){
     const alt=PAGES.find(p=>can(p[0]));
@@ -2777,7 +2808,7 @@ function postSide(side){
   if(!can("history"))side.querySelectorAll("[data-history]").forEach(e=>e.remove());
   if(!can("people"))side.querySelectorAll("[data-people]").forEach(e=>e.remove());
   if(!can("sme")){side.querySelectorAll(".ssel").forEach(e=>{const l=e.previousElementSibling;if(l&&l.classList.contains("slabel"))l.remove();e.remove()})}
-  if(!S.admin)side.querySelectorAll(".sadd,[data-quizmenu],[data-attmenu],[data-fbmenu],[data-beltmenu]").forEach(e=>e.remove());
+  if(!S.admin)side.querySelectorAll(".sadd,[data-beltmenu]"+(S.trainer?"":",[data-quizmenu],[data-attmenu],[data-fbmenu],[data-trmenu]")).forEach(e=>e.remove());
   if(!S.me&&(S.portal.guest==="none"))side.querySelectorAll(".snav,.slabel,.ssel").forEach(e=>e.remove());
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-settings],[data-settab]");if(!t)return;
@@ -2923,7 +2954,7 @@ const quizBase=()=>(S.portal&&S.portal.quizBase)||QUIZ_BASE_DEFAULT;
 const quizLink=(q,ph)=>quizBase().replace(/#.*$/,"")+"#quiz-"+q.id+(ph?"."+ph:"");
 const qid=()=>"q"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const QSTAT={draft:["Draft","none"],open:["Open","good"],closed:["Closed","bad"]};
-async function saveQuiz_orig(q,msg){q=clone(q);q.updatedAt=new Date().toISOString();q.updatedBy=S.me?S.me.username:(S.admin||"");
+async function saveQuiz_orig(q,msg){q=trStamp(clone(q));q.updatedAt=new Date().toISOString();q.updatedBy=S.me?S.me.username:(S.admin||"");
   try{await S.db.doc("quizzes/"+q.id).set(q);S.quizzes[q.id]=q;if(msg)toast(msg);return true}catch(e){toast(e&&e.code==="invalid_argument"?"Your claude.ai access is view-only, so the quiz can’t be saved.":"Could not save the quiz.");return false}}
 function qrSvg(text,size){if(!window.qrcode)return "";const q=qrcode(0,"M");q.addData(text);q.make();return q.createSvgTag({cellSize:Math.max(2,Math.floor((size||280)/(q.getModuleCount()+8))),margin:4,scalable:true})}
 
@@ -2937,9 +2968,9 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-quizmenu],
   if(d.qback!==undefined){S.qView=null;render()}});
 
 function quizView(){
-  if(!S.admin)return '<div class="empty" style="margin-top:30px"><b>Quiz is for admins and editors</b>Sign in with an Editor or Admin account to build quizzes.<div class="acts"><button class="btn primary" data-act="login">'+I.lock+' Sign in</button></div></div>';
+  if(!S.admin&&!S.trainer)return '<div class="empty" style="margin-top:30px"><b>Quiz is for admins and editors</b>Sign in with an Editor or Admin account to build quizzes.<div class="acts"><button class="btn primary" data-act="login">'+I.lock+' Sign in</button></div></div>';
   if(S.qView&&S.quizzes[S.qView.id])return S.qView.mode==="run"?quizRunView(S.quizzes[S.qView.id]):quizResultView(S.quizzes[S.qView.id]);
-  const Q=Object.values(S.quizzes).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
+  const Q=trMine(Object.values(S.quizzes)).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
   let h='<section class="banner quizb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Quiz</h1><div class="meta"><span>'+plural(Q.length,"quiz","quizzes")+'</span><span>'+Q.filter(q=>q.status==="open").length+' open now</span><span>Build questions → show QR → participants answer → scores go to the SME</span></div></div><div class="acts"><button class="btn onban solid" data-qnew>'+I.plus+' New quiz</button></div></section>';
   h+='<div class="qsteps">'+[["1","Build","Type or paste your questions and mark the right answers.","--s1"],["2","Show QR","Open the quiz and put the QR on the screen in class.","--s2"],["3","Participants answer","They scan, pick their name and answer on their phone.","--s3"],["4","Save scores","One click puts each score into the SME’s Quizzes tab.","--s4"]].map(s=>'<div style="--k:var('+s[3]+')"><i>'+s[0]+'</i><b>'+s[1]+'</b><span>'+s[2]+'</span></div>').join("")+'</div>';
   if(!S.quizLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading quizzes…</b></div>';
@@ -2970,7 +3001,7 @@ function drawEditor(){
   h+='<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-qadd="mcq">'+I.plus+' Multiple choice</button><button class="btn" data-qadd="tf">'+I.plus+' True / False</button><button class="btn" id="qePasteBtn">'+I.list+' Paste questions</button></div>'+
     '<div id="qePaste" hidden class="panel" style="margin:0;background:var(--surface-2)"><h3 style="font-size:14px">Paste questions</h3><p class="hint" style="margin:4px 0 8px">One question per block. Mark the right answer with * or add a line “Answer: B”.</p><textarea id="qe-p" rows="8" placeholder="1. What does RCM stand for?&#10;A) Root Cause Method&#10;*B) Reliability Centered Maintenance&#10;C) Risk Control Matrix&#10;&#10;2. Hydrogen is a renewable fuel.&#10;A) True&#10;B) False&#10;Answer: A"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button class="btn primary" id="qePasteGo">Add these questions</button><span class="hint" id="qePasteMsg"></span></div></div>';
   h+='<div class="err" id="qeerr"></div><div class="mfoot"><button class="btn primary" id="qeSave">Save quiz</button>'+(S.quizzes[q.id]?'<span style="flex:1"></span><button class="btn danger" id="qeDel">'+I.trash+' Delete quiz</button>':'')+'</div></div>';
-  const sc=$(".modal")?$(".modal").scrollTop:0;openModal(h);const m=$(".modal");m.classList.add("wide");m.scrollTop=sc;bindEditor();
+  const sc=$(".modal")?$(".modal").scrollTop:0;openModal(h);const m=$(".modal");m.classList.add("wide");m.scrollTop=sc;bindEditor();trHook("quiz");
 }
 function readEditor(){const q=S.qEdit;q.title=$("#qe-t").value.trim();q.smeId=$("#qe-s").value;q.quizKey=$("#qe-k")?$("#qe-k").value:"";q.showScore=$("#qe-sc").checked;q.shuffle=$("#qe-sh").checked;
   document.querySelectorAll("[data-qtext]").forEach(t=>{q.questions[+t.dataset.qtext].text=t.value});
@@ -3494,14 +3525,14 @@ const fmtTime=ms=>new Date(ms).toLocaleTimeString("en-GB",{hour:"2-digit",minute
 const localISO=d=>{d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const extId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 function subscribeExt(){if(!S.db)return;
-  S.db.collection("attendance").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.att=m;S.attLoaded=true;if(S.admin)Object.values(m).forEach(a=>{if(S.cohorts[a.smeId]&&(a.days||[]).some(d=>d.sess)){watchExt("att",a.id);attSyncSoon(a.id)}});if(S.current==="__att"||S.ext)safeRender()},()=>{S.attLoaded=true});
+  S.db.collection("attendance").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.att=m;S.attLoaded=true;if(S.admin)Object.values(m).forEach(a=>{if(S.cohorts[a.smeId]&&(a.days||[]).some(d=>d.sess)){if((a.days||[]).some(d=>d.sess==="__new"))attResolveNew(a);watchExt("att",a.id);attSyncSoon(a.id)}});if(S.current==="__att"||S.ext)safeRender()},()=>{S.attLoaded=true});
   S.db.collection("feedback").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.fbk=m;S.fbkLoaded=true;if(S.current==="__fb"||S.ext)safeRender()},()=>{S.fbkLoaded=true});
   S.db.doc("config/fbtemplates").onSnapshot(d=>{S.fbTplList=d.exists?(d.data().list||[]):[];if(S.current==="__fb")safeRender()},()=>{});
   S.db.doc("config/trainers").onSnapshot(d=>{S.trainers=d.exists?(d.data().names||[]):[];if(S.current==="__fb")safeRender()},()=>{});
 }
 function watchExt(t,id){const p=extCol(t)+"/"+id+"/responses";if(!S.db||S.extSub[p])return;S.extSub[p]=S.db.collection(p).onSnapshot(sn=>{S.extResp[p]=sn.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(t==="att")attSyncSoon(id);if(S.current==="__att"||S.current==="__fb")safeRender()},()=>{})}
 const extResp=(t,id)=>S.extResp[extCol(t)+"/"+id+"/responses"]||[];
-async function extSave(t,d,msg){d=clone(d);d.updatedAt=new Date().toISOString();d.updatedBy=S.me?S.me.username:"";const c=S.cohorts[d.smeId];
+async function extSave(t,d,msg){d=trStamp(clone(d));d.updatedAt=new Date().toISOString();d.updatedBy=S.me?S.me.username:"";const c=S.cohorts[d.smeId];
   if(c){d.smeName=c.name||d.smeId;d.roster=(c.participants||[]).filter(p=>!/withdraw/i.test(p.remark||"")).map(p=>({id:p.id,name:p.name}))}else{delete d.roster;delete d.smeName}
   try{await S.db.doc(extCol(t)+"/"+d.id).set(d);extStore(t)[d.id]=d;if(msg)toast(msg);return true}catch(e){toast("Could not save.");return false}}
 function validityHtml(v){v=v||{mode:"day",hours:2};return '<div class="field"><label>QR code valid for</label><div class="chkgrid"><label class="chk"><input type="radio" name="ev-m" value="day"'+(v.mode==="day"?" checked":"")+'> The whole day (until 11:59 pm)</label><label class="chk"><input type="radio" name="ev-m" value="hours"'+(v.mode==="hours"?" checked":"")+'> <select id="ev-h">'+[1,2,3,4,6,8,12].map(h=>'<option'+(+v.hours===h?" selected":"")+'>'+h+'</option>').join("")+'</select> hours after I open it</label><label class="chk"><input type="radio" name="ev-m" value="manual"'+(v.mode==="manual"?" checked":"")+'> Until I close it</label></div></div>'}
@@ -3526,14 +3557,14 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-batch],[da
 /* ---------------- ATTENDANCE: admin ---------------- */
 // Check-ins are copied to the SME attendance (P) automatically while an Editor/Admin has the portal open.
 function attSyncSoon(id){clearTimeout(attSyncSoon["t"+id]);attSyncSoon["t"+id]=setTimeout(()=>attSync(S.att[id]),1500)}
-function attSync(a){if(!S.admin||!a||!S.db)return 0;const c=S.cohorts[a.smeId];if(!c)return 0;const R=extResp("att",a.id),keys=new Set((c.sessions||[]).map(s=>s.key)),todo=[];
+function attSync(a){if(!S.admin||!a||!S.db)return 0;a=attResolveNew(a);const c=S.cohorts[a.smeId];if(!c)return 0;const R=extResp("att",a.id),keys=new Set((c.sessions||[]).map(s=>s.key)),todo=[];
   (a.days||[]).forEach(d=>{if(!d.sess||!keys.has(d.sess))return;R.forEach(r=>{if(r.slot!=="d"+d.n||!r.pid)return;const p=(c.participants||[]).find(x=>x.id===r.pid);if(p&&(p.att||{})[d.sess]!=="P")todo.push([p.id,d.sess])})});
   if(!todo.length)return 0;const cc=clone(c);todo.forEach(([pid,k])=>{const p=cc.participants.find(x=>x.id===pid);if(p){p.att=p.att||{};p.att[k]="P"}});
   queueSave(cc,"QR check-in “"+a.title+"”: "+plural(todo.length,"participant","participants")+" marked present");if(S.current===a.smeId)safeRender();return todo.length}
 function attView(){
-  if(!S.admin)return loginGate("Sign in as an Editor or Admin to manage attendance.");
+  if(!S.admin&&!S.trainer)return loginGate("Sign in as an Editor or Admin to manage attendance.");
   const v=S.extView&&S.extView.t==="att"&&S.att[S.extView.id];if(v)return S.extView.mode==="run"?attRunView(v):attDash(v);
-  const L=Object.values(S.att).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
+  const L=trMine(Object.values(S.att)).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
   let h='<section class="banner attb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Attendance</h1><div class="meta"><span>'+plural(L.length,"course","courses")+'</span><span>QR check-in for SME participants or anyone</span></div></div><div class="acts"><button class="btn onban solid" data-attnew>'+I.plus+' New attendance</button></div></section>';
   h+='<div class="qsteps">'+[["1","Set up","Course, location, days and how long the QR stays valid.","--s1"],["2","Show QR","Open the QR for the day. It closes by itself.","--s2"],["3","Check in","Participants scan and tap Check in — once per day.","--s3"],["4","Dashboard","See who came each day and save it to the SME.","--s4"]].map(s=>'<div style="--k:var('+s[3]+')"><i>'+s[0]+'</i><b>'+s[1]+'</b><span>'+s[2]+'</span></div>').join("")+'</div>';
   if(!S.attLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
@@ -3566,7 +3597,7 @@ function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions|
     '<div class="field"><label>Days</label><div class="dayrows">'+a.days.map((d,i)=>'<div class="dayrow"><b>Day '+d.n+'</b><input type="text" data-dl="'+i+'" value="'+esc(d.label)+'" aria-label="Label"><input type="date" data-dd="'+i+'" value="'+esc(d.date||"")+'" aria-label="Date">'+(c?'<select data-ds="'+i+'" aria-label="Save to SME attendance session"><option value="__new"'+(d.sess==="__new"?" selected":"")+'>✓ Save to SME · new session</option>'+(ss.length?'<optgroup label="Save to an existing SME session">'+ss.map(s=>'<option value="'+s.key+'"'+(s.key===d.sess?" selected":"")+'>'+esc(s.module)+(s.date?" · "+esc(fmtD(s.date)):"")+'</option>').join("")+'</optgroup>':'')+'<option value=""'+(!d.sess?" selected":"")+'>Don’t save to SME</option></select>':'')+(a.days.length>1?'<button class="btn sm icon ghost" data-ddel="'+i+'" aria-label="Remove day">'+I.x+'</button>':'')+'</div>').join("")+'</div>'+
     '<button class="more" id="eaAdd">'+I.plus+' Add day</button>'+(c?'<span class="hint">Check-ins go straight into the SME’s Attendance tab (marked Present). “New session” adds a column for that day; or pick a session the SME already has.</span>':'')+'</div>'+
     validityHtml(a.validity)+'<div class="err" id="eaerr"></div><div class="mfoot"><button class="btn primary" id="eaSave">Save</button>'+(S.att[a.id]?'<span style="flex:1"></span><button class="btn danger" id="eaDel">'+I.trash+' Delete</button>':'')+'</div></div>';
-  openModal(h);$(".modal").classList.add("wide");
+  openModal(h);$(".modal").classList.add("wide");setTimeout(()=>trHook("att"),0);
   const read=()=>{a.title=$("#ea-t").value.trim();a.location=$("#ea-l").value.trim();a.smeId=$("#ev-s").value;a.validity=readValidity();
     document.querySelectorAll("[data-dl]").forEach(e=>a.days[+e.dataset.dl].label=e.value.trim()||"Day "+a.days[+e.dataset.dl].n);document.querySelectorAll("[data-dd]").forEach(e=>a.days[+e.dataset.dd].date=e.value);document.querySelectorAll("[data-ds]").forEach(e=>a.days[+e.dataset.ds].sess=e.value)};
   $("#ev-s").addEventListener("change",()=>{read();a.days.forEach(d=>d.sess="__new");drawAttEditor()});
@@ -3575,7 +3606,7 @@ function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions|
   $("#eaSave").addEventListener("click",async()=>{read();if(!a.title){$("#eaerr").textContent="Give it a title.";return}if(a.days.some(d=>!d.date)){$("#eaerr").textContent="Every day needs a date.";return}
     const cc0=S.cohorts[a.smeId];
     if(!cc0)a.days.forEach(d=>{if(d.sess==="__new")d.sess=""});
-    else if(a.days.some(d=>d.sess==="__new")){const cc=clone(cc0);cc.sessions=cc.sessions||[];const made=[];
+    else if(!trOnly()&&a.days.some(d=>d.sess==="__new")){const cc=clone(cc0);cc.sessions=cc.sessions||[];const made=[];
       a.days.forEach(d=>{if(d.sess!=="__new")return;const mod=a.title+(a.days.length>1?" – "+d.label:"");let hit=cc.sessions.find(x=>x.module===mod&&(x.date||"")===d.date);
         if(!hit){let n=1;while(cc.sessions.some(x=>x.key==="a"+n))n++;hit={key:"a"+n,module:mod,date:d.date};cc.sessions.push(hit);made.push(mod)}d.sess=hit.key});
       if(made.length)queueSave(cc,"Added attendance "+(made.length>1?"sessions":"session")+" “"+made.join("”, “")+"”")}
@@ -3635,9 +3666,9 @@ function bindAttAdmin(){
 
 /* ---------------- FEEDBACK: admin ---------------- */
 function fbView(){
-  if(!S.admin)return loginGate("Sign in as an Editor or Admin to manage feedback.");
+  if(!S.admin&&!S.trainer)return loginGate("Sign in as an Editor or Admin to manage feedback.");
   const v=S.extView&&S.extView.t==="fb"&&S.fbk[S.extView.id];if(v)return S.extView.mode==="run"?fbRunView(v):fbDash(v);
-  const L=Object.values(S.fbk).sort((a,b)=>String(b.date||b.updatedAt||"").localeCompare(String(a.date||a.updatedAt||"")));
+  const L=trMine(Object.values(S.fbk)).sort((a,b)=>String(b.date||b.updatedAt||"").localeCompare(String(a.date||a.updatedAt||"")));
   L.forEach(f=>watchExt("fb",f.id));
   let h='<section class="banner fbb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Forum feedback</h1><div class="meta"><span>'+plural(L.length,"forum","forums")+'</span><span>Feedback form per subject, scanned by QR</span></div></div><div class="acts"><button class="btn onban" id="fbTpls">Templates ('+Object.keys(tplAll()).length+')</button><button class="btn onban" id="fbTrainers">Trainers ('+S.trainers.length+')</button><button class="btn onban solid" data-fbnew>'+I.plus+' New feedback form</button></div></section>';
   if(!S.fbkLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
@@ -3691,9 +3722,9 @@ function drawFbEditor(){const f=S.ex.fb,c=S.cohorts[f.smeId];
     '<div class="field"><label for="ef-t">Forum / subject title</label><input id="ef-t" type="text" value="'+esc(f.title)+'" placeholder="e.g. Critical Thinking & Problem Solving using AI"></div></div>'+
     '<div class="frow"><div class="field"><label for="ef-d">Date</label><input id="ef-d" type="date" value="'+esc(f.date||"")+'"></div><div class="field"><label for="ef-l">Location</label><input id="ef-l" type="text" value="'+esc(f.location||"")+'" placeholder="e.g. TNB MITC"></div></div>'+
     '<div class="frow"><div class="field"><label for="ef-t1">Trainer 1</label><input id="ef-t1" list="trlist" type="text" value="'+esc(f.trainers[0]||"")+'" placeholder="Choose or type a name"></div><div class="field"><label for="ef-t2">Trainer 2 <span class="hint">(optional)</span></label><input id="ef-t2" list="trlist" type="text" value="'+esc(f.trainers[1]||"")+'" placeholder="Leave blank if only one trainer"></div></div>'+
-    '<datalist id="trlist">'+S.trainers.map(t=>'<option value="'+esc(t)+'">').join("")+'</datalist><span class="hint">With two trainers, participants rate each trainer separately (Part 2 appears twice).</span>'+
+    '<datalist id="trlist">'+trAllNames().map(t=>'<option value="'+esc(t)+'">').join("")+'</datalist><span class="hint">With two trainers, participants rate each trainer separately (Part 2 appears twice).</span>'+
     validityHtml(f.validity)+'<div class="err" id="eferr"></div><div class="mfoot"><button class="btn primary" id="efSave">Save</button><button class="btn" id="efPrev">Preview form</button>'+(S.fbk[f.id]?'<span style="flex:1"></span><button class="btn danger" id="efDel">'+I.trash+' Delete</button>':'')+'</div></div>';
-  openModal(h);$(".modal").classList.add("wide");
+  openModal(h);$(".modal").classList.add("wide");setTimeout(()=>trHook("fb"),0);
   const read=()=>{const tp=(document.querySelector('input[name="ef-tp"]:checked')||{}).value||"ntd";if(tp!==f.template){f.template=tp;f.tpl=clone(tplAll()[tp]||FB_TEMPLATES.ntd);f.tplEdited=false}f.smeId=$("#ev-s").value;f.title=$("#ef-t").value.trim();f.date=$("#ef-d").value;f.location=$("#ef-l").value.trim();f.trainers=[$("#ef-t1").value.trim(),$("#ef-t2").value.trim()];f.validity=readValidity();const m=$("#ef-m");if(m)f.module=m.value};
   $("#ev-s").addEventListener("change",()=>{read();f.module="";drawFbEditor()});
   const m=$("#ef-m");if(m)m.addEventListener("change",()=>{read();const x=mods.find(z=>z[0]===m.value);if(x){f.title=x[0];if(x[1]&&!f.trainers[0])f.trainers[0]=x[1]}drawFbEditor()});
@@ -4111,14 +4142,219 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-beltmenu]"
 const STD_TRAINER=["Generation Ideas", "General / Technical Knowledge", "Quality of Work", "Analytical Thinking", "Critical Thinking", "Engagement", "Presentation Skill", "Syndication & Drive", "Attitude", "Self Discipline"];
 const STD_PROJECT=["1A.Plant performance knowledge (Operational and Financial)", "1B.Technical knowledge", "1C.Quality of work", "1D.Problem Solving skill & technique", "1E.Structuring & analysis", "1G.Verbal Communication", "1H.Written communication", "2A.Business Concept", "2B.Planning", "2C.Resistance to change", "2D.Adaptive nature", "2E.Financial Concept"];
 function stdTpl(c,which){c=clone(c);const has=k=>(c.participants||[]).some(p=>Object.keys(p[k]||{}).length);
-  if((!which||which==="trainer")&&!(c.trainerTopics||[]).length){c.trainerTopics=STD_TRAINER.map((m,i)=>({key:"t"+(i+1),module:m,date:""}));if(!has("trainer"))c.skillMax=5}
+  if((!which||which==="trainer")&&(!(c.trainerTopics||[]).length||(isCompTpl(c)&&!has("trainer")))){const T=stdTrainerMods(c.id);c.trainerTopics=T.mods.map((m,i)=>({key:"t"+(i+1),module:m,date:""}));if(!has("trainer"))c.skillMax=T.max}
   if((!which||which==="project")&&!(c.projectCriteria||[]).length)c.projectCriteria=STD_PROJECT.map((m,i)=>({key:"p"+(i+1),module:m,date:""}));
   return c}
 S._stdDone={};
+// trainer marks are per module (trainers assess the module they teach). The standard list is copied from the latest SME that uses modules.
+const STD_TRAINER_MODS=["7th Step #1","SP1 - GT Part","EE Hydro","SP2- Failure Analysis","Hydro Civil","Critical Eq","Impacful presentation","P Management","SP GT Performance","EE Thermal","RCM #1","SP4 - GT Part","RBI","Steam Turbine","Critical Thinking","PP Chemistry","SP5- GT Rotating"];
+function isCompTpl(c){const L=(c.trainerTopics||[]).map(t=>t.module);return L.length===STD_TRAINER.length&&L.every((m,i)=>m===STD_TRAINER[i])}
+function stdTrainerMods(skip){const ids=Object.keys(S.cohorts).filter(id=>id!==skip).sort((a,b)=>String(b).localeCompare(String(a),undefined,{numeric:true}));
+  for(const id of ids){const c=S.cohorts[id];if((c.trainerTopics||[]).length>=3&&!isCompTpl(c)&&!(c.trainerTopics||[]).every(t=>STD_TRAINER.includes(t.module)))return{mods:c.trainerTopics.map(t=>t.module),max:c.skillMax||20}}
+  return{mods:STD_TRAINER_MODS,max:20}}
 // existing SMEs with no trainer and no project assessment get the standard template (once, admin only)
 function stdAuto(c){if(!S.admin||!c||!S.db||S._stdDone[c.id])return;S._stdDone[c.id]=1;
-  if(!(c.trainerTopics||[]).length&&!(c.projectCriteria||[]).length)setTimeout(()=>{const cur=S.cohorts[c.id];if(cur&&!(cur.trainerTopics||[]).length&&!(cur.projectCriteria||[]).length){queueSave(stdTpl(cur),"Standard trainer & project assessment template added");toast("Trainer & project assessment template added to "+(cur.name||cur.id))}},300)}
+  const noT=x=>!(x.participants||[]).some(p=>Object.keys(p.trainer||{}).length);
+  if((!(c.trainerTopics||[]).length&&!(c.projectCriteria||[]).length)||(isCompTpl(c)&&noT(c)))setTimeout(()=>{const cur=S.cohorts[c.id];if(cur&&((!(cur.trainerTopics||[]).length&&!(cur.projectCriteria||[]).length)||(isCompTpl(cur)&&noT(cur)))){queueSave(stdTpl(cur),"Standard trainer & project assessment template added");toast("Trainer & project assessment template added to "+(cur.name||cur.id))}},300)}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-stdtpl]");if(!t)return;const c=S.cohorts[S.current];if(!c||!S.admin)return;queueSave(stdTpl(c,t.dataset.stdtpl),"Standard "+(t.dataset.stdtpl==="trainer"?"trainer":"project")+" assessment template added");safeRender()});
+const TR_SEED={"trainers":[{"staffId":"10028565","name":"Azmi bin Awi","grade":"E17","cat":"Bukan Pakar","subjects":["Power Utility Economics","Fundamental of Power Plant Operation"]},{"staffId":"10096458","name":"Hanafi bin Abu Hassan","grade":"E14","cat":"Bukan Pakar","subjects":["Power Utility Economics","Finance Essential"]},{"staffId":"10085973","name":"Ariff bin Adam","grade":"E15","cat":"Bukan Pakar","subjects":["Impactful Presentation","Project Management"]},{"staffId":"10097452","name":"Abbas bin Ismail","grade":"E14","cat":"Bukan Pakar","subjects":["7 Step Problem Solving","Impactful Presentation","Leadership Skill"]},{"staffId":"10097439","name":"Nuramirah binti Hilmi","grade":"E14","cat":"Bukan Pakar","subjects":["Impactful Presentation","Leadership Skill"]},{"staffId":"10086177","name":"Azren Izliani binti Mohd Razali","grade":"E16","cat":"Bukan Pakar","subjects":["Critical Thinking","Power Plant Cycle Chemistry"]},{"staffId":"10082054","name":"Muhammad Azfar bin Aziz","grade":"E16","cat":"Bukan Pakar","subjects":["Power Plant Agreement (PPA)"]},{"staffId":"10096448","name":"Mohammad Adzim bin Ab Aziz","grade":"E14","cat":"Bukan Pakar","subjects":["Energy Efficiency (Thermal)"]},{"staffId":"10090380","name":"Wan Mohd Rafiq bin Wan Mohd Raimi","grade":"E16","cat":"Bukan Pakar","subjects":["Power Plant Agreement (PPA)","Hydro Operation & Turbine"]},{"staffId":"10097937","name":"Ramesh Kumar a/l Krishnamurthy","grade":"E14","cat":"Bukan Pakar","subjects":["New Energy Sources","Reliability Centered Maintenance (RCM)"]},{"staffId":"10085799","name":"Muhammad bin Abdullah @ Abdullah Sani","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Solar PV Technology","Hydro Civil Maintenance & Cost Management"]},{"staffId":"10091014","name":"Noorazreen binti Suhaimi","grade":"E15","cat":"Bukan Pakar","subjects":["Critical Equipment & Maintenance Strategy","Agile Change"]},{"staffId":"10027662","name":"Ahmad Muniyazid bin Mohd Munawir","grade":"E15","cat":"Bukan Pakar","subjects":["Impactful Presentation"]},{"staffId":"10082057","name":"Nik Mohd Hazman bin Che Hasan","grade":"E17","cat":"Bukan Pakar","subjects":["Critical Thinking"]},{"staffId":"10090397","name":"Muhammad Sufi bin Ahmad Nasir","grade":"E15","cat":"Bukan Pakar","subjects":["7 Step Problem Solving"]},{"staffId":"10082378","name":"Muhamad Jazmi bin Yacob","grade":"E17","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10084767","name":"Mohd Fairus Khafiz bin Khalid","grade":"E16","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10085583","name":"Nor Hisham bin Ibrahim","grade":"E16","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10072571","name":"Mohd Zairi Bin Bakri","grade":"E17","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10087095","name":"Mohd Nur Haniff bin Latif","grade":"E16","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"91500327","name":"Sasivarman a/l Gunasegaran","grade":"E14","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10090262","name":"Muhammad Ihsan bin Abdul Basit","grade":"E14","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2"]},{"staffId":"10028671","name":"Noraini binti Jamaluddin","grade":"E15","cat":"Bukan Pakar","subjects":["Power Plant Agreement (PPA)"]},{"staffId":"99320049","name":"Saleh bin Samid","grade":"E15","cat":"Bukan Pakar","subjects":["RTS Methodology/S1/S2","Inventory & Negotiation"]},{"staffId":"91500383","name":"Mohd Nizam bin Othman","grade":"E14","cat":"Bukan Pakar","subjects":["Inventory & Negotiation"]},{"staffId":"10088170","name":"Mohd Rafie bin Samsudin","grade":"E16","cat":"Bukan Pakar","subjects":["New Energy Sources"]},{"staffId":"10085662","name":"Muhammad Nurhakim bin Ghazali","grade":"E16","cat":"Bukan Pakar","subjects":["Performance Management"]},{"staffId":"10028758","name":"Anas bin Ahmad Kamal","grade":"E17","cat":"Bukan Pakar","subjects":["Managing Risk"]},{"staffId":"10085675","name":"Mumi binti Zamri","grade":"E15","cat":"Bukan Pakar","subjects":["Managing Risk"]},{"staffId":"10085666","name":"Agnes Ang Ooi Foong","grade":"E15","cat":"Bukan Pakar","subjects":["Finance Essential"]},{"staffId":"10094513","name":"Faiq Khalil bin Mohd Amin","grade":"E15","cat":"Bukan Pakar","subjects":["Finance Essential"]},{"staffId":"10025545","name":"Qeemnoor Razlan Raizal B. M. Noh","grade":"E17","cat":"Bukan Pakar","subjects":["Project Management"]},{"staffId":"10094531","name":"Nik Muhd Azri bin Nik Muhd Afandi","grade":"E14","cat":"Bukan Pakar","subjects":["Project Management"]},{"staffId":"","name":"Tuan Amran bin Tuan Abdullah","grade":"","cat":"Bukan Pakar","subjects":["ET – Hydrogen"]},{"staffId":"10086220","name":"Rahimy bin Yaakub","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Carbon Capture, Utilisation and Storage (CCUS)"]},{"staffId":"10096199","name":"Muhammad Faiz bin Mohd Zabidi","grade":"E14","cat":"Bukan Pakar","subjects":["ET – Carbon Capture, Utilisation and Storage (CCUS)"]},{"staffId":"10085611","name":"Mohamad Riduan bin Marsidi","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Carbon Capture, Utilisation and Storage (CCUS)"]},{"staffId":"10076818","name":"Shamsul Azizi bin Ahmad","grade":"E15","cat":"Bukan Pakar","subjects":["ET – Carbon Capture, Utilisation and Storage (CCUS)"]},{"staffId":"10095711","name":"Perabu a/l Moorty","grade":"E15","cat":"Bukan Pakar","subjects":["ET – Solar PV Technology"]},{"staffId":"10084254","name":"Ahmad Najib bin Mohamad Yusof","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Solar PV Technology"]},{"staffId":"10098495","name":"Dain bin Razali","grade":"E14","cat":"Bukan Pakar","subjects":["ET – Solar PV Technology"]},{"staffId":"10090260","name":"Nik Muhammad Faris bin Mohd Rasidi","grade":"E16","cat":"Bukan Pakar","subjects":["Hydro Operation & Turbine"]},{"staffId":"10087334","name":"Wan Ahmad Saufi bin Wan Chek","grade":"E16","cat":"Bukan Pakar","subjects":["Hydro Operation & Turbine"]},{"staffId":"10097059","name":"Muhammad Farid bin Jafre","grade":"E14","cat":"Bukan Pakar","subjects":["Hydro Operation & Turbine"]},{"staffId":"10094823","name":"Mohd Syafik bin Ahmad Sukiman","grade":"E15","cat":"Bukan Pakar","subjects":["Critical Equipment & Maintenance Strategy"]},{"staffId":"10084911","name":"Mohd Khaidir bin Mohd Zakaria","grade":"E17","cat":"Bukan Pakar","subjects":["Critical Equipment & Maintenance Strategy"]},{"staffId":"10089159","name":"Raja Nasuha bin Raja Chik","grade":"E15","cat":"Bukan Pakar","subjects":["Critical Equipment & Maintenance Strategy"]},{"staffId":"10096454","name":"Muhamad Farhan Ridhwan bin Kambali","grade":"E14","cat":"Bukan Pakar","subjects":["Energy Efficiency (Thermal)"]},{"staffId":"10092203","name":"Mohd Asnawi bin Sulong","grade":"E15","cat":"Bukan Pakar","subjects":["Power Plant Cycle Chemistry"]},{"staffId":"10096912","name":"Safwan Asnawi bin Ahmad Zaki","grade":"E14","cat":"Bukan Pakar","subjects":["Hydro Civil Maintenance & Cost Management"]},{"staffId":"96000075","name":"'Ammar Taqi bin Borhan","grade":"E14","cat":"Bukan Pakar","subjects":["Hydro Civil Maintenance & Cost Management"]},{"staffId":"10097149","name":"Mohd Nublan Hakimi bin Mohd Asri","grade":"E14","cat":"Bukan Pakar","subjects":["Reliability Centered Maintenance (RCM)"]},{"staffId":"10096456","name":"Wan Mohamad Erfan bin Wan Mustafa","grade":"E14","cat":"Bukan Pakar","subjects":["Reliability Centered Maintenance (RCM)"]},{"staffId":"10087950","name":"Dinishkaran Pillai","grade":"E16","cat":"Bukan Pakar","subjects":["Reliability Centered Maintenance (RCM)"]},{"staffId":"10093832","name":"Muhammad bin Ab Halim @ Mat Soh","grade":"E15","cat":"Bukan Pakar","subjects":["Risk Based Inspection"]},{"staffId":"10084908","name":"Mohd. Hafiz Shazni bin Harron","grade":"E16","cat":"Bukan Pakar","subjects":["Steam Turbine"]},{"staffId":"10097070","name":"Ahmad Razikin bin Badroll Hisham","grade":"E14","cat":"Bukan Pakar","subjects":["Steam Turbine"]},{"staffId":"10085651","name":"Zatul Itri binti Chahrom @ Shahrum","grade":"E15","cat":"Bukan Pakar","subjects":["Steam Turbine"]},{"staffId":"10028120","name":"Mohd Fadhil bin Mohamed","grade":"M15","cat":"Bukan Pakar","subjects":["Steam Turbine"]},{"staffId":"10096986","name":"Muhammad Nuraiman bin Kamalul Arifin","grade":"E14","cat":"Bukan Pakar","subjects":["Genco DigiBoost"]},{"staffId":"10099308","name":"Chong Kah Luo","grade":"E14","cat":"Bukan Pakar","subjects":["Genco DigiBoost"]},{"staffId":"10098364","name":"Nurul Hanani binti Abdullah","grade":"E14","cat":"Bukan Pakar","subjects":["ET – Biomass Coal Co-Firing","Impactful Presentation"]},{"staffId":"10090354","name":"Muhammad Zuhair bin Khairuddin","grade":"E15","cat":"Bukan Pakar","subjects":["ET – Biomass Coal Co-Firing"]},{"staffId":"10085596","name":"Mohd Adzuan bin Che Azmi","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Biomass Coal Co-Firing"]},{"staffId":"10085592","name":"Noor Hidayah binti Ismail","grade":"E15","cat":"Bukan Pakar","subjects":["ET – Biomass Coal Co-Firing"]},{"staffId":"10100027","name":"Murni Muslimah binti Amir Muslim","grade":"E14","cat":"Bukan Pakar","subjects":["Agile Change"]},{"staffId":"10084257","name":"Azmil Khalili bin Md Khazali","grade":"E17","cat":"Bukan Pakar","subjects":["Agile Change"]},{"staffId":"10083417","name":"Effendy bin Mangsor","grade":"E16","cat":"Bukan Pakar","subjects":["ET – Battery Energy Storage System (BESS)"]},{"staffId":"10085602","name":"Suhendden a/l Manohara","grade":"E15","cat":"Bukan Pakar","subjects":["ET – Battery Energy Storage System (BESS)"]},{"staffId":"96000448","name":"Muhammad Nabil Muzakkir bin Ghazali","grade":"KE15","cat":"Bukan Pakar","subjects":["ET – Battery Energy Storage System (BESS)"]},{"staffId":"10101619","name":"Mahmud Zaki bin Ibrahim","grade":"E13","cat":"Bukan Pakar","subjects":["PI System"]},{"staffId":"96000175","name":"Muhammad Afif bin Md Yusoh","grade":"E12","cat":"Bukan Pakar","subjects":["PI System"]},{"staffId":"96000277","name":"Syed Ahmad Afiq bin Syed Sofi","grade":"E12","cat":"Bukan Pakar","subjects":["PI System"]},{"staffId":"10084741","name":"Syed Ahmad Razali bin Syed Abdul Rahman","grade":"E13","cat":"Bukan Pakar","subjects":["Plant Maintenance & KKS Code"]},{"staffId":"10028395","name":"Muhammad Amin bin Min Hussain","grade":"E16","cat":"Bukan Pakar","subjects":["Plant Maintenance & KKS Code"]},{"staffId":"10025018","name":"Mathiyazhagan a/l Muneesamy","grade":"E17","cat":"Bukan Pakar","subjects":["Fundamental of Power Plant Operation"]},{"staffId":"10090234","name":"Mohd Farid bin Mohd Marzuki","grade":"E15","cat":"Bukan Pakar","subjects":["7 Step Problem Solving"]},{"staffId":"10095360","name":"Mohd Syahir bin Muhamed Yaacob","grade":"E14","cat":"Bukan Pakar","subjects":["7 Step Problem Solving"]},{"staffId":"10090257","name":"Muhammad Asyraf bin Razali","grade":"E15","cat":"Bukan Pakar","subjects":["7 Step Problem Solving"]},{"staffId":"10086921","name":"Mohd Taufiq bin Mohd Sharudin","grade":"E16","cat":"Bukan Pakar","subjects":["Gas Turbine Parts Refurbishment"]},{"staffId":"10024699","name":"Samsudin bin Sunar","grade":"M15(S)","cat":"Pakar","subjects":["Gas Turbine Performance Enhancement Technologies"]},{"staffId":"10085580","name":"Muhammad Ariff bin Che Hussin @ Zakaria","grade":"E16(S)","cat":"Pakar","subjects":["Gas Turbine Performance Enhancement Technologies"]},{"staffId":"10028136","name":"Abdul Rohim bin Md. Said","grade":"M15(S)","cat":"Pakar","subjects":["Failure Analysis & Root Cause Analysis"]},{"staffId":"10028121","name":"Mohd Karim bin Ibrahim","grade":"M15(S)","cat":"Pakar","subjects":["Gas Turbine Parts & Material Failure Mechanism"]},{"staffId":"10028000","name":"Azril Dahari Bin Johari","grade":"M15(S)","cat":"Pakar","subjects":["Gas Turbine Parts Development Guidelines"]},{"staffId":"10085590","name":"Thanaraj a/l Sanmugham","grade":"E16(S)","cat":"Pakar","subjects":["Gas Turbine Rotating Blade Refurbishment Process"]},{"staffId":"10087263","name":"Mohd Fahmi bin Mohd Yusoff","grade":"E16(S)","cat":"Pakar","subjects":["Gas Turbine Parts Refurbishment"]}],"modules":["Power Utility Economics","Fundamental of Power Plant Operation","Finance Essential","Impactful Presentation","Project Management","7 Step Problem Solving","Leadership Skill","Critical Thinking","Power Plant Cycle Chemistry","Power Plant Agreement (PPA)","Energy Efficiency (Thermal)","Hydro Operation & Turbine","New Energy Sources","Reliability Centered Maintenance (RCM)","ET – Solar PV Technology","Hydro Civil Maintenance & Cost Management","Critical Equipment & Maintenance Strategy","Agile Change","RTS Methodology/S1/S2","Inventory & Negotiation","Performance Management","Managing Risk","ET – Hydrogen","ET – Carbon Capture, Utilisation and Storage (CCUS)","Risk Based Inspection","Steam Turbine","Genco DigiBoost","ET – Biomass Coal Co-Firing","ET – Battery Energy Storage System (BESS)","PI System","Plant Maintenance & KKS Code","Gas Turbine Parts Refurbishment","Gas Turbine Performance Enhancement Technologies","Failure Analysis & Root Cause Analysis","Gas Turbine Parts & Material Failure Mechanism","Gas Turbine Parts Development Guidelines","Gas Turbine Rotating Blade Refurbishment Process"]};
+
+/* ---------------- TRAINERS ---------------- */
+// Directory of trainers (config/trainerDir), trainer logins (role "trainer", username = staff number),
+// trainer assessments (tmarks/<sme>__<module>__<staff>) copied into the SME's Trainer Assessment by an admin/editor session.
+ROLES.trainer={label:"Trainer",desc:"Signs in with staff number. Marks participants in the modules they teach and runs attendance, quiz and feedback for those modules",col:"--s2"};
+const TR_RUBRIC=["Generation Ideas","General / Technical Knowledge","Quality of Work","Analytical Thinking","Critical Thinking","Engagement","Presentation Skill","Syndication & Drive","Attitude","Self Discipline"];
+const TR_MAX=TR_RUBRIC.length*5;
+S.trDir=null;S.trDirLoaded=false;S.tmarks={};S.tmLoaded=false;S.trTab="trainers";S.trForm=null;S.trQ="";S.trMod="";
+const trList=()=>(S.trDir&&Array.isArray(S.trDir.list))?S.trDir.list:TR_SEED.trainers;
+const trModules=()=>(S.trDir&&Array.isArray(S.trDir.modules))?S.trDir.modules:TR_SEED.modules;
+const trKey=t=>t.staffId||("x"+String(t.name||"").toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,16));
+const trMe=()=>S.trainer?trList().find(t=>t.staffId===S.trainer)||{staffId:S.trainer,name:(S.me&&S.me.displayName)||S.trainer,subjects:[]}:null;
+const trOnly=()=>!!S.trainer&&!S.admin;
+const trMine=L=>trOnly()?L.filter(x=>x.owner===S.trainer):L;
+const trUser=sid=>usersList().find(u=>u.role==="trainer"&&(u.staffId||u.username)===sid);
+function trAllNames(){const s=new Set((S.trainers||[]).concat(trList().map(t=>t.name)));return [...s].filter(Boolean).sort((a,b)=>a.localeCompare(b))}
+const tmId=(sme,sub,sid)=>sme+"__"+String(sub).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)+"__"+sid;
+async function saveTrDir(mut,msg){const cur={list:clone(trList()),modules:clone(trModules())};mut(cur);cur.updatedAt=new Date().toISOString();cur.updatedBy=S.me?S.me.username:"";
+  try{await S.db.doc("config/trainerDir").set(cur);S.trDir=cur;if(msg)toast(msg);return true}catch(e){toast("Could not save the trainer list");return false}}
+function subscribeTrainers(){if(!S.db||S._trSub)return;S._trSub=true;
+  S.db.doc("config/trainerDir").onSnapshot(d=>{S.trDir=d.exists?d.data():null;S.trDirLoaded=true;
+    if(!d.exists&&S.admin&&!S._trSeeded){S._trSeeded=true;saveTrDir(()=>{},"")}
+    if(S.current==="__trainer")safeRender()},()=>{S.trDirLoaded=true});
+  S.db.collection("tmarks").onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{if(d.exists)m[d.id]=d.data()});S.tmarks=m;S.tmLoaded=true;if(S.admin)tmSyncSoon();if(S.current==="__trainer")safeRender()},()=>{S.tmLoaded=true});
+}
+/* ---- match a trainer's module to a column in the SME's Trainer Assessment ---- */
+const trTok=s=>String(s||"").toLowerCase().replace(/&/g," ").replace(/\(.*?\)/g," ").replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(w=>w&&!["of","and","the","et","#1","1","2","3"].includes(w)).map(w=>w.replace(/^7th$/,"7"));
+function trMatchCol(c,sub){const A=new Set(trTok(sub));let best=null,bs=0;(c.trainerTopics||[]).forEach(t=>{const B=new Set(trTok(t.module));let n=0;A.forEach(w=>{if(B.has(w)||[...B].some(b=>b.length>=3&&(w.startsWith(b)||b.startsWith(w))))n++});const sc=n/Math.max(1,Math.min(A.size,B.size));if(sc>bs){bs=sc;best=t}});return bs>=.5?best:null}
+/* ---- sync submitted marks into the SME (admin / editor sessions only) ---- */
+function tmSyncSoon(){clearTimeout(tmSyncSoon.t);tmSyncSoon.t=setTimeout(tmSyncAll,1200)}
+function tmSyncAll(){if(!S.admin||!S.db)return;const by={};Object.values(S.tmarks).filter(d=>d.status==="submitted"&&S.cohorts[d.smeId]).forEach(d=>{(by[d.smeId]=by[d.smeId]||[]).push(d)});
+  Object.entries(by).forEach(([sid,L])=>{const c0=S.cohorts[sid];const cc=clone(c0);let changed=0;const msgs=[],ups=[];
+    const noT=!(cc.participants||[]).some(p=>Object.keys(p.trainer||{}).length);
+    if(typeof isCompTpl==="function"&&isCompTpl(cc)&&noT){cc.trainerTopics=[];cc.skillMax=20;changed++}
+    const sk=cc.skillMax||20;
+    L.forEach(d=>{let col=(cc.trainerTopics||[]).find(t=>t.key===d.colKey);if(!col&&d.colKey!=="__new")col=trMatchCol(cc,d.subject);
+      if(!col){let n=0;(cc.trainerTopics||[]).forEach(t=>{const m=String(t.key).match(/^t(\d+)$/);if(m)n=Math.max(n,+m[1])});col={key:"t"+(n+1),module:d.subject,date:""};cc.trainerTopics=(cc.trainerTopics||[]).concat([col]);changed++}
+      if(d.trainerName&&!String(col.trainer||"").includes(d.trainerName)){col.trainer=col.trainer?col.trainer+" & "+d.trainerName:d.trainerName;changed++}
+      let n=0;Object.entries(d.totals||{}).forEach(([pid,tot])=>{const p=(cc.participants||[]).find(x=>x.id===pid);if(!p||typeof tot!=="number")return;const v=Math.round(tot/TR_MAX*sk*10)/10;p.trainer=p.trainer||{};if(p.trainer[col.key]!==v){p.trainer[col.key]=v;n++}});
+      if(n){changed++;msgs.push(d.trainerName+" · "+d.subject+" ("+n+")")}
+      if(d.colKey!==col.key||!d.syncedAt||d.syncedAt<d.submittedAt)ups.push({...d,colKey:col.key,colName:col.module,syncedAt:new Date().toISOString()})});
+    if(changed)queueSave(cc,msgs.length?"Trainer marks added: "+msgs.join(", "):"Trainer modules updated");
+    ups.forEach(u=>{S.db.doc("tmarks/"+u.id).set(u).catch(()=>{})})});
+}
+/* ---- routing ---- */
+document.addEventListener("click",e=>{const t=e.target.closest("[data-trmenu],[data-trtab],[data-tropen],[data-trback],[data-trnew],[data-tredit],[data-trlogin],[data-trnewsess]");if(!t)return;const d=t.dataset;
+  if(d.trmenu!==undefined){S.trForm=null;go("__trainer");return}
+  if(d.trtab){S.trTab=d.trtab;S.trForm=null;render();return}
+  if(d.tropen){S.trForm={id:d.tropen};render();window.scrollTo(0,0);return}
+  if(d.trback!==undefined){S.trForm=null;render();return}
+  if(d.trnew!==undefined){trEditModal(null);return}
+  if(d.tredit){trEditModal(d.tredit);return}
+  if(d.trlogin){trLoginModal(d.trlogin);return}
+  if(d.trnewsess){const k=d.trnewsess;S.trSub=($("#trSub")||{}).value||S.trSub||"";if(k==="att"){S.extView=null;S.extBatch=null;go("__att");setTimeout(()=>attEditor(null),50)}else if(k==="fb"){S.extView=null;S.extBatch=null;go("__fb");setTimeout(()=>fbEditor(null),50)}else{S.qView=null;go("__quiz");setTimeout(()=>quizEditor(null),50)}}});
+
+function trainerView(){
+  if(S.admin)return trAdminView();
+  if(!S.trainer)return loginGate("Sign in with your staff number to open the trainer page.");
+  if(S.trForm)return trFormView();
+  const me=trMe(),subs=me.subjects||[],ids=Object.keys(S.cohorts).sort((a,b)=>String(b).localeCompare(String(a),undefined,{numeric:true}));
+  const mine=Object.values(S.tmarks).filter(d=>d.staffId===S.trainer).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
+  let h='<section class="banner trb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Trainer · '+esc(me.cat||"")+'</span><h1>'+esc(me.name)+'</h1><div class="meta"><span>Staff no. '+esc(me.staffId)+'</span><span>'+plural(subs.length,"module","modules")+' you teach</span></div></div></section>';
+  h+='<div class="trsubs">'+(subs.length?subs.map(s=>'<span class="trchip">'+esc(s)+'</span>').join(""):'<span class="hint">No modules are linked to you yet. Ask the Genco Academy coordinator to add them.</span>')+'</div>';
+  h+='<div class="g2"><section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s3)"></i>Trainer assessment</div><h3>Mark participants</h3><p>Pick the SME and the module you taught. Rate each participant on '+TR_RUBRIC.length+' criteria (1–5). The total goes into the SME’s Trainer Assessment for your module.</p></div></div>'+
+    '<div class="frow"><div class="field"><label for="trSme">SME</label><select id="trSme">'+ids.map(id=>'<option value="'+esc(id)+'">'+esc(S.cohorts[id].name||id)+' · '+(S.cohorts[id].participants||[]).length+' participants</option>').join("")+'</select></div>'+
+    '<div class="field"><label for="trSub">Module you teach</label><select id="trSub">'+subs.map(s=>'<option'+(s===S.trSub?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select></div></div>'+
+    '<button class="btn primary" id="trStart"'+(subs.length&&ids.length?"":" disabled")+'>Open assessment</button></section>'+
+    '<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s1)"></i>Sessions</div><h3>Run your session</h3><p>When the programme coordinator is not there, you can run attendance, a quiz and the feedback form for the modules you teach.</p></div></div>'+
+    '<div class="trsess"><button class="btn" data-trnewsess="att">'+navIco('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/>')+' New attendance</button><button class="btn" data-trnewsess="quiz">'+qrIco+' New quiz</button><button class="btn" data-trnewsess="fb">'+navIco('<path d="M4 5h16v11H8l-4 4z"/>')+' New feedback form</button></div>'+
+    '<p class="hint">Yours so far: '+plural(trMine(Object.values(S.att||{})).length,"attendance","attendance")+' · '+plural(trMine(Object.values(S.quizzes||{})).length,"quiz","quizzes")+' · '+plural(trMine(Object.values(S.fbk||{})).length,"feedback form","feedback forms")+'. Open them from the menu on the left.</p></section></div>';
+  h+='<section class="panel"><div class="ph"><div class="t"><h3>My assessments</h3><p>Drafts stay with you. Submitted marks are copied into the SME automatically.</p></div></div>'+(mine.length?'<div class="tblwrap"><table class="btbl"><thead><tr><th>SME</th><th>Module</th><th class="r">Scored</th><th>Status</th><th>Updated</th><th></th></tr></thead><tbody>'+mine.map(d=>{const c=S.cohorts[d.smeId],N=c?(c.participants||[]).length:0,n=Object.keys(d.totals||{}).length;
+    return '<tr><td><b>'+esc(c?c.name||d.smeId:d.smeId)+'</b></td><td>'+esc(d.subject)+'</td><td class="r num">'+n+'<span class="hint">/'+N+'</span></td><td>'+tmStatus(d)+'</td><td>'+esc(new Date(d.updatedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</td><td class="r"><button class="btn sm" data-tropen="'+esc(d.id)+'">Open</button></td></tr>'}).join("")+'</tbody></table></div>':'<div class="empty"><b>No assessments yet</b>Pick an SME and your module above.</div>')+'</section>';
+  return h;
+}
+function tmStatus(d){return d.status!=="submitted"?'<span class="pill none">Draft</span>':d.syncedAt&&d.syncedAt>=d.submittedAt?'<span class="pill good">In SME ✓</span>':'<span class="pill warn">Submitted · waiting to copy</span>'}
+function trFormView(){
+  const d=S.tmarks[S.trForm.id]||S.trForm.draft;if(!d){S.trForm=null;return trainerView()}
+  const c=S.cohorts[d.smeId],ro=!(S.trainer===d.staffId)&&!S.admin,ps=c?(c.participants||[]).filter(p=>!/withdraw/i.test(p.remark||"")):[],sk=c?(c.skillMax||20):20;
+  const sc=S.trForm.scores||(S.trForm.scores=clone(d.scores||{})),cm=S.trForm.comments||(S.trForm.comments=clone(d.comments||{}));
+  const tot=pid=>{const a=sc[pid];if(!a||a.some(v=>!v))return null;return a.reduce((x,y)=>x+y,0)};
+  const done=ps.filter(p=>tot(p.id)!=null).length,col=c?((c.trainerTopics||[]).find(t=>t.key===(S.trForm.colKey||d.colKey))||(S.trForm.colKey==="__new"?null:trMatchCol(c,d.subject))):null;
+  let h='<div class="qbar"><button class="btn ghost" data-trback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(S.admin?"Trainer assessments":"My trainer page")+'</button><span class="grow"></span>'+tmStatus(d)+'</div>';
+  h+='<section class="banner trb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">'+esc(c?c.name||d.smeId:d.smeId)+' · Trainer assessment</span><h1>'+esc(d.subject)+'</h1><div class="meta"><span>'+esc(d.trainerName)+'</span><span>'+done+' of '+ps.length+' participants marked</span></div></div></section>';
+  if(c&&!ro)h+='<div class="trinfo"><span>Goes to <b>'+esc(c.name||c.id)+' → Trainer Assessment →</b></span><select id="trCol"><option value="">'+(col?esc(col.module)+" (matched)":"New column: "+esc(d.subject))+'</option>'+(c.trainerTopics||[]).map(t=>'<option value="'+esc(t.key)+'"'+(S.trForm.colKey===t.key?" selected":"")+'>'+esc(t.module)+'</option>').join("")+'<option value="__new"'+(S.trForm.colKey==="__new"?" selected":"")+'>New column: '+esc(d.subject)+'</option></select><span class="hint">Total out of '+TR_MAX+' becomes a mark out of '+sk+' in the SME.</span></div>';
+  h+='<div class="tblwrap trtbl"><table><thead><tr><th class="namecell">Participant</th>'+TR_RUBRIC.map((r,i)=>'<th class="c" title="'+esc(r)+'"><span class="vh">'+esc(r)+'</span></th>').join("")+'<th class="r">Total<br><small class="hint">/'+TR_MAX+'</small></th><th class="r">SME<br><small class="hint">/'+sk+'</small></th><th>Remark</th></tr></thead><tbody>'+
+    ps.map(p=>{const a=sc[p.id]||[],t=tot(p.id);return '<tr><td class="namecell"><b>'+esc(p.name)+'</b><small>'+esc(p.station||"")+'</small></td>'+TR_RUBRIC.map((r,i)=>'<td class="c">'+(ro?(a[i]||"–"):'<select class="trs v'+(a[i]||0)+'" data-trs="'+esc(p.id)+'|'+i+'" aria-label="'+esc(p.name+", "+r)+'"><option value="">–</option>'+[1,2,3,4,5].map(v=>'<option'+(a[i]===v?" selected":"")+'>'+v+'</option>').join("")+'</select>')+'</td>').join("")+
+      '<td class="r num"><b>'+(t==null?'<span class="hint">–</span>':t)+'</b></td><td class="r num">'+(t==null?'<span class="hint">–</span>':(Math.round(t/TR_MAX*sk*10)/10))+'</td><td>'+(ro?esc(cm[p.id]||""):'<input type="text" class="trrem" data-trc="'+esc(p.id)+'" value="'+esc(cm[p.id]||"")+'" placeholder="Optional">')+'</td></tr>'}).join("")+'</tbody></table></div>';
+  h+='<p class="hint">Scale: 1 Poor · 2 Fair · 3 Good · 4 Very good · 5 Excellent. Criteria: '+TR_RUBRIC.map((r,i)=>(i+1)+". "+esc(r)).join(" · ")+'</p>';
+  if(!ro)h+='<div class="trfoot"><span class="err" id="trErr"></span><span class="grow"></span>'+(S.tmarks[d.id]&&d.status!=="submitted"?'<button class="btn ghost danger" id="trDel">'+I.trash+' Delete draft</button>':'')+'<button class="btn" id="trDraft">Save draft</button><button class="btn primary" id="trSubmit">'+(d.status==="submitted"?"Update marks in SME":"Submit to SME")+'</button></div>';
+  return h;
+}
+function bindTrainer(){
+  const st=$("#trStart");if(st)st.addEventListener("click",()=>{const sme=$("#trSme").value,sub=$("#trSub").value,me=trMe();S.trSub=sub;const id=tmId(sme,sub,me.staffId);
+    S.trForm={id,draft:S.tmarks[id]?null:{id,smeId:sme,subject:sub,staffId:me.staffId,trainerName:me.name,scores:{},comments:{},totals:{},status:"draft",updatedAt:new Date().toISOString()}};render();window.scrollTo(0,0)});
+  document.querySelectorAll("[data-trs]").forEach(s=>s.addEventListener("change",()=>{const [pid,i]=s.dataset.trs.split("|");const a=S.trForm.scores[pid]=(S.trForm.scores[pid]||Array(TR_RUBRIC.length).fill(0)).slice();a[+i]=+s.value||0;const y=window.scrollY;render();window.scrollTo(0,y);const n=document.querySelector('[data-trs="'+pid+'|'+(+i+1)+'"]');if(n)n.focus()}));
+  document.querySelectorAll("[data-trc]").forEach(x=>x.addEventListener("input",()=>{S.trForm.comments[x.dataset.trc]=x.value}));
+  const cl=$("#trCol");if(cl)cl.addEventListener("change",()=>{S.trForm.colKey=cl.value;const y=window.scrollY;render();window.scrollTo(0,y)});
+  const save=async submit=>{const d0=S.tmarks[S.trForm.id]||S.trForm.draft,d=clone(d0),c=S.cohorts[d.smeId];const sc=S.trForm.scores,tot={};
+    Object.entries(sc).forEach(([pid,a])=>{if(a&&a.length===TR_RUBRIC.length&&a.every(v=>v>=1))tot[pid]=a.reduce((x,y)=>x+y,0)});
+    const part=Object.entries(sc).filter(([pid,a])=>a&&a.some(v=>v)&&!tot[pid]).length;
+    if(submit&&part){$("#trErr").textContent=plural(part,"participant has","participants have")+" some criteria left blank. Finish them or clear the row.";return}
+    if(submit&&!Object.keys(tot).length){$("#trErr").textContent="Mark at least one participant first.";return}
+    d.scores=sc;d.comments=Object.fromEntries(Object.entries(S.trForm.comments).filter(([k,v])=>v&&v.trim()));d.totals=tot;d.updatedAt=new Date().toISOString();
+    if(S.trForm.colKey!==undefined)d.colKey=S.trForm.colKey||null;if(!d.colKey)delete d.colKey;
+    if(submit){d.status="submitted";d.submittedAt=d.updatedAt}
+    try{await S.db.doc("tmarks/"+d.id).set(d);S.tmarks[d.id]=d;S.trForm.draft=null;toast(submit?"Submitted — the marks go into "+(c?c.name||d.smeId:d.smeId):"Draft saved");if(S.admin)tmSyncSoon();render()}catch(e){toast("Could not save. Check your connection.")}};
+  const dr=$("#trDraft");if(dr)dr.addEventListener("click",()=>save(false));
+  const sb=$("#trSubmit");if(sb)sb.addEventListener("click",()=>save(true));
+  const dl=$("#trDel");if(dl)dl.addEventListener("click",async()=>{if(!confirm("Delete this draft?"))return;try{await S.db.doc("tmarks/"+S.trForm.id).delete();delete S.tmarks[S.trForm.id];S.trForm=null;render()}catch(e){toast("Could not delete")}});
+  bindTrAdmin();
+}
+/* ---- admin / editor ---- */
+function trAdminView(){
+  if(S.trForm)return trFormView();
+  const L=trList(),M=trModules(),T=S.trTab||"trainers";
+  let h='<section class="banner trb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Trainers</h1><div class="meta"><span>'+plural(L.length,"trainer","trainers")+'</span><span>'+plural(M.length,"module","modules")+'</span><span>'+L.filter(t=>trUser(t.staffId)).length+' with a login</span></div></div><div class="acts"><button class="btn onban solid" data-trnew>'+I.plus+' Add trainer</button></div></section>';
+  const subm=Object.values(S.tmarks).filter(d=>d.status==="submitted");
+  h+='<div class="trtabs">'+[["trainers","Trainers"],["modules","Modules"],["marks","Assessments"+(subm.length?" ("+subm.length+")":"")]].map(x=>'<button class="tab" data-trtab="'+x[0]+'" aria-selected="'+(T===x[0])+'">'+x[1]+'</button>').join("")+'</div>';
+  if(T==="modules"){
+    h+='<section class="panel"><div class="ph"><div class="t"><h3>Modules</h3><p>The subjects trainers can teach. Trainers only see the modules linked to them.</p></div><div class="a"><input id="trNewMod" type="text" placeholder="New module name"><button class="btn primary" id="trAddMod">'+I.plus+' Add module</button></div></div><div class="tblwrap"><table class="btbl"><thead><tr><th>Module</th><th>Trainers</th><th></th></tr></thead><tbody>'+
+      M.map((m,i)=>{const tr=L.filter(t=>(t.subjects||[]).includes(m));return '<tr><td><b>'+esc(m)+'</b></td><td>'+(tr.length?esc(tr.map(t=>t.name).join(", ")):'<span class="hint">No trainer yet</span>')+'</td><td class="r nowrap"><button class="btn sm icon ghost" data-trmren="'+i+'" title="Rename">'+I.edit+'</button>'+(tr.length?'':'<button class="btn sm icon ghost danger" data-trmdel="'+i+'" title="Delete">'+I.trash+'</button>')+'</td></tr>'}).join("")+'</tbody></table></div></section>';
+    return h}
+  if(T==="marks"){
+    const A=Object.values(S.tmarks).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));
+    h+='<section class="panel"><div class="ph"><div class="t"><h3>Trainer assessments</h3><p>Submitted marks are copied into each SME’s Trainer Assessment automatically (Total /'+TR_MAX+' → the SME’s scale).</p></div></div>'+(A.length?'<div class="tblwrap"><table class="btbl"><thead><tr><th>SME</th><th>Module</th><th>Trainer</th><th class="r">Scored</th><th>Status</th><th>SME column</th><th>Updated</th><th></th></tr></thead><tbody>'+A.map(d=>{const c=S.cohorts[d.smeId];
+      return '<tr><td><b>'+esc(c?c.name||d.smeId:d.smeId)+'</b></td><td>'+esc(d.subject)+'</td><td>'+esc(d.trainerName)+'</td><td class="r num">'+Object.keys(d.totals||{}).length+'</td><td>'+tmStatus(d)+'</td><td>'+esc(d.colName||"")+'</td><td>'+esc(new Date(d.updatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"}))+'</td><td class="r"><button class="btn sm" data-tropen="'+esc(d.id)+'">View</button></td></tr>'}).join("")+'</tbody></table></div>':'<div class="empty"><b>No trainer assessments yet</b>Trainers mark participants from their own trainer page.</div>')+'</section>';
+    return h}
+  const q=(S.trQ||"").toLowerCase(),fm=S.trMod||"";
+  const V=L.filter(t=>(!q||(t.name+" "+t.staffId).toLowerCase().includes(q))&&(!fm||(t.subjects||[]).includes(fm)));
+  h+='<div class="trfilter"><input id="trQ" type="search" placeholder="Search name or staff no." value="'+esc(S.trQ||"")+'"><select id="trMod"><option value="">All modules</option>'+M.map(m=>'<option'+(m===fm?" selected":"")+'>'+esc(m)+'</option>').join("")+'</select><span class="hint">'+V.length+' shown</span></div>';
+  h+='<div class="tblwrap"><table class="btbl trdir"><thead><tr><th>Trainer</th><th>Staff no.</th><th>Category</th><th>Modules taught</th><th>Login</th><th></th></tr></thead><tbody>'+V.map(t=>{const u=trUser(t.staffId),k=trKey(t);
+    return '<tr><td><b>'+esc(t.name)+'</b><small class="hint">'+esc(t.grade||"")+'</small></td><td class="num">'+esc(t.staffId||"–")+'</td><td>'+esc(t.cat||"")+'</td><td><div class="trchips">'+(t.subjects||[]).map(s=>'<span class="trchip sm">'+esc(s)+'</span>').join("")+'</div></td><td>'+(u?(u.active===false?'<span class="pill none">Disabled</span>':'<span class="pill good">Active</span>'):'<span class="hint">None</span>')+'</td>'+
+      '<td class="r nowrap"><button class="btn sm icon ghost" data-tredit="'+esc(k)+'" title="Edit">'+I.edit+'</button><button class="btn sm" data-trlogin="'+esc(k)+'"'+(t.staffId?"":" disabled title=\"Add the staff number first\"")+'>'+(u?"Password":"Create login")+'</button></td></tr>'}).join("")+'</tbody></table></div>';
+  return h;
+}
+function bindTrAdmin(){
+  const q=$("#trQ");if(q)q.addEventListener("input",()=>{S.trQ=q.value;clearTimeout(bindTrAdmin.t);bindTrAdmin.t=setTimeout(()=>{render();const n=$("#trQ");if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length)}},250)});
+  const fm=$("#trMod");if(fm)fm.addEventListener("change",()=>{S.trMod=fm.value;render()});
+  const am=$("#trAddMod");if(am)am.addEventListener("click",()=>{const v=$("#trNewMod").value.trim();if(!v)return;if(trModules().some(m=>m.toLowerCase()===v.toLowerCase())){toast("That module already exists");return}saveTrDir(d=>{d.modules.push(v)},"Module added").then(()=>render())});
+  document.querySelectorAll("[data-trmren]").forEach(b=>b.addEventListener("click",()=>{const old=trModules()[+b.dataset.trmren],nv=prompt("Rename module",old);if(!nv||!nv.trim()||nv.trim()===old)return;const v=nv.trim();
+    saveTrDir(d=>{d.modules=d.modules.map(m=>m===old?v:m);d.list.forEach(t=>{t.subjects=(t.subjects||[]).map(s=>s===old?v:s)})},"Module renamed").then(()=>render())}));
+  document.querySelectorAll("[data-trmdel]").forEach(b=>b.addEventListener("click",()=>{const m=trModules()[+b.dataset.trmdel];if(!confirm("Delete module “"+m+"”?"))return;saveTrDir(d=>{d.modules=d.modules.filter(x=>x!==m)},"Module deleted").then(()=>render())}));
+}
+function trEditModal(k){const L=trList(),t=k?L.find(x=>trKey(x)===k):null,M=trModules();
+  openModal(mhead(t?"Edit trainer":"Add trainer",t?t.name:"Name, staff number and the modules they teach")+'<form class="mb" id="tef"><div class="frow"><div class="field"><label for="te-n">Name</label><input id="te-n" type="text" required value="'+esc(t?t.name:"")+'"></div><div class="field"><label for="te-s">Staff number (used to sign in)</label><input id="te-s" type="text" inputmode="numeric" value="'+esc(t?t.staffId:"")+'"'+(t&&t.staffId&&trUser(t.staffId)?" disabled":"")+'></div></div>'+
+    '<div class="frow"><div class="field"><label for="te-g">Grade</label><input id="te-g" type="text" value="'+esc(t?t.grade||"":"")+'"></div><div class="field"><label for="te-c">Category</label><select id="te-c">'+["Bukan Pakar","Pakar"].map(c=>'<option'+(t&&t.cat===c?" selected":"")+'>'+c+'</option>').join("")+'</select></div></div>'+
+    '<div class="field"><label>Modules taught</label><div class="chkgrid trmodpick">'+M.map(m=>'<label class="chk"><input type="checkbox" name="te-m" value="'+esc(m)+'"'+(t&&(t.subjects||[]).includes(m)?" checked":"")+'> '+esc(m)+'</label>').join("")+'</div><div style="display:flex;gap:8px;margin-top:8px"><input id="te-nm" type="text" placeholder="Add a new module"><button type="button" class="btn sm" id="te-am">'+I.plus+' Add</button></div></div>'+
+    '<div class="err" id="teerr"></div><div class="mfoot"><button class="btn primary" type="submit">'+(t?"Save":"Add trainer")+'</button>'+(t?'<span style="flex:1"></span><button type="button" class="btn danger" id="teDel">'+I.trash+' Remove</button>':'')+'</div></form>');
+  $("#te-am").addEventListener("click",()=>{const v=$("#te-nm").value.trim();if(!v)return;const g=$(".trmodpick");g.insertAdjacentHTML("beforeend",'<label class="chk"><input type="checkbox" name="te-m" value="'+esc(v)+'" checked> '+esc(v)+' <span class="pill sm">new</span></label>');$("#te-nm").value=""});
+  $("#tef").addEventListener("submit",async e=>{e.preventDefault();const name=$("#te-n").value.trim(),sid=$("#te-s").value.trim().replace(/\s+/g,""),err=$("#teerr");
+    if(!name){err.textContent="Type the trainer’s name.";return}if(sid&&!/^[A-Za-z0-9]{4,12}$/.test(sid)){err.textContent="Staff number: 4–12 letters or digits.";return}
+    if(sid&&L.some(x=>x!==t&&x.staffId===sid)){err.textContent="Another trainer already has this staff number.";return}
+    const subs=[...document.querySelectorAll('input[name="te-m"]:checked')].map(x=>x.value);
+    const rec={...(t||{}),name,staffId:sid,grade:$("#te-g").value.trim(),cat:$("#te-c").value,subjects:subs};
+    const ok=await saveTrDir(d=>{subs.forEach(s=>{if(!d.modules.includes(s))d.modules.push(s)});const i=t?d.list.findIndex(x=>trKey(x)===k):-1;if(i>=0)d.list[i]=rec;else d.list.push(rec)},t?"Trainer updated":"Trainer added");
+    if(ok){if(sid&&trUser(sid))saveUsers(dd=>{const u=dd.users.find(x=>x.role==="trainer"&&(x.staffId||x.username)===sid);if(u)u.displayName=name},"");closeModal();render()}});
+  const dl=$("#teDel");if(dl)dl.addEventListener("click",async()=>{if(!confirm("Remove "+t.name+" from the trainer list"+(trUser(t.staffId)?" and turn off their login":"")+"?"))return;
+    const ok=await saveTrDir(d=>{d.list=d.list.filter(x=>trKey(x)!==k)},"Trainer removed");if(ok&&trUser(t.staffId))await saveUsers(dd=>{const u=dd.users.find(x=>x.role==="trainer"&&(x.staffId||x.username)===t.staffId);if(u)u.active=false},"Trainer login turned off: "+t.name);closeModal();render()});
+}
+function trLoginModal(k){const t=trList().find(x=>trKey(x)===k);if(!t||!t.staffId)return;const u=trUser(t.staffId),pw=genPass();
+  if(S.me&&S.me.role!=="admin"){toast("Only an admin can create logins");return}
+  openModal(mhead(u?"Trainer password":"Create trainer login",t.name)+'<form class="mb" id="tlf"><div class="frow"><div class="field"><label>Username</label><input type="text" value="'+esc(t.staffId)+'" disabled><span class="hint">The trainer signs in with their staff number.</span></div>'+
+    '<div class="field"><label for="tl-p">'+(u?"New password":"Password")+'</label><input id="tl-p" type="text" minlength="8" value="'+pw+'"></div></div>'+
+    (u?'<label class="chk"><input type="checkbox" id="tl-a"'+(u.active===false?"":" checked")+'> Login active</label>':'')+
+    '<p class="hint">Give the staff number and password to the trainer privately. They can change the password in Settings → Personal after signing in.</p><div class="err" id="tlerr"></div><div class="mfoot"><button class="btn primary" type="submit">'+(u?"Set new password":"Create login")+'</button></div></form>',true);
+  $("#tlf").addEventListener("submit",async e=>{e.preventDefault();const p=$("#tl-p").value,err=$("#tlerr"),btn=e.target.querySelector("button[type=submit]");if(p.length<8){err.textContent="Password needs at least 8 characters.";return}btn.disabled=true;
+    const active=$("#tl-a")?$("#tl-a").checked:true;const rec={...(u||{}),username:u?u.username:t.staffId,staffId:t.staffId,displayName:t.name,role:"trainer",active,mustChange:true};if(!u)rec.createdAt=new Date().toISOString();
+    if(window.FB&&FB.createUser){ // Firebase: a new sign-in account (a fresh one when resetting, since passwords can't be changed for someone else)
+      let n=0,em;for(;;){em=(t.staffId+(n?"."+n:"")).toLowerCase()+"@"+SYN_DOMAIN;if(u&&u.email===em){n++;continue}try{const r=await FB.createUser(em,p);if(r==="exists"){n++;if(n>20)throw 0;continue}break}catch(x){btn.disabled=false;err.textContent="Could not create the sign-in account.";return}}
+      rec.email=em}
+    else{rec.salt=newSalt();rec.hash=await sha(rec.salt+"|"+p)}
+    delete rec.legacy;Object.keys(rec).forEach(x=>{if(rec[x]===undefined)delete rec[x]});
+    const ok=await saveUsers(d=>{const i=d.users.findIndex(x=>x.username===rec.username);if(i>=0)d.users[i]=rec;else d.users.push(rec)},(u?"New password for trainer ":"Trainer login created: ")+t.name+" ("+t.staffId+")");
+    btn.disabled=false;if(ok){closeModal();openModal(mhead("Login ready",t.name)+'<div class="mb"><div class="credbox"><div><span>Portal</span><b>'+esc(location.origin+location.pathname)+'</b></div><div><span>Username</span><b>'+esc(t.staffId)+'</b></div><div><span>Password</span><b>'+esc(p)+'</b></div></div><p class="hint">Copy these now — the password is not shown again.</p><div class="mfoot"><button class="btn primary" id="tlCopy">Copy</button></div></div>',true);
+      $("#tlCopy").addEventListener("click",()=>{navigator.clipboard&&navigator.clipboard.writeText("Genco Academy portal: "+location.origin+location.pathname+"\nUsername: "+t.staffId+"\nPassword: "+p).then(()=>toast("Copied"),()=>{})});render()}});
+}
+/* ---- trainer: pick the module in attendance / quiz / feedback editors ---- */
+function trHook(kind){if(!trOnly())return;const mb=$(".modal .mb");if(!mb||$("#trHookSub"))return;const o=kind==="att"?S.ex.att:kind==="fb"?S.ex.fb:S.qEdit;if(!o)return;const subs=(trMe().subjects||[]);
+  if(!o.subject)o.subject=S.trSub&&subs.includes(S.trSub)?S.trSub:(subs[0]||"");
+  mb.insertAdjacentHTML("afterbegin",'<div class="field trhook"><label for="trHookSub">Module you teach</label><select id="trHookSub">'+subs.map(s=>'<option'+(s===o.subject?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select><span class="hint">As a trainer you can create sessions for your own modules.</span></div>');
+  const ti=$(kind==="att"?"#ea-t":kind==="fb"?"#ef-t":"#qe-t");if(ti&&!ti.value)ti.value=o.subject+(kind==="quiz"?" quiz":"");
+  $("#trHookSub").addEventListener("change",e=>{const prev=o.subject;o.subject=e.target.value;if(ti&&(!ti.value||ti.value===prev||ti.value===prev+" quiz"))ti.value=o.subject+(kind==="quiz"?" quiz":"")});
+  document.querySelectorAll(".modal .btn.danger").forEach(b=>{if(o.owner&&o.owner!==S.trainer)b.remove()});
+}
+function trStamp(d){if(!trOnly())return d;const me=trMe();d.owner=d.owner||S.trainer;d.ownerName=d.ownerName||me.name;if(!d.subject)d.subject=(me.subjects||[])[0]||"";return d}
+function trPost(){if(!trOnly())return;document.querySelectorAll("#qPush,#attPush,#fbTpls,#fbTrainers,#qClear").forEach(e=>e.remove())}
+
+// sessions a trainer asked for ("new SME session") are created by the next admin / editor session
+function attResolveNew(a){if(!S.admin)return a;const c0=S.cohorts[a.smeId];if(!c0||!(a.days||[]).some(d=>d.sess==="__new"))return a;
+  a=clone(a);const cc=clone(c0);cc.sessions=cc.sessions||[];const made=[];
+  a.days.forEach(d=>{if(d.sess!=="__new")return;const mod=a.title+(a.days.length>1?" – "+d.label:"");let hit=cc.sessions.find(x=>x.module===mod&&(x.date||"")===d.date);
+    if(!hit){let n=1;while(cc.sessions.some(x=>x.key==="a"+n))n++;hit={key:"a"+n,module:mod,date:d.date};cc.sessions.push(hit);made.push(mod)}d.sess=hit.key});
+  if(made.length)queueSave(cc,"Added attendance "+(made.length>1?"sessions":"session")+" “"+made.join("”, “")+"”"+(a.ownerName?" (by trainer "+a.ownerName+")":""));
+  S.att[a.id]=a;extSave("att",a);return a}
+// admin / editor sessions copy trainers' work into the SMEs as soon as they are signed in, and every 20 s after
+function trKick(){if(!S.admin||!S.db)return;if(S.tmLoaded)tmSyncAll();Object.values(S.att||{}).forEach(a=>{if(S.cohorts[a.smeId]&&(a.days||[]).some(d=>d.sess==="__new"))attResolveNew(a)})}
+setTimeout(trKick,3000);setTimeout(trKick,7000);setInterval(trKick,20000);
 
 /* ---------- STAFF DIRECTORY (lookup only, no menu tab) ---------- */
 S.staff=null;S.staffMeta=null;S.staffSub=false;
