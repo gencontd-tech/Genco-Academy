@@ -946,6 +946,22 @@ details.notyet .chips span{background:var(--surface-2);border-radius:999px;paddi
 .aska p{margin:0 0 6px}.aska ul{margin:4px 0 8px;padding-left:20px}.aska h4{margin:8px 0 4px;font-size:14px}
 .askact{display:flex;justify-content:flex-end}
 @media (max-width:600px){.bbnums{grid-template-columns:repeat(3,minmax(0,1fr))}.askbox{flex-direction:column;align-items:stretch}}
+.aisave{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:#fef3c7;color:#92400e;margin:0 0 12px;font-size:13px}
+.aisave>span{flex:1;min-width:220px}
+.aisave.saved{background:var(--surface-2,#f1f5f9);color:var(--muted)}
+.askact{gap:6px;align-items:center;margin-top:6px}
+/* batches */
+.bfolders{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-bottom:16px}
+.bfold{display:flex;align-items:center;gap:12px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--k);border-radius:14px;padding:14px;font:inherit;color:var(--ink);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.bfold:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(15,23,42,.08)}
+.bfold .grow{flex:1;min-width:0}
+.bfold b{display:block;font-size:15px}
+.bfold small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.bfi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--k) 15%,transparent);color:var(--k);flex:none}
+.bscore{text-align:right;line-height:1}.bscore b{font-size:18px;color:var(--c)}.bscore small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.btbl td{vertical-align:middle}
+.btbl .nowrap{white-space:nowrap}.btbl .nowrap .btn{margin-left:4px}
+.btbl td .hint{font-size:12px}
 
 </style>
 
@@ -1653,7 +1669,9 @@ function renderInner(){
   if(S.current==="__quiz"){app.innerHTML=quizView();const qq=S.qView&&S.quizzes[S.qView.id];if(qq&&S.admin){if(S.qView.mode==="run")bindQuizRun(qq);else bindQuizResult(qq)}return}
   if(S.current==="__att"){app.innerHTML=attView();bindAttAdmin();return}
   if(S.current==="__fb"){app.innerHTML=fbView();bindFbAdmin();return}
+  if(S.current!=="__belt"&&typeof beltClear==="function")beltClear();
   if(S.current==="__belt"){app.innerHTML=beltView();bindBelt();return}
+  if(S.cohorts[S.current]&&typeof stdAuto==="function")stdAuto(S.cohorts[S.current]);
   if(S.current==="__history"){app.innerHTML=historyView();bindHistory();return}
   if(S.current==="__people"){app.innerHTML=peopleDirView();bindPeopleDir();return}
   if(!S.current||!S.cohorts[S.current]){app.innerHTML=homeView();return}
@@ -1779,13 +1797,13 @@ function registerPanel(c){
   return h+'</section>';
 }
 function dataTab(c,ds){
-  const D=DS[ds],cols=c[D.list]||[],ps=c.participants||[],adm=!!S.admin;
+  const D=DS[ds],cols=c[D.list]||[],ps=c.participants||[],adm=!!S.admin;if(ds==="trainer"||ds==="project")stdAuto(c);
   let h=ds==="att"?pAtt(c,true)+registerPanel(c):pScores(c,ds,true);
   const desc={att:adm?"Each cell is a dropdown: Present, Absent, Excused or Not started.":"Present · Absent · Excused · Not started",quiz:"Scores in % (0–100).",trainer:"Trainer marks per module, out of "+SKM(c)+".",project:"Ratings per criterion on a 1–3 scale."}[ds];
   h+='<div class="tools"><div><b style="font-family:var(--f-display);font-size:16px">'+({att:"Attendance register (all sessions)",quiz:"Quiz scores",trainer:"Trainer module marks",project:"Project ratings"}[ds])+'</b><div class="hint">'+plural(cols.length,D.item,D.items)+' · '+desc+'</div></div><span class="grow"></span>';
   if(ds==="att")h+='<div class="legend"><span><span class="st P">P</span> Present</span><span><span class="st A">A</span> Absent</span><span><span class="st R">E</span> Excused</span><span><span class="st N">–</span> Not started</span></div>';
   h+='<button class="btn'+(cols.length?"":" primary")+'" data-manage="'+ds+'">'+I.list+' Manage '+(ds==="trainer"?"trainer modules":D.items)+'</button></div>';
-  if(!cols.length){h+='<div class="empty"><b>No '+(ds==="trainer"?"trainer modules":D.items)+' yet</b>Add them with “Manage '+(ds==="trainer"?"trainer modules":D.items)+'”, or import a file.<div class="acts"><button class="btn primary" data-manage="'+ds+'">'+I.plus+' Add '+D.items+'</button></div></div>';return h}
+  if(!cols.length){h+='<div class="empty"><b>No '+(ds==="trainer"?"trainer modules":D.items)+' yet</b>Add them with “Manage '+(ds==="trainer"?"trainer modules":D.items)+'”, or import a file.<div class="acts">'+((ds==="trainer"||ds==="project")&&adm?'<button class="btn primary" data-stdtpl="'+ds+'">'+I.list+' Use standard template</button>':'')+'<button class="btn'+((ds==="trainer"||ds==="project")&&adm?"":" primary")+'" data-manage="'+ds+'">'+I.plus+' Add '+D.items+'</button></div></div>';return h}
   if(!ps.length){h+='<div class="empty"><b>No participants yet</b><div class="acts"><button class="btn primary" data-act="addperson">'+I.plus+' Add participants</button></div></div>';return h}
   h+='<div class="tblwrap"><table class="matrix"><thead><tr><th class="namecell">Participant</th><th class="r">'+(ds==="att"?"Present":"Average")+'</th>';
   cols.forEach(col=>{h+='<th class="mc'+(ds==="att"&&adm?" wide":"")+'"><button class="colhd" '+(ds==="att"?'data-reg="'+col.key+'"':'data-coldetail="'+ds+'|'+col.key+'"')+' title="'+esc(col.module)+'">'+esc(short(col.module,32))+'</button>'+(col.date?'<small>'+esc(fmtD(col.date))+'</small>':'')+(col.trainer?'<small>'+esc(short(col.trainer,22))+'</small>':'')+'</th>'});
@@ -1907,7 +1925,7 @@ function newCohortModal(){
     '<div class="field"><label for="nc-id">SME code</label><input id="nc-id" type="text" value="'+nextSme()+'" required></div>'+
     '<div class="field"><label for="nc-period">Period</label><input id="nc-period" type="text" placeholder="e.g. Jan – Dec 2027"></div></div>'+
     '<div class="field"><label for="nc-prog">SME group</label><select id="nc-prog">'+PROGS.map(p=>'<option value="'+p[0]+'"'+((S.prog||"GENCO")===p[0]?" selected":"")+'>'+p[1]+'</option>').join("")+'</select></div>'+'<div class="field"><label for="nc-title">Programme</label><input id="nc-title" type="text" value="SME Foundation Programme"></div>'+
-    '<div class="field"><label for="nc-from">Start from</label><select id="nc-from"><option value="">Blank SME</option>'+list.map(id=>'<option value="'+esc(id)+'">Copy sessions, quizzes, trainer modules and criteria from '+esc(id)+'</option>').join("")+'</select><span class="hint">Copying brings over the structure only. Participants, dates and scores start empty.</span></div>'+
+    '<div class="field"><label for="nc-from">Start from</label><select id="nc-from"><option value="">Blank SME</option>'+list.map(id=>'<option value="'+esc(id)+'">Copy sessions, quizzes, trainer modules and criteria from '+esc(id)+'</option>').join("")+'</select><span class="hint">Copying brings over the structure only. Participants, dates and scores start empty. Trainer assessment (10 competencies, out of 5) and Project assessment (12 criteria, 1–3) are always set up for you.</span></div>'+
     '<div class="err" id="ncerr"></div><button class="btn primary" type="submit">'+I.plus+' Create SME</button></form>',true);
   $("#ncf").addEventListener("submit",e=>{e.preventDefault();
     const id=cohortId($("#nc-id").value);if(!id){$("#ncerr").textContent="Use letters, numbers or hyphens.";return}
@@ -1915,7 +1933,8 @@ function newCohortModal(){
     if(!S.db){$("#ncerr").textContent="The database is not available in this view.";return}
     const c=blankCohort(id,$("#nc-id").value.trim().toUpperCase());c.title=$("#nc-title").value.trim();c.programme=$("#nc-prog").value;c.period=$("#nc-period").value.trim();
     const src=S.cohorts[$("#nc-from").value];
-    if(src)Object.keys(DS).forEach(k=>{c[DS[k].list]=(src[DS[k].list]||[]).map(x=>({key:x.key,module:x.module,date:""}))});
+    if(src){Object.keys(DS).forEach(k=>{const L=src[DS[k].list]||[];if(L.length)c[DS[k].list]=L.map(x=>({key:x.key,module:x.module,date:""}))});if((src.trainerTopics||[]).length&&src.skillMax)c.skillMax=src.skillMax}
+    Object.assign(c,stdTpl(c));
     queueSave(c,"Created SME "+id+(src?" (structure copied from "+src.id+")":""));closeModal();go(id);toast(id+" created")});
 }
 function addPersonModal(){
@@ -3482,6 +3501,19 @@ function untilFrom(v){const now=new Date();if(v.mode==="hours")return now.getTim
 const leftTxt=ms=>{const s=Math.max(0,Math.round((ms-Date.now())/60000));return ms>=EXT_FOREVER?"until you close it":s>=60?Math.floor(s/60)+"h "+(s%60)+"m left":s+" min left"};
 function whoSelect(sel){return '<select id="ev-s"><option value=""'+(!sel?" selected":"")+'>Open to anyone (type name, staff no., department)</option><optgroup label="Participants of an SME">'+ids().map(i=>'<option value="'+esc(i)+'"'+(i===sel?" selected":"")+'>'+esc(S.cohorts[i].name||i)+'</option>').join("")+'</optgroup></select>'}
 
+/* ---------------- Batches: group attendance / feedback by SME ---------------- */
+S.extBatch=null; // {t:"att"|"fb", sme:"SME20"|"__open"}
+const batchKey=x=>S.cohorts[x.smeId]?x.smeId:"__open";
+const batchName=k=>k==="__open"?"Open to anyone":(S.cohorts[k]&&S.cohorts[k].name)||k;
+const batchCol=k=>k==="__open"?"--s3":SME_COL(k);
+function batchGroups(L){const g={};L.forEach(x=>{(g[batchKey(x)]=g[batchKey(x)]||[]).push(x)});
+  return Object.keys(g).sort((a,b)=>a==="__open"?1:b==="__open"?-1:String(b).localeCompare(String(a),undefined,{numeric:true})).map(k=>({k,L:g[k]}))}
+function curBatch(t){return S.extBatch&&S.extBatch.t===t?S.extBatch.sme:null}
+function batchBar(t,k,n,label){return '<div class="qbar"><button class="btn ghost" data-batchback="'+t+'">'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All batches</button><span class="grow"></span><span class="hint">'+plural(n,label,label+"s")+' in this batch</span></div>'}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-batch],[data-batchback]");if(!t)return;const d=t.dataset;
+  if(d.batchback!==undefined){S.extBatch=null;S.extView=null;render();window.scrollTo(0,0);return}
+  const [tt,k]=d.batch.split("|");S.extBatch={t:tt,sme:k};S.extView=null;render();window.scrollTo(0,0)});
+
 /* ---------------- ATTENDANCE: admin ---------------- */
 // Check-ins are copied to the SME attendance (P) automatically while an Editor/Admin has the portal open.
 function attSyncSoon(id){clearTimeout(attSyncSoon["t"+id]);attSyncSoon["t"+id]=setTimeout(()=>attSync(S.att[id]),1500)}
@@ -3497,12 +3529,23 @@ function attView(){
   h+='<div class="qsteps">'+[["1","Set up","Course, location, days and how long the QR stays valid.","--s1"],["2","Show QR","Open the QR for the day. It closes by itself.","--s2"],["3","Check in","Participants scan and tap Check in — once per day.","--s3"],["4","Dashboard","See who came each day and save it to the SME.","--s4"]].map(s=>'<div style="--k:var('+s[3]+')"><i>'+s[0]+'</i><b>'+s[1]+'</b><span>'+s[2]+'</span></div>').join("")+'</div>';
   if(!S.attLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
   if(!L.length)return h+'<div class="empty"><b>No attendance yet</b>Create one for your next course.<div class="acts"><button class="btn primary" data-attnew>'+I.plus+' New attendance</button></div></div>';
-  return h+'<div class="qcards">'+L.map(a=>{const c=S.cohorts[a.smeId],live=(a.days||[]).find(d=>extOpen(a,"d"+d.n));
-    return '<div class="qcard" style="--k:var('+(c?SME_COL(a.smeId):"--s1")+')"><div class="top">'+(live?'<span class="pill good">Open · '+esc(live.label)+'</span>':'<span class="pill none">Closed</span>')+'<span class="hint">'+esc(c?c.name||a.smeId:"Open to anyone")+'</span></div><b class="qt">'+esc(a.title)+'</b><span class="hint">'+esc(a.location||"")+(a.days&&a.days.length?' · '+plural(a.days.length,"day","days")+' from '+esc(fmtDay(a.days[0].date)):'')+'</span>'+
-      '<div class="qacts"><button class="btn sm" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-attdash="'+esc(a.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
+  const dash=navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>'),cin=a=>extResp("att",a.id).length;L.forEach(a=>watchExt("att",a.id));
+  const k=curBatch("att");
+  if(!k){const G=batchGroups(L);
+    return h+'<div class="sechead"><div><h2>Batches</h2><p class="hint">One folder per SME. Open a batch to see its courses.</p></div></div><div class="bfolders">'+G.map(g=>{const live=g.L.some(a=>(a.days||[]).some(d=>extOpen(a,"d"+d.n))),days=g.L.reduce((x,a)=>x+(a.days||[]).length,0),ci=g.L.reduce((x,a)=>x+cin(a),0),last=g.L.map(a=>(a.days||[]).map(d=>d.date).sort().pop()||"").sort().pop();
+      return '<button class="bfold" data-batch="att|'+esc(g.k)+'" style="--k:var('+batchCol(g.k)+')"><span class="bfi">'+navIco('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>')+'</span><span class="grow"><b>'+esc(batchName(g.k))+'</b><small>'+plural(g.L.length,"course","courses")+' · '+plural(days,"day","days")+' · '+plural(ci,"check-in","check-ins")+(last?' · last '+esc(fmtDay(last)):'')+'</small></span>'+(live?'<span class="pill good">Live</span>':'')+I.arrow+'</button>'}).join("")+'</div>';}
+  const B=L.filter(a=>batchKey(a)===k).sort((x,y)=>String(((y.days||[])[0]||{}).date||"").localeCompare(String(((x.days||[])[0]||{}).date||"")));
+  h=h.replace('<h1>Attendance</h1>','<h1>Attendance · '+esc(batchName(k))+'</h1>').replace('<span>'+plural(L.length,"course","courses")+'</span>','<span>'+plural(B.length,"course","courses")+'</span>');
+  h+=batchBar("att",k,B.length,"course");
+  if(!B.length)return h+'<div class="empty"><b>No courses in this batch</b><div class="acts"><button class="btn primary" data-attnew>'+I.plus+' New attendance</button></div></div>';
+  const tot=B.reduce((x,a)=>x+cin(a),0),ds=B.reduce((x,a)=>x+(a.days||[]).length,0);
+  h+='<div class="kpis">'+kpiH("Courses",B.length,"",plural(ds,"day","days")+" in total","--s1",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>')+kpiH("Check-ins",tot,"",ds?(tot/ds).toFixed(1)+" per day on average":"","--good",'<path d="M5 12l5 5L20 7"/>')+(S.cohorts[k]?kpiH("Participants",(S.cohorts[k].participants||[]).length,"","In "+esc(batchName(k)),"--s5",NAV[1][3]):"")+'</div>';
+  return h+'<div class="tblwrap"><table class="btbl"><thead><tr><th>Course / forum</th><th>Days</th><th>Location</th><th class="r">Check-ins</th><th>Status</th><th></th></tr></thead><tbody>'+B.map(a=>{const live=(a.days||[]).find(d=>extOpen(a,"d"+d.n)),dd=a.days||[];
+    return '<tr><td><button class="linkish" data-attdash="'+esc(a.id)+'"><b>'+esc(a.title||"Untitled")+'</b></button></td><td>'+(dd.length?esc(fmtDay(dd[0].date))+(dd.length>1?' <span class="hint">+'+(dd.length-1)+' day'+(dd.length>2?"s":"")+'</span>':''):'–')+'</td><td>'+esc(a.location||"")+'</td><td class="r num">'+cin(a)+'</td><td>'+(live?'<span class="pill good">Open · '+esc(live.label)+'</span>':'<span class="pill none">Closed</span>')+'</td>'+
+      '<td class="r nowrap"><button class="btn sm icon ghost" data-attedit="'+esc(a.id)+'" aria-label="Edit" title="Edit">'+I.edit+'</button><button class="btn sm icon" data-attrun="'+esc(a.id)+'" aria-label="QR & run" title="QR & run">'+qrIco+'</button><button class="btn sm icon" data-attdash="'+esc(a.id)+'" aria-label="Dashboard" title="Dashboard">'+dash+'</button></td></tr>'}).join("")+'</tbody></table></div>';
 }
 function attEditor(id){
-  const a=id?clone(S.att[id]):{id:"a"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",location:"",days:[{n:1,label:"Day 1",date:localISO(),sess:"__new"}],validity:{mode:"day",hours:2},openUntil:{},v:2};
+  const a=id?clone(S.att[id]):{id:"a"+extId(),title:"",smeId:curBatch("att")?(curBatch("att")==="__open"?"":curBatch("att")):(S.cohorts[S.current]?S.current:""),location:"",days:[{n:1,label:"Day 1",date:localISO(),sess:"__new"}],validity:{mode:"day",hours:2},openUntil:{},v:2};
   if(a.v!==2&&S.cohorts[a.smeId])a.days.forEach(d=>{if(!d.sess)d.sess="__new"});a.v=2;
   S.ex.att=a;drawAttEditor();
 }
@@ -3533,7 +3576,7 @@ function drawAttEditor(){const a=S.ex.att,c=S.cohorts[a.smeId],ss=c?(c.sessions|
 function attRunView(a){
   const c=S.cohorts[a.smeId],days=a.days||[];let dn=S.ex.attDay&&S.ex.attDay[a.id];if(!dn||!days.some(d=>d.n===dn)){const live=days.find(d=>extOpen(a,"d"+d.n)),today=localISO();dn=(live||days.find(d=>d.date===today)||days[0]||{}).n}
   const d=days.find(x=>x.n===dn)||{},slot="d"+dn,open=extOpen(a,slot),until=(a.openUntil||{})[slot]||0,R=extResp("att",a.id).filter(r=>r.slot===slot),link=extLink("att",a.id,slot),n=c?(c.participants||[]).length:0;
-  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All attendance</button><span style="flex:1"></span><button class="btn" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn" data-attdash="'+esc(a.id)+'">Dashboard</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("att")?esc(batchName(curBatch("att"))):"All attendance")+'</button><span style="flex:1"></span><button class="btn" data-attedit="'+esc(a.id)+'">'+I.edit+' Edit</button><button class="btn" data-attdash="'+esc(a.id)+'">Dashboard</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1>'+
     '<div class="daychips">'+days.map(x=>'<button type="button" class="'+(x.n===dn?"on":"")+'" data-attday="'+x.n+'"><b>'+esc(x.label)+(extOpen(a,"d"+x.n)?' <span class="pill good" style="font-size:10px;padding:1px 6px">LIVE</span>':'')+'</b><small>'+esc(fmtDay(x.date))+'</small></button>').join("")+'</div>'+
     '<div class="qrtag">CHECK-IN · '+esc((d.label||"").toUpperCase())+'</div><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
@@ -3551,7 +3594,7 @@ function attDash(a){
   if(c)(c.participants||[]).forEach(p=>{const k=p.id;if(!people[k])people[k]={name:p.name,staffId:p.staffId,unit:p.station,pid:p.id,d:{}}});
   const P=Object.values(people).sort((x,y)=>x.name.localeCompare(y.name)),N=c?(c.participants||[]).length:P.length;
   const per=days.map(d=>R.filter(r=>r.slot==="d"+d.n).length),uniq=new Set(R.map(r=>r.key||r.name)).size,rate=N&&days.length?avgOf(per.map(x=>x/N)):null;
-  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All attendance</button><span style="flex:1"></span><button class="btn" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("att")?esc(batchName(curBatch("att"))):"All attendance")+'</button><span style="flex:1"></span><button class="btn" data-attrun="'+esc(a.id)+'">'+qrIco+' QR & run</button></div>';
   h+='<section class="banner attb"><div class="grow"><span class="bk">'+esc(c?c.name||a.smeId:"Open to anyone")+' · '+esc(a.location||"")+'</span><h1>'+esc(a.title)+'</h1><div class="meta"><span>'+plural(days.length,"day","days")+'</span><span>'+esc(days.length?fmtDay(days[0].date)+(days.length>1?" – "+fmtDay(days[days.length-1].date):""):"")+'</span></div></div><div class="acts"><button class="btn onban" id="attExport">'+I.down+' Export to Excel</button>'+(c&&days.some(d=>d.sess)?'<button class="btn onban solid" id="attPush">Mark absentees in '+esc(c.name||a.smeId)+'</button>':'')+'</div></section>';
   if(c)h+='<div class="notice">'+(days.some(d=>d.sess)?'✓ Linked to <b>'+esc(c.name||a.smeId)+'</b>: check-ins are saved to its Attendance tab automatically (Present). '+esc(days.filter(d=>!d.sess).map(d=>d.label).join(", ")?"Not linked: "+days.filter(d=>!d.sess).map(d=>d.label).join(", ")+".":""):'Not linked to the SME attendance. Edit this attendance and choose “Save to SME” for each day.')+'</div>';
   h+='<div class="kpis">'+kpiH("Days",days.length,"",a.location||"","--s1",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>')+kpiH("People checked in",uniq,c?"/"+N:"","At least one day","--s5",NAV[1][3],N?uniq/N:null)+kpiH("Check-ins",R.length,"","All days","--s3",'<path d="M9 11l3 3 8-8"/>')+kpiH("Average attendance",rate==null?"–":Math.round(rate*100),rate==null?"":"%",c?"Per day, of "+N+" participants":"Needs an SME roster","--good",'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',rate)+'</div>';
@@ -3590,16 +3633,29 @@ function fbView(){
   let h='<section class="banner fbb"><span class="ga"><img alt="Genco Academy" src="'+LOGO_GA+'"></span><div class="grow"><span class="bk">Genco Academy</span><h1>Forum feedback</h1><div class="meta"><span>'+plural(L.length,"forum","forums")+'</span><span>Feedback form per subject, scanned by QR</span></div></div><div class="acts"><button class="btn onban" id="fbTpls">Templates ('+Object.keys(tplAll()).length+')</button><button class="btn onban" id="fbTrainers">Trainers ('+S.trainers.length+')</button><button class="btn onban solid" data-fbnew>'+I.plus+' New feedback form</button></div></section>';
   if(!S.fbkLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading…</b></div>';
   if(!L.length)return h+'<div class="empty"><b>No feedback forms yet</b>Create one for each subject or forum. Pick a template, the module and up to two trainers.<div class="acts"><button class="btn primary" data-fbnew>'+I.plus+' New feedback form</button></div></div>';
-  // overview dashboard
-  const stat=L.map(f=>({f,...fbStats(f)})),all=stat.filter(s=>s.n),tot=stat.reduce((x,s)=>x+s.n,0),ov=avgOf(all.map(s=>s.overall));
-  const tr={};all.forEach(s=>s.trainers.forEach(t=>{(tr[t.name]=tr[t.name]||{name:t.name,v:[],forums:0,n:0});tr[t.name].v.push(t.avg);tr[t.name].forums++;tr[t.name].n+=s.n}));const TR=Object.values(tr).map(t=>({...t,avg:avgOf(t.v)})).sort((x,y)=>y.avg-x.avg);
-  h+='<div class="kpis">'+kpiH("Forums",L.length,"",all.length+" with responses","--s1",'<path d="M4 5h16v11H8l-4 4z"/>')+kpiH("Responses",tot,"","All forums","--s5",NAV[1][3])+kpiH("Overall satisfaction",ov==null?"–":(ov*100).toFixed(0),ov==null?"":"%","Average of all rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',ov)+kpiH("Trainers rated",TR.length,"",TR[0]?"Top: "+TR[0].name:"","--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+'</div>';
-  if(all.length)h+='<div class="g2">'+panel("fbForums",{title:"Satisfaction by forum",tag:"Forums",tagColor:"--s1",sub:"Average of all rating items (3 = Agree). Click to open.",opts:[["bar","Bar"]],render:()=>hbars(all.slice().sort((x,y)=>y.overall-x.overall).map(s=>({label:s.f.title,sub:(s.f.date?fmtDay(s.f.date)+" · ":"")+s.n+" responses",value:s.overall,max:1,text:(1+s.overall*2).toFixed(2)+" / 3",color:rateColor(s.overall),act:'data-fbdash="'+esc(s.f.id)+'"'})),{max:1})})+
-    panel("fbTrainerBoard",{title:"Trainer ratings",tag:"Trainers",tagColor:"--s3",sub:"Average of Part 2 (Trainer) across all forums",opts:[["bar","Bar"]],render:()=>TR.length?hbars(TR.map(t=>({label:t.name,sub:plural(t.forums,"forum","forums")+" · "+t.n+" responses",value:t.avg,max:1,text:(1+t.avg*2).toFixed(2)+" / 3",color:rateColor(t.avg)})),{max:1}):emptyChart("No trainer ratings yet.")})+'</div>';
-  h+='<div class="sechead"><div><h2>Feedback forms</h2></div></div><div class="qcards">'+stat.map(s=>{const f=s.f,c=S.cohorts[f.smeId],open=extOpen(f,"fb");
-    return '<div class="qcard" style="--k:var('+(c?SME_COL(f.smeId):"--s3")+')"><div class="top">'+(open?'<span class="pill good">Open</span>':'<span class="pill none">Closed</span>')+'<span class="hint">'+esc(c?c.name||f.smeId:"Open to anyone")+'</span></div><b class="qt">'+esc(f.title)+'</b><span class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).filter(Boolean).join(" & ")].filter(Boolean).join(" · "))+'</span>'+
-      (s.n?'<div class="fbmini"><b class="num">'+(1+s.overall*2).toFixed(2)+'</b><span>/ 3 · '+s.n+' responses</span><div class="meter"><i style="width:'+s.overall*100+'%"></i></div></div>':'<span class="hint">No responses yet</span>')+
-      '<div class="qacts"><button class="btn sm" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-fbdash="'+esc(f.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Dashboard</button></div></div>'}).join("")+'</div>';
+  const k=curBatch("fb");
+  const statAll=L.map(f=>({f,...fbStats(f)}));
+  const trBoard=st=>{const tr={};st.filter(s=>s.n).forEach(s=>s.trainers.forEach(t=>{(tr[t.name]=tr[t.name]||{name:t.name,v:[],forums:0,n:0});tr[t.name].v.push(t.avg);tr[t.name].forums++;tr[t.name].n+=s.n}));return Object.values(tr).map(t=>({...t,avg:avgOf(t.v)})).sort((x,y)=>y.avg-x.avg)};
+  const trPanel=(TR,id,sub)=>panel(id,{title:"Trainer ratings",tag:"Trainers",tagColor:"--s3",sub,opts:[["bar","Bar"]],render:()=>TR.length?hbars(TR.map(t=>({label:t.name,sub:plural(t.forums,"forum","forums")+" · "+t.n+" responses",value:t.avg,max:1,text:(1+t.avg*2).toFixed(2)+" / 3",color:rateColor(t.avg)})),{max:1}):emptyChart("No trainer ratings yet.")});
+  const kp=(st,lbl)=>{const all=st.filter(s=>s.n),tot=st.reduce((x,s)=>x+s.n,0),ov=avgOf(all.map(s=>s.overall)),TR=trBoard(st);
+    return '<div class="kpis">'+kpiH(lbl,st.length,"",all.length+" with responses","--s1",'<path d="M4 5h16v11H8l-4 4z"/>')+kpiH("Responses",tot,"","All forums","--s5",NAV[1][3])+kpiH("Overall satisfaction",ov==null?"–":(1+ov*2).toFixed(2),ov==null?"":"/ 3","Average of all rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',ov)+kpiH("Trainers rated",TR.length,"",TR[0]?"Top: "+TR[0].name:"","--s3",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+'</div>'};
+  if(!k){const G=batchGroups(L);
+    h+=kp(statAll,"Forums");
+    h+='<div class="sechead"><div><h2>Batches</h2><p class="hint">One folder per SME. Open a batch to see its forums and the batch dashboard.</p></div></div><div class="bfolders">'+G.map(g=>{const st=statAll.filter(s=>batchKey(s.f)===g.k),n=st.reduce((x,s)=>x+s.n,0),ov=avgOf(st.filter(s=>s.n).map(s=>s.overall)),live=g.L.some(f=>extOpen(f,"fb"));
+      return '<button class="bfold" data-batch="fb|'+esc(g.k)+'" style="--k:var('+batchCol(g.k)+')"><span class="bfi">'+navIco('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>')+'</span><span class="grow"><b>'+esc(batchName(g.k))+'</b><small>'+plural(g.L.length,"forum","forums")+' · '+plural(n,"response","responses")+'</small></span>'+(ov!=null?'<span class="bscore" style="--c:var('+rateColor(ov)+')"><b class="num">'+(1+ov*2).toFixed(2)+'</b><small>/ 3</small></span>':'')+(live?'<span class="pill good">Live</span>':'')+I.arrow+'</button>'}).join("")+'</div>';
+    const TR=trBoard(statAll);if(TR.length)h+='<div class="g2">'+trPanel(TR,"fbTrainerBoard","Average of the trainer section across all batches")+'</div>';
+    return h}
+  const st=statAll.filter(s=>batchKey(s.f)===k).sort((x,y)=>String(y.f.date||"").localeCompare(String(x.f.date||"")));
+  h=h.replace('<h1>Forum feedback</h1>','<h1>Forum feedback · '+esc(batchName(k))+'</h1>').replace('<span>'+plural(L.length,"forum","forums")+'</span>','<span>'+plural(st.length,"forum","forums")+'</span>');
+  h+=batchBar("fb",k,st.length,"forum");
+  if(!st.length)return h+'<div class="empty"><b>No forums in this batch</b><div class="acts"><button class="btn primary" data-fbnew>'+I.plus+' New feedback form</button></div></div>';
+  h+=kp(st,"Forums");
+  const all=st.filter(s=>s.n),TR=trBoard(st);
+  if(all.length)h+='<div class="g2">'+panel("fbForums",{title:"Satisfaction by forum",tag:"Forums",tagColor:"--s1",sub:"Average of all rating items (3 = Agree). Click to open.",opts:[["bar","Bar"]],render:()=>hbars(all.slice().sort((x,y)=>y.overall-x.overall).map(s=>({label:s.f.title,sub:(s.f.date?fmtDay(s.f.date)+" · ":"")+s.n+" responses",value:s.overall,max:1,text:(1+s.overall*2).toFixed(2)+" / 3",color:rateColor(s.overall),act:'data-fbdash="'+esc(s.f.id)+'"'})),{max:1})})+trPanel(TR,"fbTrainerBoardB","Average of the trainer section in this batch")+'</div>';
+  const dash=navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>');
+  h+='<div class="sechead"><div><h2>Forums in '+esc(batchName(k))+'</h2></div></div><div class="tblwrap"><table class="btbl"><thead><tr><th>Forum / module</th><th>Date</th><th>Trainers</th><th class="r">Responses</th><th class="r">Score</th><th>Status</th><th></th></tr></thead><tbody>'+st.map(s=>{const f=s.f,open=extOpen(f,"fb"),c=S.cohorts[f.smeId],tot=c?(c.participants||[]).length:null;
+    return '<tr><td><button class="linkish" data-fbdash="'+esc(f.id)+'"><b>'+esc(f.title||"Untitled")+'</b></button></td><td>'+esc(f.date?fmtDay(f.date):"–")+'</td><td>'+esc((f.trainers||[]).filter(Boolean).join(" & ")||"–")+'</td><td class="r num">'+s.n+(tot?'<span class="hint">/'+tot+'</span>':'')+'</td><td class="r">'+(s.n?'<b class="num" style="color:var('+rateColor(s.overall)+')">'+(1+s.overall*2).toFixed(2)+'</b>':'<span class="hint">–</span>')+'</td><td>'+(open?'<span class="pill good">Open</span>':'<span class="pill none">Closed</span>')+'</td>'+
+      '<td class="r nowrap"><button class="btn sm icon ghost" data-fbedit="'+esc(f.id)+'" aria-label="Edit" title="Edit">'+I.edit+'</button><button class="btn sm icon" data-fbrun="'+esc(f.id)+'" aria-label="QR & run" title="QR & run">'+qrIco+'</button><button class="btn sm icon" data-fbdash="'+esc(f.id)+'" aria-label="Dashboard" title="Dashboard">'+dash+'</button></td></tr>'}).join("")+'</tbody></table></div>';
   return h;
 }
 function fbStats(f){const R=extResp("fb",f.id),items=fbItems(f),avgK=k=>avgOf(R.map(r=>(r.ans||{})[k]).filter(v=>typeof v==="number"));
@@ -3612,7 +3668,7 @@ function fbStats(f){const R=extResp("fb",f.id),items=fbItems(f),avgK=k=>avgOf(R.
   const rec={};R.forEach(r=>{if(r.rec)rec[r.rec]=(rec[r.rec]||0)+1});
   return{R,n:R.length,items:it,overall,parts,trainers,rec,comments:R.filter(r=>r.comment&&r.comment.trim())}}
 function fbEditor(id){
-  const f=id?clone(S.fbk[id]):{id:"f"+extId(),title:"",smeId:S.cohorts[S.current]?S.current:"",module:"",date:localISO(),location:"",trainers:["",""],template:"ntd",validity:{mode:"day",hours:2},openUntil:{}};
+  const f=id?clone(S.fbk[id]):{id:"f"+extId(),title:"",smeId:curBatch("fb")?(curBatch("fb")==="__open"?"":curBatch("fb")):(S.cohorts[S.current]?S.current:""),module:"",date:localISO(),location:"",trainers:["",""],template:"ntd",validity:{mode:"day",hours:2},openUntil:{}};
   f.trainers=(f.trainers||[]).concat(["",""]).slice(0,2);if(!f.tpl)f.tpl=clone(tplAll()[f.template]||FB_TEMPLATES.ntd);S.ex.fb=f;drawFbEditor();
 }
 function drawFbEditor(){const f=S.ex.fb,c=S.cohorts[f.smeId];
@@ -3711,7 +3767,7 @@ function trainersModal(){
 }
 function fbRunView(f){
   const c=S.cohorts[f.smeId],open=extOpen(f,"fb"),until=(f.openUntil||{}).fb||0,R=extResp("fb",f.id),link=extLink("fb",f.id),n=c?(c.participants||[]).length:0;
-  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All feedback</button><span style="flex:1"></span><button class="btn" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn" data-fbdash="'+esc(f.id)+'">Dashboard</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("fb")?esc(batchName(curBatch("fb"))):"All feedback")+'</button><span style="flex:1"></span><button class="btn" data-fbedit="'+esc(f.id)+'">'+I.edit+' Edit</button><button class="btn" data-fbdash="'+esc(f.id)+'">Dashboard</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||f.smeId:"Open to anyone")+(f.location?' · '+esc(f.location):'')+'</span><h1>'+esc(f.title)+'</h1><p class="hint">'+esc([fmtDay(f.date),(f.trainers||[]).join(" & ")].filter(Boolean).join(" · "))+'</p>'+
     '<div class="qrtag fb">FEEDBACK</div><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div><div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" data-copy="'+esc(link)+'">Copy link</button></div>'+
     '<div class="runstate">'+(open?'<span class="pill good" style="font-size:14px;padding:4px 14px">Open · '+esc(leftTxt(until))+'</span><button class="btn danger" id="fbClose">Close</button>':'<span class="pill none" style="font-size:14px;padding:4px 14px">'+(until?"Closed":"Not open")+'</span><button class="btn primary" id="fbOpen">Open feedback</button>')+'</div><p class="hint">One response per person, from one phone.</p></section>'+
@@ -3721,7 +3777,7 @@ function fbRunView(f){
 }
 function fbDash(f){
   const c=S.cohorts[f.smeId],s=fbStats(f),T=tplOf(f),sc=v=>v==null?"–":(1+v*2).toFixed(2);
-  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All feedback</button><span style="flex:1"></span><button class="btn" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-extback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("fb")?esc(batchName(curBatch("fb"))):"All feedback")+'</button><span style="flex:1"></span><button class="btn" data-fbrun="'+esc(f.id)+'">'+qrIco+' QR & run</button></div>';
   h+='<section class="banner fbb"><div class="grow"><span class="bk">'+esc(c?c.name||f.smeId:"Open to anyone")+' · feedback dashboard</span><h1>'+esc(f.title)+'</h1><div class="meta"><span>'+esc(fmtDay(f.date))+'</span>'+(f.location?'<span>'+esc(f.location)+'</span>':'')+'<span>Trainer'+((f.trainers||[]).length>1?"s":"")+': '+esc((f.trainers||[]).join(" & "))+'</span></div></div><div class="acts"><button class="btn onban" id="fbExport">'+I.down+' Export to Excel</button></div></section>';
   if(!s.n)return h+'<div class="empty"><b>No responses yet</b>Open the feedback QR so participants can answer.</div>';
   h+='<div class="kpis">'+kpiH("Responses",s.n,c?"/"+(c.participants||[]).length:"",c?"Participants":"People","--s5",NAV[1][3],c?s.n/((c.participants||[]).length||1):null)+kpiH("Overall",sc(s.overall),"/ 3","All rating items","--good",'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',s.overall)+s.parts.filter(p=>!p.perTrainer&&p===s.parts.find(z=>!z.perTrainer)).map(p=>kpiH(p.short||p.title,sc(p.avg),"/ 3",p.title,"--s1",'<path d="M4 5h16v14H4zM8 9h8M8 13h5"/>',p.avg)).join("")+
@@ -3755,7 +3811,7 @@ function bindFbAdmin(){
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-attmenu],[data-fbmenu],[data-attnew],[data-attedit],[data-attrun],[data-attdash],[data-fbnew],[data-fbedit],[data-fbrun],[data-fbdash],[data-extback],[data-copy]");if(!t)return;const d=t.dataset;
   if(d.copy){navigator.clipboard.writeText(d.copy).then(()=>toast("Link copied"),()=>toast("Select the link and copy it"));return}
-  if(d.attmenu!==undefined){S.extView=null;go("__att");return}if(d.fbmenu!==undefined){S.extView=null;go("__fb");return}
+  if(d.attmenu!==undefined){S.extView=null;S.extBatch=null;go("__att");return}if(d.fbmenu!==undefined){S.extView=null;S.extBatch=null;go("__fb");return}
   if(d.attnew!==undefined){attEditor(null);return}if(d.attedit){attEditor(d.attedit);return}
   if(d.fbnew!==undefined){fbEditor(null);return}if(d.fbedit){fbEditor(d.fbedit);return}
   const open=(tt,id,mode,page)=>{S.extView={t:tt,id,mode};watchExt(tt,id);if(S.current!==page)go(page);else render();window.scrollTo(0,0)};
@@ -3838,11 +3894,14 @@ function bindExtTaker(){
 // Ranks an SME's participants on their final score, suggests Black Belt for the top share (default 10%)
 // and Green Belt for everyone else who completed the programme. An optional AI review writes an executive
 // summary per participant. Only anonymous codes and scores are sent to the AI, never names or staff numbers.
-S.beltSme="";S.beltDraft={};S.beltBusy=false;S.beltOpen={};S.beltChat={};S.beltAsk=false;
+S.beltSme="";S.beltDraft={};S.beltBusy=false;S.beltOpen={};S.beltChat={};S.beltAsk=false;S.beltAiDraft={};
 const BELTS={black:{label:"Black Belt",cls:"bb"},green:{label:"Green Belt",cls:"gb"},none:{label:"Not completed",cls:"nb"}};
 const beltPill=(b,sm)=>'<span class="beltp '+(BELTS[b]||BELTS.none).cls+(sm?" sm":"")+'">'+(b==="black"||b==="green"?'<i></i>':'')+esc((BELTS[b]||BELTS.none).label)+'</span>';
 const beltIco='<path d="M4 9h16v4H4z"/><path d="M10 13l-2 7 4-2 4 2-2-7"/>';
 function beltCfg(c){return c.belt||{}}
+// AI output stays a draft until saved; drafts and unsaved answers are cleared when you leave the page or change SME
+function beltAI(c){return S.beltAiDraft[c.id]||beltCfg(c).ai||null}
+function beltClear(){S.beltAiDraft={};Object.keys(S.beltChat).forEach(k=>{S.beltChat[k]=(S.beltChat[k]||[]).filter(m=>m.saved)});S.beltErr="";S.beltPending=null}
 function beltPct(c){return beltCfg(c).pct||10}
 function beltQuota(c,n){return Math.max(1,Math.round(n*beltPct(c)/100))}
 function beltRows(c){
@@ -3855,7 +3914,7 @@ function beltRows(c){
   rows.forEach((x,i)=>{x.rank=i+1;x.code="P"+String(i+1).padStart(2,"0")});
   const q=beltQuota(c,rows.length);let k=0;
   rows.forEach(x=>{x.rule=!x.pass?"none":(k++<q?"black":"green")});
-  const ai=beltCfg(c).ai,fin=beltCfg(c).final||{},dr=S.beltDraft[c.id]||{};
+  const ai=beltAI(c),fin=beltCfg(c).final||{},dr=S.beltDraft[c.id]||{};
   rows.forEach(x=>{x.ai=ai&&ai.items?ai.items[x.p.id]:null;x.sug=x.ai&&x.ai.belt?x.ai.belt:x.rule;x.saved=fin[x.p.id]||null;x.final=dr[x.p.id]||x.saved||null});
   return rows;
 }
@@ -3919,11 +3978,11 @@ function beltView(){
     kpiH("Final Black Belt",fb,"/"+q,fin.length?(fb>q?"Above quota":fb<q?"Below quota":"On quota"):"Not decided yet","--ink",beltIco,q?Math.min(1,fb/q):0)+
     kpiH("Final Green Belt",fg,"",fin.length?(cfg.decidedAt?"Saved "+new Date(cfg.decidedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"Not saved"):"Not decided yet","--good",beltIco)+'</div>';
   // ---- Black Belt candidates with justification
-  const ai=cfg.ai,just=cfg.just||{};
+  const ai=beltAI(c),draft=!!S.beltAiDraft[c.id],just=(ai&&ai.just)||{};
   const cand=rows.filter(x=>(x.final||x.sug)==="black"),near=ai?rows.filter(x=>x.ai&&x.ai.whyNot&&(x.final||x.sug)!=="black"):[];
   const vs=(v,a)=>v==null?'–':(v*100).toFixed(0)+'%'+(a!=null?' <small class="'+(v>=a?"up":"dn")+'">'+(v>=a?"+":"")+((v-a)*100).toFixed(0)+' vs avg</small>':'');
-  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:#111827"></i>'+(ai?"AI selection · "+new Date(ai.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"By final score")+'</div><h3>Why these candidates qualify for Black Belt</h3><p>'+(ai?"AI’s reasons, with the evidence from the SME data. Edit any text before you report it.":"Press <b>AI: select & justify Black Belt</b> — AI reviews all SME data, picks up to "+q+" candidates and explains why each one qualifies.")+'</p></div></div>'+
-    (ai&&ai.summary?'<div class="beltexec">'+beltMd(ai.summary,M.byCode)+'</div>':'')+
+  h+='<section class="panel"><div class="ph"><div class="t"><div class="tag"><i style="background:#111827"></i>'+(ai?"AI selection · "+new Date(ai.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+(draft?" · not saved":" · saved"):"By final score")+'</div><h3>Why these candidates qualify for Black Belt</h3><p>'+(ai?"AI’s reasons, with the evidence from the SME data. Edit any text before you report it.":"Press <b>AI: select & justify Black Belt</b> — AI reviews all SME data, picks up to "+q+" candidates and explains why each one qualifies.")+'</p></div></div>'+
+    (ai?(draft?'<div class="aisave"><span><b>This AI result is not saved yet.</b> Save it to keep it, or discard it. Unsaved results are cleared when you leave this page.</span><button class="btn primary sm" id="aiSave">Save AI result</button><button class="btn sm ghost" id="aiDrop">'+I.trash+' Discard</button></div>':'<div class="aisave saved"><span>Saved AI result'+(ai.by?" · by "+esc(ai.by):"")+'</span><button class="btn sm ghost danger" id="aiDel">'+I.trash+' Delete AI result</button></div>'):'')+(ai&&ai.summary?'<div class="beltexec">'+beltMd(ai.summary,M.byCode)+'</div>':'')+
     '<div class="bbcards">'+(cand.length?cand.map(x=>{const why=just[x.p.id]!=null?just[x.p.id]:(x.ai&&x.ai.why)||"",ev=(x.ai&&x.ai.evidence)||[];
       return '<article class="bbcard"><header><span class="bbrank">#'+x.rank+'</span><div class="grow"><b>'+esc(x.p.name)+'</b><small>'+esc(x.p.station||"")+'</small></div>'+beltPill("black",1)+(x.final==="black"?'<span class="pill good">Final</span>':'<span class="pill">Suggested</span>')+'</header>'+
         '<div class="bbnums"><div><span>Final score</span><b>'+x.total.toFixed(1)+'</b><small class="'+(x.total>=av.total?"up":"dn")+'">'+(x.total>=av.total?"+":"")+(x.total-(av.total||0)).toFixed(1)+' vs avg</small></div><div><span>Project</span><b>'+vs(x.project,av.project)+'</b></div><div><span>Trainer</span><b>'+vs(x.trainer,av.trainer)+'</b></div><div><span>Quiz</span><b>'+vs(x.quiz,av.quiz)+'</b></div><div><span>Attendance</span><b>'+vs(x.att,av.att)+'</b></div></div>'+
@@ -3932,12 +3991,12 @@ function beltView(){
         '<footer><button class="btn sm ghost" data-bbedit="'+esc(x.p.id)+'">'+I.edit+' Edit reason</button><button class="btn sm ghost" data-bbask="'+esc(x.code)+'">Ask AI about this person</button></footer></article>'}).join(""):'<div class="empty"><b>No candidates</b>Nobody has passed yet.</div>')+'</div>'+
     (near.length?'<div class="bbnear"><h4>Close, but not Black Belt</h4>'+near.map(x=>'<div><b>'+esc(x.p.name)+'</b> <span class="hint">#'+x.rank+' · '+x.total.toFixed(1)+'</span><div>'+beltMd(x.ai.whyNot,M.byCode)+'</div></div>').join("")+'</div>':'')+'</section>';
   // ---- Ask AI
-  const chat=S.beltChat[c.id]||[];
+  const chat=(S.beltChat[c.id]||[]).filter(m=>!m.saved).concat((cfg.notes||[]).map((m,i)=>({...m,saved:true,ni:i})));
   const chips=cfg.lang==="ms"?["Kenapa calon Black Belt ini lebih layak berbanding yang lain?","Bandingkan 5 peserta teratas","Siapa paling kuat dalam project dan kenapa?","Apakah kelemahan biasa kumpulan ini?","Peserta mana hampir gagal dan apa yang perlu dibantu?","Tulis ringkasan untuk laporan pengurusan"]:["Why do the Black Belt candidates deserve it more than the others?","Compare the top 5 participants","Who is strongest in the project and why?","What are the common gaps in this group?","Who is at risk and what support do they need?","Write a summary for the management report"];
   h+='<section class="panel askai"><div class="ph"><div class="t"><div class="tag"><i style="background:var(--s4)"></i>Ask AI</div><h3>Ask anything about '+esc(c.name||c.id)+'</h3><p>AI reads this SME’s attendance, quiz, trainer and project data. You can type names — they are swapped for codes before anything is sent to the AI.</p></div></div>'+
     '<div class="askchips">'+chips.map(t=>'<button class="chipbtn" data-askchip="'+esc(t)+'">'+esc(t)+'</button>').join("")+'</div>'+
     '<div class="askbox"><textarea id="askQ" rows="2" placeholder="'+(cfg.lang==="ms"?"cth. Kenapa Asyraf layak Black Belt? Siapa paling konsisten dalam kuiz?":"e.g. Why does Asyraf deserve Black Belt? Who is most consistent in the quizzes?")+'">'+esc(S.beltQ||"")+'</textarea><button class="btn primary" id="askGo"'+(S.beltBusy?" disabled":"")+'>'+(S.beltBusy==="ask"?'<span class="spin"></span> Thinking…':'Ask')+'</button></div>'+
-    (chat.length?'<div class="asklog">'+chat.map((m,i)=>'<div class="askq"><b>You</b> '+esc(m.q)+'</div><div class="aska">'+beltMd(m.a,M.byCode)+'<div class="askact"><button class="btn sm ghost" data-askcopy="'+i+'">Copy</button></div></div>').join("")+'</div>':'')+'</section>';
+    (chat.length?'<div class="asklog">'+chat.map((m,i)=>'<div class="askq"><b>You</b> '+esc(m.q)+'</div><div class="aska">'+beltMd(m.a,M.byCode)+'<div class="askact">'+(m.saved?'<span class="pill good">Saved</span><span style="flex:1"></span>':'<span class="hint">Not saved · cleared when you leave</span><span style="flex:1"></span><button class="btn sm" data-asksave="'+i+'">Save</button>')+'<button class="btn sm ghost" data-askcopy="'+i+'">Copy</button><button class="btn sm ghost" data-askdel="'+i+'" aria-label="Delete">'+I.trash+'</button></div></div>').join("")+'</div>':'')+'</section>';
   // ---- table
   const pc=v=>v==null?'<span class="hint">–</span>':(v*100).toFixed(0)+"%";
   h+='<section class="panel"><div class="ph"><div class="t"><h3>Ranking & final selection</h3><p>Sorted by final score. Click a name for the AI note.</p></div><div class="a"><button class="btn" id="beltAcc"'+(n?"":" disabled")+'>Use suggestions as final</button><button class="btn primary" id="beltSave"'+(dirty?"":" disabled")+'>Save final selection</button></div></div><div class="tblwrap"><table class="belttbl"><thead><tr><th>#</th><th>Participant</th><th class="r">Score</th><th class="r">Attend.</th><th class="r">Quiz</th><th class="r">Trainer</th><th class="r">Project</th><th>Suggested</th><th>Final belt</th></tr></thead><tbody>'+
@@ -3979,8 +4038,8 @@ function beltApply(c,rows,j){
   if(!Object.keys(items).length)throw new Error("empty");
   const q=beltQuota(c,rows.length),bl=rows.filter(x=>items[x.p.id]&&items[x.p.id].belt==="black");bl.slice(q).forEach(x=>items[x.p.id].belt="green");
   rows.forEach(x=>{if(!items[x.p.id])items[x.p.id]={belt:x.rule,summary:"",why:"",evidence:[],whyNot:""}});
-  const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:{at:new Date().toISOString(),summary:T(j.summary,2500),items},just:{}});
-  S.beltErr="";S.beltErrDetail="";S.beltPending=null;queueSave(cc,"AI Black Belt selection for "+(c.name||c.id));toast("AI selection done — read the reasons, then choose the final belts");
+  S.beltAiDraft[c.id]={at:new Date().toISOString(),summary:T(j.summary,2500),items,just:{}};
+  S.beltErr="";S.beltErrDetail="";S.beltPending=null;toast("AI selection ready — read it, then Save or Discard");
 }
 async function beltAsk(){
   const c=S.cohorts[S.beltSme],el=$("#askQ");if(!c||!el||S.beltBusy)return;const q=el.value.trim();if(!q){el.focus();return}S.beltQ=q;
@@ -3997,31 +4056,37 @@ function beltPasteModal(c){const p=S.beltPending||{t:"review"};
   openModal(mhead("Paste AI answer",p.t==="ask"?"Paste the answer to: "+short(p.q,80):"Paste the JSON answer from the AI chat")+'<div class="mb"><div class="field"><textarea id="bp-t" rows="12" style="width:100%;font-family:ui-monospace,monospace;font-size:12px"></textarea></div><div class="err" id="bp-e"></div><div class="mfoot"><button class="btn primary" id="bp-ok">Use this answer</button></div></div>');
   $("#bp-ok").addEventListener("click",()=>{const raw=$("#bp-t").value.trim();let t=raw.replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");const a=t.indexOf("{"),b=t.lastIndexOf("}");let j=null;if(a>=0&&b>a){try{j=JSON.parse(t.slice(a,b+1))}catch(e){}}
     try{if(p.t==="ask")beltAddAnswer(c,p.q,j||raw);else{if(!j)throw 0;beltApply(c,beltRows(c),j)}closeModal();safeRender()}catch(e){$("#bp-e").textContent=p.t==="ask"?"Paste the AI’s answer.":"This is not a valid AI result. Copy the whole JSON answer (starting with { and ending with })."}})}
-function beltEditReason(c,pid){const rows=beltRows(c),x=rows.find(r=>r.p.id===pid);if(!x)return;const M=beltCodeMaps(rows),cur=(beltCfg(c).just||{})[pid]!=null?beltCfg(c).just[pid]:String((x.ai&&x.ai.why)||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m);
-  openModal(mhead("Reason for Black Belt",x.p.name)+'<div class="mb"><div class="field"><textarea id="br-t" rows="9" style="width:100%">'+esc(cur)+'</textarea></div><div class="mfoot"><button class="btn primary" id="br-ok">Save reason</button>'+((beltCfg(c).just||{})[pid]!=null?'<span style="flex:1"></span><button class="btn ghost" id="br-rs">Use AI text again</button>':'')+'</div></div>');
-  const save=v=>{const cc=clone(c),J=Object.assign({},(cc.belt||{}).just||{});if(v==null)delete J[pid];else J[pid]=v;cc.belt=Object.assign({},cc.belt||{},{just:J});queueSave(cc,"Black Belt reason edited for "+x.p.name);closeModal();safeRender()};
+function beltEditReason(c,pid){const rows=beltRows(c),x=rows.find(r=>r.p.id===pid);if(!x)return;const M=beltCodeMaps(rows),ai=beltAI(c)||{},J0=ai.just||{},cur=J0[pid]!=null?J0[pid]:String((x.ai&&x.ai.why)||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m);
+  openModal(mhead("Reason for Black Belt",x.p.name)+'<div class="mb"><div class="field"><textarea id="br-t" rows="9" style="width:100%">'+esc(cur)+'</textarea></div><div class="mfoot"><button class="btn primary" id="br-ok">Save reason</button>'+(J0[pid]!=null?'<span style="flex:1"></span><button class="btn ghost" id="br-rs">Use AI text again</button>':'')+'</div></div>');
+  const save=v=>{if(S.beltAiDraft[c.id]){const J=S.beltAiDraft[c.id].just=S.beltAiDraft[c.id].just||{};if(v==null)delete J[pid];else J[pid]=v}else{const cc=clone(c),A=Object.assign({},(cc.belt||{}).ai||{at:new Date().toISOString(),summary:"",items:{}}),J=Object.assign({},A.just||{});if(v==null)delete J[pid];else J[pid]=v;A.just=J;cc.belt=Object.assign({},cc.belt||{},{ai:A});queueSave(cc,"Black Belt reason edited for "+x.p.name)}closeModal();safeRender()};
   $("#br-ok").addEventListener("click",()=>save($("#br-t").value.trim()));const rs=$("#br-rs");if(rs)rs.addEventListener("click",()=>save(null))}
 async function beltExport(c){let dl=null;try{dl=await window.claude.use("downloads")}catch(e){}if(!dl){toast("Downloads are not available here");return}try{await loadLib("xlsx")}catch(e){toast("Could not load the Excel library");return}
-  const rows=beltRows(c),M=beltCodeMaps(rows),N=t=>String(t||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m),P=v=>v==null?"":Math.round(v*1000)/10,J=beltCfg(c).just||{};
+  const rows=beltRows(c),M=beltCodeMaps(rows),N=t=>String(t||"").replace(/\bP\d{2}\b/g,m=>M.byCode[m]?M.byCode[m].p.name:m),P=v=>v==null?"":Math.round(v*1000)/10,J=(beltAI(c)||{}).just||{};
   const A=[["Rank","Name","Staff number","Station","Final score","Attendance %","Quiz %","Trainer %","Project %","Suggested by score","AI suggestion","Final belt","Why Black Belt","Evidence","Why not Black Belt","AI note"]].concat(rows.map(x=>[x.rank,x.p.name,x.p.staffId||"",x.p.station||"",Math.round(x.total*10)/10,P(x.att),P(x.quiz),P(x.trainer),P(x.project),BELTS[x.rule].label,x.ai?BELTS[x.ai.belt].label:"",x.final?BELTS[x.final].label:"",N(J[x.p.id]!=null?J[x.p.id]:x.ai?x.ai.why:""),x.ai?N((x.ai.evidence||[]).join("; ")):"",x.ai?N(x.ai.whyNot):"",x.ai?N(x.ai.summary):""]));
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(A),"Belt selection");
-  const ai=beltCfg(c).ai;if(ai&&ai.summary)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Executive summary"],[N(ai.summary)]]),"Summary");
-  const ch=S.beltChat[c.id]||[];if(ch.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Question","AI answer"]].concat(ch.map(m=>[m.q,N(m.a)]))),"Ask AI");
+  const ai=beltAI(c);const NT=beltCfg(c).notes||[];if(NT.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Question","AI answer (saved)"]].concat(NT.map(m=>[m.q,N(m.a)]))),"Saved AI notes");if(ai&&ai.summary)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Executive summary"],[N(ai.summary)]]),"Summary");
+  const ch=[];if(ch.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Question","AI answer"]].concat(ch.map(m=>[m.q,N(m.a)]))),"Ask AI");
   try{await dl.save({filename:("Belt_selection_"+(c.name||c.id)).replace(/[^\w\- ]+/g,"").replace(/\s+/g,"_")+".xlsx",data:new Uint8Array(XLSX.write(wb,{type:"array",bookType:"xlsx"}))})}catch(e){}}
 function bindBelt(){
   const c=S.cohorts[S.beltSme];
-  const sm=$("#beltSme");if(sm)sm.addEventListener("change",()=>{S.beltSme=sm.value;S.beltErr="";S.beltPending=null;S.beltOpen={};safeRender()});
+  const sm=$("#beltSme");if(sm)sm.addEventListener("change",()=>{beltClear();S.beltSme=sm.value;S.beltOpen={};safeRender()});
   if(!c)return;
   const pc=$("#beltPct");if(pc)pc.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{pct:+pc.value});queueSave(cc,"Black Belt share set to "+pc.value+"%");safeRender()});
   const lg=$("#beltLang");if(lg)lg.addEventListener("change",()=>{const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{lang:lg.value});queueSave(cc);safeRender()});
   const ai=$("#beltAI");if(ai)ai.addEventListener("click",beltRunAI);
   const cp=$("#beltCopy");if(cp)cp.addEventListener("click",()=>beltCopy(beltPendingPrompt(c)));
   const ps=$("#beltPaste");if(ps)ps.addEventListener("click",()=>beltPasteModal(c));
+  const chatL=()=>(S.beltChat[c.id]||[]).filter(m=>!m.saved).concat((beltCfg(c).notes||[]).map((m,i)=>({...m,saved:true,ni:i})));
+  const as=$("#aiSave");if(as)as.addEventListener("click",()=>{const d=S.beltAiDraft[c.id];if(!d)return;const cc=clone(c);cc.belt=Object.assign({},cc.belt||{},{ai:Object.assign({},d,{by:S.admin||"admin",savedAt:new Date().toISOString()})});delete cc.belt.just;delete S.beltAiDraft[c.id];queueSave(cc,"AI Black Belt selection saved");toast("AI result saved");safeRender()});
+  const adr=$("#aiDrop");if(adr)adr.addEventListener("click",()=>{delete S.beltAiDraft[c.id];toast("AI result discarded");safeRender()});
+  const adl=$("#aiDel");if(adl)adl.addEventListener("click",()=>{if(!confirm("Delete the saved AI result (reasons and summary) for "+(c.name||c.id)+"? Your final belts stay."))return;const cc=clone(c);cc.belt=Object.assign({},cc.belt||{});delete cc.belt.ai;delete cc.belt.just;queueSave(cc,"AI Black Belt selection deleted");toast("AI result deleted");safeRender()});
+  document.querySelectorAll("[data-asksave]").forEach(b=>b.addEventListener("click",()=>{const m=chatL()[+b.dataset.asksave];if(!m||m.saved)return;const cc=clone(c),N=((cc.belt||{}).notes||[]).slice();N.unshift({q:m.q,a:m.a,at:m.at,by:S.admin||"admin"});cc.belt=Object.assign({},cc.belt||{},{notes:N.slice(0,50)});S.beltChat[c.id]=(S.beltChat[c.id]||[]).filter(x=>!(x.at===m.at&&x.q===m.q));queueSave(cc,"AI answer saved");toast("Answer saved");safeRender()}));
+  document.querySelectorAll("[data-askdel]").forEach(b=>b.addEventListener("click",()=>{const m=chatL()[+b.dataset.askdel];if(!m)return;if(m.saved){if(!confirm("Delete this saved AI answer?"))return;const cc=clone(c),N=((cc.belt||{}).notes||[]).slice();N.splice(m.ni,1);cc.belt=Object.assign({},cc.belt||{},{notes:N});queueSave(cc,"AI answer deleted")}else S.beltChat[c.id]=(S.beltChat[c.id]||[]).filter(x=>!(x.at===m.at&&x.q===m.q));safeRender()}));
   const x=$("#beltX");if(x)x.addEventListener("click",()=>beltExport(c));
   const qa=$("#askQ");if(qa){qa.addEventListener("input",()=>{S.beltQ=qa.value});qa.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();beltAsk()}})}
   const ag=$("#askGo");if(ag)ag.addEventListener("click",beltAsk);
   document.querySelectorAll("[data-askchip]").forEach(b=>b.addEventListener("click",()=>{const t=$("#askQ");t.value=b.dataset.askchip;S.beltQ=t.value;t.focus()}));
-  document.querySelectorAll("[data-askcopy]").forEach(b=>b.addEventListener("click",()=>{const rows=beltRows(c),M=beltCodeMaps(rows),m=(S.beltChat[c.id]||[])[+b.dataset.askcopy];if(m)beltCopy(String(m.a).replace(/\bP\d{2}\b/g,k=>M.byCode[k]?M.byCode[k].p.name:k).replace(/\*\*/g,""))}));
+  document.querySelectorAll("[data-askcopy]").forEach(b=>b.addEventListener("click",()=>{const rows=beltRows(c),M=beltCodeMaps(rows),m=chatL()[+b.dataset.askcopy];if(m)beltCopy(String(m.a).replace(/\bP\d{2}\b/g,k=>M.byCode[k]?M.byCode[k].p.name:k).replace(/\*\*/g,""))}));
   document.querySelectorAll("[data-bbedit]").forEach(b=>b.addEventListener("click",()=>beltEditReason(c,b.dataset.bbedit)));
   document.querySelectorAll("[data-bbask]").forEach(b=>b.addEventListener("click",()=>{const x=beltRows(c).find(r=>r.code===b.dataset.bbask);const t=$("#askQ");t.value=(beltCfg(c).lang==="ms"?"Kenapa "+x.p.name+" layak Black Belt berbanding peserta lain? Apa kekuatan dan kelemahannya?":"Why does "+x.p.name+" deserve Black Belt over the others? What are the strengths and gaps?");S.beltQ=t.value;t.scrollIntoView({behavior:"smooth",block:"center"});t.focus()}));
   const acc=$("#beltAcc");if(acc)acc.addEventListener("click",()=>{const d=S.beltDraft[c.id]=S.beltDraft[c.id]||{};beltRows(c).forEach(r=>{if(r.saved!==r.sug)d[r.p.id]=r.sug;else delete d[r.p.id]});safeRender();toast("Suggestions copied — press Save final selection to keep them")});
@@ -4032,6 +4097,19 @@ function bindBelt(){
     delete S.beltDraft[c.id];queueSave(cc,"Final belts saved: "+nb+" Black, "+ng+" Green");toast("Saved: "+nb+" Black Belt, "+ng+" Green Belt");safeRender()});
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-beltmenu]");if(!t)return;S.extView=null;go("__belt")});
+
+/* ---------------- Standard assessment template for new SMEs ---------------- */
+const STD_TRAINER=["Generation Ideas", "General / Technical Knowledge", "Quality of Work", "Analytical Thinking", "Critical Thinking", "Engagement", "Presentation Skill", "Syndication & Drive", "Attitude", "Self Discipline"];
+const STD_PROJECT=["1A.Plant performance knowledge (Operational and Financial)", "1B.Technical knowledge", "1C.Quality of work", "1D.Problem Solving skill & technique", "1E.Structuring & analysis", "1G.Verbal Communication", "1H.Written communication", "2A.Business Concept", "2B.Planning", "2C.Resistance to change", "2D.Adaptive nature", "2E.Financial Concept"];
+function stdTpl(c,which){c=clone(c);const has=k=>(c.participants||[]).some(p=>Object.keys(p[k]||{}).length);
+  if((!which||which==="trainer")&&!(c.trainerTopics||[]).length){c.trainerTopics=STD_TRAINER.map((m,i)=>({key:"t"+(i+1),module:m,date:""}));if(!has("trainer"))c.skillMax=5}
+  if((!which||which==="project")&&!(c.projectCriteria||[]).length)c.projectCriteria=STD_PROJECT.map((m,i)=>({key:"p"+(i+1),module:m,date:""}));
+  return c}
+S._stdDone={};
+// existing SMEs with no trainer and no project assessment get the standard template (once, admin only)
+function stdAuto(c){if(!S.admin||!c||!S.db||S._stdDone[c.id])return;S._stdDone[c.id]=1;
+  if(!(c.trainerTopics||[]).length&&!(c.projectCriteria||[]).length)setTimeout(()=>{const cur=S.cohorts[c.id];if(cur&&!(cur.trainerTopics||[]).length&&!(cur.projectCriteria||[]).length){queueSave(stdTpl(cur),"Standard trainer & project assessment template added");toast("Trainer & project assessment template added to "+(cur.name||cur.id))}},300)}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-stdtpl]");if(!t)return;const c=S.cohorts[S.current];if(!c||!S.admin)return;queueSave(stdTpl(c,t.dataset.stdtpl),"Standard "+(t.dataset.stdtpl==="trainer"?"trainer":"project")+" assessment template added");safeRender()});
 
 /* ---------- STAFF DIRECTORY (lookup only, no menu tab) ---------- */
 S.staff=null;S.staffMeta=null;S.staffSub=false;
