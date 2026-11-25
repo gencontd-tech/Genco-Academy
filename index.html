@@ -2962,7 +2962,7 @@ function qrSvg(text,size){if(!window.qrcode)return "";const q=qrcode(0,"M");q.ad
 
 /* menu + routing */
 document.addEventListener("click",e=>{const t=e.target.closest("[data-quizmenu],[data-qopen],[data-qrun],[data-qres],[data-qnew],[data-qback]");if(!t)return;const d=t.dataset;
-  if(d.quizmenu!==undefined){S.qView=null;go("__quiz");return}
+  if(d.quizmenu!==undefined){S.qView=null;S.extBatch=null;go("__quiz");return}
   if(d.qnew!==undefined){quizEditor(null);return}
   if(d.qopen){quizEditor(d.qopen);return}
   if(d.qrun){S.qView={id:d.qrun,mode:"run"};watchResponses(d.qrun);if(S.current!=="__quiz")go("__quiz");else render();return}
@@ -2977,16 +2977,17 @@ function quizView(){
   h+='<div class="qsteps">'+[["1","Build","Type or paste your questions and mark the right answers.","--s1"],["2","Show QR","Open the quiz and put the QR on the screen in class.","--s2"],["3","Participants answer","They scan, pick their name and answer on their phone.","--s3"],["4","Save scores","One click puts each score into the SME’s Quizzes tab.","--s4"]].map(s=>'<div style="--k:var('+s[3]+')"><i>'+s[0]+'</i><b>'+s[1]+'</b><span>'+s[2]+'</span></div>').join("")+'</div>';
   if(!S.quizLoaded&&S.db)return h+'<div class="empty"><span class="spin"></span><b>Loading quizzes…</b></div>';
   if(!Q.length)return h+'<div class="empty"><b>No quizzes yet</b>Create the first quiz for a module.<div class="acts"><button class="btn primary" data-qnew>'+I.plus+' New quiz</button></div></div>';
-  h+='<div class="qcards">'+Q.map(q=>{const st=QSTAT[q.status||"draft"],c=S.cohorts[q.smeId],n=(q.questions||[]).length,r=(S.qResp[q.id]||[]).length;
-    return '<div class="qcard" style="--k:var('+(c?SME_COL(q.smeId):"--s0")+')"><div class="top"><span class="pill '+st[1]+'">'+st[0]+'</span><span class="hint">'+esc(c?c.name||q.smeId:q.smeId?q.smeId+" (not found)":"Open to anyone")+'</span></div><b class="qt">'+esc(q.title||"Untitled quiz")+'</b><span class="hint">'+plural(n,"question","questions")+(q.savedAt?' · scores saved '+esc(new Date(q.savedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"})):'')+'</span>'+
-      '<div class="qacts"><button class="btn sm" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn sm primary" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button><button class="btn sm" data-qres="'+esc(q.id)+'">'+navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>')+' Results</button></div></div>'}).join("")+'</div>';
-  return h;
+  // one simple list of quiz titles
+  const dash=navIco('<path d="M4 20V10M10 20V4M16 20v-7"/>');
+  return h+'<div class="tblwrap"><table class="btbl"><thead><tr><th>#</th><th>Quiz title</th><th>SME</th><th class="r">Questions</th><th>Status</th><th></th></tr></thead><tbody>'+Q.map((q,i)=>{const st=QSTAT[q.status||"draft"],c=S.cohorts[q.smeId],ph=q.status==="open"?(q.phase==="pre"?" · Pre-quiz":" · Post-quiz"):"";
+    return '<tr><td class="num">'+(i+1)+'</td><td><button class="linkish" data-qres="'+esc(q.id)+'"><b>'+esc(q.title||"Untitled quiz")+'</b></button></td><td>'+esc(c?c.name||q.smeId:q.smeId?q.smeId:"Open to anyone")+'</td><td class="r num">'+(q.questions||[]).length+'</td><td><span class="pill '+st[1]+'">'+st[0]+ph+'</span></td>'+
+      '<td class="r nowrap"><button class="btn sm icon ghost" data-qopen="'+esc(q.id)+'" aria-label="Edit" title="Edit">'+I.edit+'</button><button class="btn sm icon" data-qrun="'+esc(q.id)+'" aria-label="QR & run" title="QR & run">'+qrIco+'</button><button class="btn sm icon" data-qres="'+esc(q.id)+'" aria-label="Results" title="Results">'+dash+'</button></td></tr>'}).join("")+'</tbody></table></div>';
 }
 const qrIco='<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v1M14 20h1M18 18h3v3"/></svg>';
 
 /* editor */
 function quizEditor(id){
-  const q=id?clone(S.quizzes[id]):{id:qid(),title:"",smeId:S.cohorts[S.current]?S.current:(ids()[0]||""),quizKey:"",status:"draft",showScore:true,shuffle:false,questions:[]};
+  const q=id?clone(S.quizzes[id]):{id:qid(),title:"",smeId:curBatch("quiz")?(curBatch("quiz")==="__open"?"":curBatch("quiz")):(S.cohorts[S.current]?S.current:(ids()[0]||"")),quizKey:"",status:"draft",showScore:true,shuffle:false,questions:[]};
   S.qEdit=q;drawEditor();
 }
 function drawEditor(){
@@ -3000,7 +3001,7 @@ function drawEditor(){
   h+='<div class="qlist">'+(q.questions||[]).map((x,i)=>'<div class="qitem"><div class="qh"><span class="qn">'+(i+1)+'</span><textarea rows="2" data-qtext="'+i+'" placeholder="Question">'+esc(x.text)+'</textarea><span class="ops"><button class="btn sm icon ghost" data-qmv="'+i+'|-1"'+(i?"":" disabled")+' aria-label="Move up">'+I.upA+'</button><button class="btn sm icon ghost" data-qmv="'+i+'|1"'+(i<q.questions.length-1?"":" disabled")+' aria-label="Move down">'+I.dnA+'</button><button class="btn sm icon ghost danger" data-qdel="'+i+'" aria-label="Delete question">'+I.trash+'</button></span></div>'+
     '<div class="qopts">'+x.options.map((o,j)=>'<label class="qo'+(x.answer===j?" ok":"")+'"><input type="radio" name="qa'+i+'" data-qans="'+i+'|'+j+'"'+(x.answer===j?" checked":"")+' aria-label="Correct answer"><span class="ql">'+String.fromCharCode(65+j)+'</span><input type="text" value="'+esc(o)+'" data-qopt="'+i+'|'+j+'" placeholder="Option '+String.fromCharCode(65+j)+'">'+(x.options.length>2?'<button class="btn sm icon ghost" data-qodel="'+i+'|'+j+'" aria-label="Remove option">'+I.x+'</button>':'')+'</label>').join("")+(x.options.length<6?'<button class="more" data-qoadd="'+i+'">'+I.plus+' Option</button>':'')+'</div></div>').join("")+'</div>';
   if(!(q.questions||[]).length)h+='<div class="empty" style="padding:18px"><b>No questions yet</b>Add one below, or paste a list.</div>';
-  h+='<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-qadd="mcq">'+I.plus+' Multiple choice</button><button class="btn" data-qadd="tf">'+I.plus+' True / False</button><button class="btn" id="qePasteBtn">'+I.list+' Paste questions</button></div>'+
+  h+='<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-qadd="mcq">'+I.plus+' Multiple choice</button><button class="btn" data-qadd="tf">'+I.plus+' True / False</button><button class="btn" id="qePasteBtn">'+I.list+' Paste questions</button><button class="btn" id="qeFileBtn">'+I.up+' Upload file</button><input type="file" id="qeFile" accept=".docx,.pdf,.txt,.xlsx,.xls,.csv" hidden><span class="hint" id="qeFileMsg" style="flex-basis:100%">Word, PDF, Excel or text file with the questions and answers.</span></div>'+
     '<div id="qePaste" hidden class="panel" style="margin:0;background:var(--surface-2)"><h3 style="font-size:14px">Paste questions</h3><p class="hint" style="margin:4px 0 8px">One question per block. Mark the right answer with * or add a line “Answer: B”.</p><textarea id="qe-p" rows="8" placeholder="1. What does RCM stand for?&#10;A) Root Cause Method&#10;*B) Reliability Centered Maintenance&#10;C) Risk Control Matrix&#10;&#10;2. Hydrogen is a renewable fuel.&#10;A) True&#10;B) False&#10;Answer: A"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button class="btn primary" id="qePasteGo">Add these questions</button><span class="hint" id="qePasteMsg"></span></div></div>';
   h+='<div class="err" id="qeerr"></div><div class="mfoot"><button class="btn primary" id="qeSave">Save quiz</button>'+(S.quizzes[q.id]?'<span style="flex:1"></span><button class="btn danger" id="qeDel">'+I.trash+' Delete quiz</button>':'')+'</div></div>';
   const sc=$(".modal")?$(".modal").scrollTop:0;openModal(h);const m=$(".modal");m.classList.add("wide");m.scrollTop=sc;bindEditor();trHook("quiz");
@@ -3019,6 +3020,64 @@ function parsePasted(txt){
     out.push({id:qid(),type:opts.length===2&&/^(true|betul)$/i.test(opts[0])?"tf":"mcq",text,options:opts,answer:ans<0?null:ans,points:1})});
   return out;
 }
+/* ---------- quiz: questions from an attached file (.docx, .pdf, .xlsx/.csv, .txt) ---------- */
+function qeDocxText(html){
+  const doc=new DOMParser().parseFromString(html,"text/html"),out=[];let qn=0,inQ=false,nOpt=0,keyMode=false;
+  const L=i=>String.fromCharCode(65+i),own=li=>{const c=li.cloneNode(true);c.querySelectorAll("ol,ul").forEach(x=>x.remove());return c.textContent.replace(/\s+/g," ").trim()};
+  const bold=el=>{const t=el.textContent.replace(/\s+/g,"").length,b=[...el.querySelectorAll("strong,b")].reduce((a,x)=>a+x.textContent.replace(/\s+/g,"").length,0);return t>0&&b/t>=.6};
+  const optLine=(txt,b)=>{nOpt++;return (b?"*":"")+L(nOpt-1)+") "+txt.replace(/^\(?[A-Fa-f][\)\.:]\s*/,"")};
+  const q=txt=>{qn++;inQ=true;nOpt=0;out.push("");out.push(qn+". "+txt.replace(/^(Q(uestion|uestion)?\s*)?\d+[\.\):]\s*/i,""))};
+  const table=t=>{const rows=[...t.querySelectorAll("tr")].map(r=>[...r.querySelectorAll("td,th")].map(c=>c.textContent.replace(/\s+/g," ").trim()));
+    const hi=rows.findIndex(r=>r.some(c=>/^(question|soalan)/i.test(c)));
+    if(hi<0){rows.forEach(r=>out.push(r.filter(Boolean).join(" ")));return}
+    const h=rows[hi].map(c=>c.toLowerCase()),qi=h.findIndex(c=>/^(question|soalan)/.test(c)),ai=h.findIndex(c=>/answer|jawapan|correct|betul|skema/.test(c));
+    const oi=h.map((c,i)=>i).filter(i=>i!==qi&&i!==ai&&/^(option|pilihan|choice)?\s*\(?[a-f]\)?$/.test(h[i].replace(/[^a-z() ]/g,"").trim()));
+    rows.slice(hi+1).forEach(r=>{if(!r[qi])return;q(r[qi]);oi.forEach((i,k)=>{if(r[i])out.push(L(k)+") "+r[i])});if(ai>=0&&r[ai])out.push("Answer: "+r[ai].replace(/[^A-Fa-f]/g,"").slice(0,1).toUpperCase())})};
+  [...doc.body.children].forEach(el=>{const tag=el.tagName;
+    if(tag==="TABLE"){table(el);inQ=false;return}
+    if(tag==="OL"||tag==="UL"){[...el.children].forEach(li=>{const t=own(li),sub=li.querySelector("ol,ul");if(!t&&!sub)return;
+        if(sub){q(t);[...sub.children].forEach(o=>{const ot=own(o);if(ot)out.push(optLine(ot,bold(o)))});return}
+        const looksQ=/[?:]$/.test(t)||t.length>70||!inQ||nOpt>=6;
+        if(looksQ&&!(/^\(?[A-Fa-f][\)\.:]\s/.test(t)))q(t);else out.push(optLine(t,bold(li)))});return}
+    const t=el.textContent.replace(/\s+/g," ").trim();if(!t){out.push("");return}
+    if(keyMode||/^(answer\s*key|answers|jawapan|skema(\s*jawapan)?|kunci\s*jawapan)\s*:?\s*$/i.test(t)){keyMode=true;out.push(t);return}
+    if(/^\(?[A-Fa-f][\)\.:]\s+\S/.test(t)&&inQ){out.push((bold(el)?"*":"")+t);nOpt++;return}
+    if(/^(Q(uestion)?\s*)?\d+[\.\):]\s+\S/i.test(t)){q(t);return}
+    if(/^(answer|jawapan|ans)\s*[:\-]/i.test(t)){out.push(t);return}
+    out.push(t)});
+  return out.join("\n");
+}
+function qeKey(text){ // an answer key at the end: "Answer key / Jawapan / Skema" then 1. B  2. C ...
+  const lines=String(text).replace(/\r/g,"").split("\n");const i=lines.findIndex((l,k)=>k>0&&/^\s*(answer\s*key|answers|jawapan|skema(\s*jawapan)?|kunci\s*jawapan)\s*:?\s*$/i.test(l));
+  if(i<0)return{text,key:{}};const key={},tail=lines.slice(i+1).join(" ");let m;const re=/(\d+)\s*[\.\)\-:=]?\s*\(?([A-Fa-f])\)?(?![a-z])/g;while((m=re.exec(tail)))key[+m[1]]=m[2].toUpperCase().charCodeAt(0)-65;
+  return Object.keys(key).length>=1?{text:lines.slice(0,i).join("\n"),key}:{text,key:{}}}
+function qeSheetText(rows){const out=[];rows=rows.filter(r=>r&&r.some(c=>c!=null&&String(c).trim()!==""));if(!rows.length)return"";
+  const S0=r=>r.map(c=>c==null?"":String(c).trim()),h=S0(rows[0]).map(c=>c.toLowerCase());let qi=h.findIndex(c=>/^(question|soalan)/.test(c)),ai=h.findIndex(c=>/answer|jawapan|correct|betul|skema/.test(c)),start=1;
+  if(qi<0){qi=0;start=0;ai=-1}
+  rows.slice(start).forEach((r0,n)=>{const r=S0(r0);let cells=r.map((c,i)=>[i,c]).filter(([i,c])=>i!==qi&&i!==ai&&c!=="");
+    if(!r[qi])return;let ans=ai>=0?r[ai]:"";if(ai<0&&cells.length>2&&/^[A-Fa-f]$/.test(cells[cells.length-1][1])){ans=cells.pop()[1]}
+    if(start&&h[0]&&/^(no|bil|#)\.?$/.test(h[0]))cells=cells.filter(([i])=>i!==0);
+    out.push("");out.push((n+1)+". "+r[qi]);cells.slice(0,6).forEach(([i,c],k)=>out.push(String.fromCharCode(65+k)+") "+c.replace(/^\(?[A-Fa-f][\)\.:]\s*/,"")));
+    if(ans){const a=String(ans).trim();const L=/^[A-Fa-f]\b/.test(a)?a[0].toUpperCase():(()=>{const k=cells.findIndex(([i,c])=>c.toLowerCase()===a.toLowerCase());return k>=0?String.fromCharCode(65+k):""})();if(L)out.push("Answer: "+L)}});
+  return out.join("\n")}
+async function qeFile(f){const msg=$("#qePasteMsg"),ext=(f.name.split(".").pop()||"").toLowerCase();
+  const st=t=>{const e=$("#qeFileMsg");if(e)e.innerHTML=t};st('<span class="spin"></span> Reading '+esc(f.name)+'…');
+  try{const buf=await f.arrayBuffer();let text="";
+    if(ext==="docx"){await loadLib("mammoth");const r=await mammoth.convertToHtml({arrayBuffer:buf});text=qeDocxText(r.value)}
+    else if(ext==="pdf"){await loadLib("pdfw");await loadLib("pdf");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=LIBS.pdfw[0];
+      const pdf=await lib.getDocument({data:new Uint8Array(buf)}).promise;for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i),tc=await pg.getTextContent();text+=pdfRows(tc.items).map(r=>r.join(" ")).join("\n")+"\n"}}
+    else if(["xlsx","xls","xlsm","csv"].includes(ext)){await loadLib("xlsx");const wb=XLSX.read(buf,{type:"array"});text=wb.SheetNames.map(n=>qeSheetText(XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:false,defval:null}))).join("\n")}
+    else if(ext==="txt"){text=new TextDecoder().decode(buf)}
+    else throw new Error("Use a Word (.docx), PDF, Excel (.xlsx / .csv) or text (.txt) file.");
+    const k=qeKey(text);let add=parsePasted(k.text);
+    add=add.filter(x=>x.text&&x.text.length>2&&x.options.length>=2);
+    add.forEach((x,i)=>{if(x.answer==null&&k.key[i+1]!=null&&k.key[i+1]<x.options.length)x.answer=k.key[i+1]});
+    if(!add.length){$("#qePaste").hidden=false;$("#qe-p").value=k.text.trim();st("");$("#qePasteMsg").textContent="No questions recognised automatically. The text from the file is below — tidy it into the format shown and press Add these questions.";return}
+    readEditor();const q=S.qEdit;q.questions=q.questions.concat(add);if(!q.title)q.title=f.name.replace(/\.[^.]+$/,"").replace(/[_-]+/g," ");
+    const miss=add.filter(x=>x.answer==null).length;drawEditor();
+    toast(plural(add.length,"question","questions")+" added from "+f.name+(miss?" · "+miss+" without an answer — tick the right option":""));
+    const e=$("#qeFileMsg");if(e)e.innerHTML='<b>'+plural(add.length,"question","questions")+' added from '+esc(f.name)+'.</b> '+(miss?'<span class="pill warn">'+miss+' need an answer</span> ':'')+'Check them below before saving.';
+  }catch(err){st('<span class="err">'+esc(err&&err.message||"The file could not be read.")+'</span>')}}
 function bindEditor(){
   const q=S.qEdit,box=$(".modal");
   $("#qe-s").addEventListener("change",()=>{readEditor();q.quizKey="";drawEditor()});
@@ -3030,6 +3089,7 @@ function bindEditor(){
     if(d.qodel){const [i,j]=d.qodel.split("|").map(Number),x=q.questions[i];x.options.splice(j,1);if(x.answer===j)x.answer=null;else if(x.answer>j)x.answer--}
     drawEditor();if(d.qadd)setTimeout(()=>{const m=$(".modal");m.scrollTop=m.scrollHeight;const ts=document.querySelectorAll("[data-qtext]");if(ts.length)ts[ts.length-1].focus()},30)});
   box.addEventListener("change",e=>{const a=e.target.dataset.qans;if(a){readEditor();const [i,j]=a.split("|").map(Number);q.questions[i].answer=j;drawEditor()}});
+  $("#qeFileBtn").addEventListener("click",()=>$("#qeFile").click());$("#qeFile").addEventListener("change",e=>{const f=e.target.files[0];e.target.value="";if(f)qeFile(f)});
   $("#qePasteBtn").addEventListener("click",()=>{$("#qePaste").hidden=!$("#qePaste").hidden;if(!$("#qePaste").hidden)$("#qe-p").focus()});
   $("#qePasteGo").addEventListener("click",()=>{readEditor();const add=parsePasted($("#qe-p").value);if(!add.length){$("#qePasteMsg").textContent="No questions recognised. Check the format above.";return}q.questions=q.questions.concat(add);drawEditor();toast(plural(add.length,"question","questions")+" added"+(add.some(x=>x.answer==null)?" · mark the missing answers":""))});
   $("#qeSave").addEventListener("click",async()=>{readEditor();const err=$("#qeerr");
@@ -3045,7 +3105,7 @@ function bindEditor(){
 function quizRunView_old(q){
   const c=S.cohorts[q.smeId],R=S.qResp[q.id]||[],n=(c&&c.participants||[]).length,link=quizLink(q),st=QSTAT[q.status||"draft"];
   const avg=R.length?R.reduce((a,r)=>a+(r.pct||0),0)/R.length:null;
-  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("quiz")?esc(batchName(curBatch("quiz"))):"All quizzes")+'</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"")+' · scan to answer</span><h1>'+esc(q.title)+'</h1><div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
     '<div class="qlink"><code>'+esc(link)+'</code><button class="btn sm" id="qCopy">Copy link</button></div>'+
     '<div class="runstate"><span class="pill '+st[1]+'" style="font-size:14px;padding:4px 14px">'+st[0]+'</span>'+(q.status==="open"?'<button class="btn danger" id="qClose">Close quiz</button>':'<button class="btn primary" id="qOpen">Open quiz for answers</button>')+'</div>'+
@@ -3073,7 +3133,7 @@ function quizResultView_old(q){
   const c=S.cohorts[q.smeId],R=(S.qResp[q.id]||[]).slice().sort((a,b)=>(b.pct||0)-(a.pct||0)),Qs=q.questions||[];
   const best={};R.forEach(r=>{const p=matchParticipant(c,r),k=p?p.id:"x"+r.id;if(!best[k]||String(r.submittedAt)<String(best[k].r.submittedAt))best[k]={r,p}});
   const rows=Object.values(best),matched=rows.filter(x=>x.p).length;
-  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("quiz")?esc(batchName(curBatch("quiz"))):"All quizzes")+'</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
   h+='<section class="banner quizb"><div class="grow"><span class="bk">'+esc(c?c.name||q.smeId:"")+' · results</span><h1>'+esc(q.title)+'</h1><div class="meta"><span>'+R.length+' submissions</span><span>'+matched+' matched to participants</span>'+(q.savedAt?'<span>Scores saved '+esc(new Date(q.savedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</span>':'')+'</div></div><div class="acts"><button class="btn onban solid" id="qPush"'+(matched?"":" disabled")+'>Save scores to '+esc(c?c.name||q.smeId:"SME")+'</button></div></section>';
   h+='<div class="g2">'+panel("qrDist",{title:"Score distribution",tag:"Results",tagColor:"--s2",sub:"Participants per score band",opts:[["col","Column"],["pie","Donut"]],render:t=>{const bs=bands(rows.map(x=>x.r.pct||0));return t==="pie"?donut(bs,{center:rows.length,centerLabel:"ANSWERED"}):columns(bs.map(b=>({label:b.label.split(" · ")[0],value:b.value,text:b.value,color:b.color,tip:b.label+": "+b.value})))}})+
     panel("qrItems",{title:"Question analysis",tag:"Questions",tagColor:"--s1",sub:"Share of participants who got each question right",opts:[["bar","Bar"]],render:()=>hbars(Qs.map((x,i)=>{const ok=rows.filter(r=>(r.r.answers||{})[x.id]===x.answer).length,v=rows.length?ok/rows.length:null;return{label:"Q"+(i+1)+". "+x.text,value:v,max:1,text:v==null?"–":Math.round(v*100)+"%",color:rateColor(v),tip:x.text+"\nCorrect: "+x.options[x.answer]+"\n"+ok+" of "+rows.length+" right"}}),{max:1})})+'</div>';
@@ -3213,7 +3273,7 @@ function quizRunView_v2(q){
   const c=S.cohorts[q.smeId],open=q.status==="open",ph=open?(q.phase||"post"):(S.qRunPhase[q.id]||q.phase||"pre");
   const {R,rows}=qBest(q,ph),n=(c&&c.participants||[]).length,link=quizLink(q);
   const avg=avgOf(rows.map(x=>x.r.pct||0));
-  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("quiz")?esc(batchName(curBatch("quiz"))):"All quizzes")+'</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"Open to anyone")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
     '<div class="phasepick" role="group" aria-label="Quiz phase">'+PHASES.map(p=>'<button type="button" class="'+(ph===p[0]?"on ":"")+p[0]+'" data-qphase="'+p[0]+'"'+(open&&ph!==p[0]?' title="Switch the open quiz to '+p[1]+'"':'')+'><b>'+p[1]+'</b><small>'+p[2]+'</small></button>').join("")+'</div>'+
     '<div class="qrbox" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
@@ -3245,7 +3305,7 @@ function quizResultView_v2(q){
   const hasPre=all.some(r=>rPhase(r)==="pre"),hasPost=all.some(r=>rPhase(r)==="post");
   let v=S.qPhaseView||(hasPost?"post":hasPre?"pre":"post");if(v==="compare"&&!(hasPre&&hasPost))v=hasPost?"post":"pre";
   const PRE=qBest(q,"pre"),POST=qBest(q,"post");
-  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("quiz")?esc(batchName(curBatch("quiz"))):"All quizzes")+'</button><span style="flex:1"></span><button class="btn" data-qrun="'+esc(q.id)+'">'+qrIco+' QR & run</button></div>';
   const matchedPost=POST.rows.filter(x=>x.p).length;
   h+='<section class="banner quizb"><div class="grow"><span class="bk">'+esc(c?c.name||q.smeId:"Open to anyone")+' · results</span><h1>'+esc(q.title)+'</h1><div class="meta"><span>Pre-quiz: '+PRE.rows.length+' answered · avg '+pctTxt(avgOf(PRE.rows.map(x=>x.r.pct||0)))+'</span><span>Post-quiz: '+POST.rows.length+' answered · avg '+pctTxt(avgOf(POST.rows.map(x=>x.r.pct||0)))+'</span>'+(q.savedAt?'<span>Post scores saved '+esc(new Date(q.savedAt).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))+'</span>':'')+'</div></div>'+
     '<div class="acts"><button class="btn onban" id="qExport">'+I.down+' Export to Excel</button>'+(q.smeId?'<button class="btn onban solid" id="qPush"'+(matchedPost?"":" disabled")+' title="Only Post-quiz scores are saved">Save post-quiz scores to '+esc(c?c.name||q.smeId:"SME")+'</button>':'')+'</div></section>';
@@ -3388,7 +3448,7 @@ function watchClaims(q){if(!S.db||S.qClaimSub===q.id)return;if(S.qClaimUnsub)S.q
 function quizRunView(q){
   const c=S.cohorts[q.smeId],vp=S.qRunPhase[q.id]||(q.status==="open"?(q.phase||"post"):"pre"),isOpen=q.status==="open"&&(q.phase||"post")===vp,other=q.status==="open"&&!isOpen;
   const {R,rows}=qBest(q,vp),n=(c&&c.participants||[]).length,link=quizLink(q,vp),avg=avgOf(rows.map(x=>x.r.pct||0));
-  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' All quizzes</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
+  let h='<div class="qbar"><button class="btn ghost" data-qback>'+I.upA.replace('d="M6 15l6-6 6 6"','d="M15 6l-6 6 6 6"')+' '+(curBatch("quiz")?esc(batchName(curBatch("quiz"))):"All quizzes")+'</button><span style="flex:1"></span><button class="btn" data-qopen="'+esc(q.id)+'">'+I.edit+' Edit</button><button class="btn" data-qres="'+esc(q.id)+'">Results</button></div>';
   h+='<div class="runwrap"><section class="panel runqr"><span class="eyebrow">'+esc(c?c.name||q.smeId:"Open to anyone")+' · scan to answer</span><h1>'+esc(q.title)+'</h1>'+
     '<div class="phasepick" role="group" aria-label="Which QR code">'+PHASES.map(p=>{const live=q.status==="open"&&(q.phase||"post")===p[0];return '<button type="button" class="'+(vp===p[0]?"on ":"")+p[0]+'" data-qphase="'+p[0]+'"><b>'+p[1]+' QR'+(live?' <span class="pill good" style="font-size:10px;padding:1px 6px;margin-left:4px">LIVE</span>':'')+'</b><small>'+p[2]+'</small></button>'}).join("")+'</div>'+
     '<div class="qrtag '+vp+'">'+qphLabel(vp).toUpperCase()+'</div><div class="qrbox '+vp+'" id="qrbox">'+(window.qrcode?qrSvg(link,420):'<span class="spin"></span>')+'</div>'+
